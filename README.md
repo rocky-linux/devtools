@@ -33,6 +33,7 @@ will be also made available in the package repository mentioned above.
 
 ## Debugging module streams
 Mock supports enabling custom build options as well as module streams for
-specific builds. To do this, you will need to edit a configuration file
-that is installed to /etc/mock/templates/myrocky.tpl and modify the build
-macros as well as the module stream you will find there.
+specific builds. To do this, you will need to edit the configuration file
+that is installed to `/etc/mock/templates/myrocky.tpl` and add/modify the
+build macros as well as add or comment out the module stream needed for
+that build.
