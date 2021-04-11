@@ -50,7 +50,7 @@ commit:
 pull:
 	git pull
 help:
-	@echo "Usage: make <target>"
+	@echo "Usage: make <target> <argument>"
 	@echo
 	@echo "Available targets are:"
 	@echo "  all                    Default without argument"
