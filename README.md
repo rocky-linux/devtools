@@ -13,6 +13,17 @@ From this source directory, run the following commands:
 This installation will automatically install `nginx` and will configure a
 local repository to be run and usable at: /usr/share/nginx/html/repo
 
+Following enable directory browsing of RPMs in /usr/share/nginx/html/repo
+
+```
+#/etc/nginx/nginx.conf
+<snipped>
+   location / {
+              root /usr/share/nginx/html;index index.html;autoindex on;
+              }
+<snipped>	      
+```		      
+
 note: The permissions on this repository are wide open, so please tune if
 you are on a shared system.
 
