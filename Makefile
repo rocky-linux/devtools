@@ -59,7 +59,7 @@ help:
 	@echo
 	@echo "Available targets are:"
 	@echo "  all                    Default without argument"
-	@echo "  help                   showing this help "
+	@echo "  help                   Showing this help "
 	@echo "  install                Install "
 	@echo "  clean                  clean myrocky and srpmproc "
 	@echo "  commit {"my message"}  ie, git commit, without or with real commit message"
