@@ -1,7 +1,24 @@
 #!/bin/sh
 
-set -xe
+ARCH=`uname -m`
 
+if [ -z "$1" ]; then
+    if basename $PWD | grep -q "^r8-"; then 
+        echo "ERROR: This branch seems to be a module, append the module:stream to the rockybuild command"
+        exit 255
+    fi
+    MOCKCONFIG="/etc/mock/rocky.$ARCH/baseos.cfg"
+else
+    if [ -f "/etc/mock/rocky.$ARCH/modules/$1.cfg" ]; then
+        MOCKCONFIG="/etc/mock/rocky.$ARCH/modules/$1.cfg"
+        shift
+    else
+        echo "ERROR: Could not find module config for: '$1'"
+        exit 255
+    fi
+fi
+    
+set -xe
 
 createrepo /usr/share/nginx/html/repo
 
@@ -9,7 +26,7 @@ rpmbuild -bs --nodeps --define "%_topdir `pwd`" --define "dist .el8" SPECS/*.spe
 
 touch /tmp/mock-include.tpl
 
-mock -r /etc/mock/rocky8.cfg --resultdir=`pwd` SRPMS/*.src.rpm --cleanup-after  "$@"
+mock -r "$MOCKCONFIG" --resultdir=`pwd` SRPMS/*.src.rpm --cleanup-after  "$@"
 
 cp *.rpm SRPMS/*.src.rpm /usr/share/nginx/html/repo/
 
