@@ -37,11 +37,6 @@ install: srpmproc/srpmproc .dnf .system
 clean:
 	rm -rf srpmproc  $(HOME)/rocky 
 
-test:
-	(mkdir -p $(HOME)/rocky && cd $(HOME)/rocky && rockyget curl)
-	(cd $(HOME)/rocky/curl/r8 && rockybuild-notest)
-
-
 # enable makefile to accept argument after command
 #https://stackoverflow.com/questions/6273608/how-to-pass-argument-to-makefile-from-command-line
 
@@ -60,10 +55,18 @@ help:
 	@echo "Available targets are:"
 	@echo "  all                    Default without argument"
 	@echo "  help                   Showing this help "
-	@echo "  install                Install "
+	@echo "  install                Install devtool"
+	@echo "  build  rpm-name        Ex: make build perl "
 	@echo "  clean                  clean myrocky and srpmproc "
 	@echo "  commit {"my message"}  ie, git commit, without or with real commit message"
 	@echo "  status                 ie, git status"
 	@echo "  pull                   ie, git pull"
 	@echo ""
+
+build:
+	(mkdir -p $(HOME)/rocky && cd $(HOME)/rocky && rockyget $(filter-out $@,$(MAKECMDGOALS)))
+	(cd $(HOME)/rocky/$(filter-out $@,$(MAKECMDGOALS))/r8 && rockybuild-notest)
+
+
+
 
