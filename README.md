@@ -13,17 +13,6 @@ From this source directory, run the following commands:
 This installation will automatically install `nginx` and will configure a
 local repository to be run and usable at: /usr/share/nginx/html/repo
 
-Following enable directory browsing of RPMs in /usr/share/nginx/html/repo
-
-```
-#/etc/nginx/nginx.conf
-<snipped>
-   location / {
-              root /usr/share/nginx/html;index index.html;autoindex on;
-              }
-<snipped>	      
-```		      
-
 note: The permissions on this repository are wide open, so please tune if
 you are on a shared system.
 
@@ -43,8 +32,22 @@ All of the built RPMs and logs can be found in the current directory and
 will be also made available in the package repository mentioned above.
 
 ## Debugging module streams
-Mock supports enabling custom build options as well as module streams for
-specific builds. To do this, you will need to edit the configuration file
-that is installed to `/etc/mock/templates/myrocky.tpl` and add/modify the
-build macros as well as add or comment out the module stream needed for
-that build.
+Mock supports enabling and using Module Streams as part of the build
+process. Devtools supports this and integrates the various mock configs
+a developer would need for any configuration (these configs are still
+being built now).
+
+To use this, do the following:
+```
+    mkdir -p $HOME/rocky
+    cd $HOME/rocky
+    rockyget apache-ivy
+    cd apache-ivy/r8-stream-201801
+    rockybuild javapackages-tools:201801
+```
+
+note: Apache-Ivy has two c8-stream modules to choose from (at the time of
+this writing they are: `r8-stream-201801` and `r8-stream-201902`). Each
+of them correlate to the `javapackages-tools` module with the respective
+streams of `201801` and `201902`. When we call `rockybuild` we need to
+include the module:stream that we want this package built for.
