@@ -3,10 +3,7 @@
 set -xe
 
 
-mkdir /tmp/srpmproc-cache 2>/dev/null
+mkdir /tmp/srpmproc-cache 2>/dev/null ||:
 
-srpmproc --version 8 --source-rpm "\$1" --upstream-prefix https://git.rockylinux.org/staging --storage-addr file:///tmp/srpmproc-cache --tmpfs-mode "\$1"
+srpmproc --version 8 --source-rpm "$1" --upstream-prefix https://git.rockylinux.org/staging --storage-addr file:///tmp/srpmproc-cache --tmpfs-mode "$1"
 
-
-
---storage-addr https://rocky-linux-sources-staging.a1.rockylinux.org/
