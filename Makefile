@@ -24,10 +24,8 @@ srpmproc/srpmproc: srpmproc
 
 
 install: srpmproc/srpmproc .dnf .system
-	install -m 644 etc_mock/*.cfg /etc/mock/
-	install -m 644 etc_mock/rockybuild8.tpl /etc/mock/templates/
-	install -m 644 etc_mock/rockycentos-8.tpl /etc/mock/templates/
-	install -m 644 etc_mock/myrocky.tpl /etc/mock/templates/
+	cp -r etc_mock/rocky* /etc/mock/
+	cp -r etc_mock/templates/* /etc/mock/templates/
 	install -m 755 srpmproc/srpmproc /usr/local/bin/
 	install -m 755 bin/* /usr/local/bin/
 	test -d /usr/share/nginx/html/repo || mkdir /usr/share/nginx/html/repo
