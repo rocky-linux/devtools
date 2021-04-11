@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -xe
+
+
+createrepo /usr/share/nginx/html/repo
+
+rpmbuild -bs --nodeps --define "%_topdir `pwd`" --define "dist .el8" SPECS/*.spec
+
+touch /tmp/mock-include.tpl
+
+mock --nocheck -r /etc/mock/rocky8.cfg --resultdir=`pwd` SRPMS/*.src.rpm --cleanup-after  "$@"
+
+cp *.rpm SRPMS/*.src.rpm /usr/share/nginx/html/repo/
+
+createrepo /usr/share/nginx/html/repo
+
