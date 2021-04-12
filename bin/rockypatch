@@ -1,0 +1,33 @@
+#!/bin/sh
+
+set -xe
+
+if [ ! -d "_work" ]; then
+    echo "No _work directory found, run 'rockyprep' first"
+    exit 255
+fi
+
+if [ -z "$1" ]; then
+    echo "USAGE: $0 [patch file name]"
+    exit 255
+fi
+PATCHFILE="$1"
+
+test -d _patch && rm -rf _patch
+
+rpmbuild --quiet -bp --nodeps --define "%_topdir `pwd`" --define "dist .el8" SPECS/*.spec
+
+SOURCEDIR=`ls -d _work/*`
+
+mkdir _patch
+ln -s ../$SOURCEDIR _patch/a
+mv BUILD/* _patch/b
+
+( cd _patch; diff -ru a b ) > "SOURCES/$PATCHFILE"
+
+rm -rf _patch
+
+set +x
+
+echo "WROTE: SOURCES/$PATCHFILE"
+
