@@ -9,6 +9,7 @@ all: srpmproc/srpmproc
 	touch .dnf
 
 .system:
+	sudo dnf config-manager --set-enabled powertools
 	sudo systemctl start nginx
 	sudo systemctl enable nginx
 	touch .system
