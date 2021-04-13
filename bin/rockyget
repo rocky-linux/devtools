@@ -1,9 +1,24 @@
 #!/bin/sh
 
-set -xe
+NAME="$1"
+
+set -e
+
+if [ -z "${NAME}" ]; then
+    echo "usage: import_package.sh NAME"
+    exit 1
+fi
 
 
-mkdir /tmp/srpmproc-cache 2>/dev/null ||:
+if [ -d "${HOME}/rocky/patch/${NAME}.git" ]; then
+    echo "NOTICE: Will merge local configs into pulled package"
+    ( cd "${HOME}/rocky/patch/${NAME}.git"; git add .; git commit -m "update" ) ||:
+fi
 
-srpmproc --version 8 --source-rpm "$1" --upstream-prefix https://git.rockylinux.org/staging --storage-addr file:///tmp/srpmproc-cache --tmpfs-mode "$1"
+test -d "$HOME/rocky/rpms/${NAME}" && rm -rf "$HOME/rocky/rpms/${NAME}"
+test -d /tmp/srpmproc-cache || mkdir /tmp/srpmproc-cache
+mkdir -p "$HOME/rocky/rpms/${NAME}"
 
+srpmproc --version 8 --upstream-prefix "file://$HOME/rocky" --storage-addr file:///tmp/srpmproc-cache --source-rpm "$NAME" --tmpfs-mode "$HOME/rocky/rpms/${NAME}"
+
+echo "Package has been pulled to: $HOME/rocky/rpms/${NAME}"

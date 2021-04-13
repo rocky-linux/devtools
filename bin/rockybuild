@@ -1,27 +1,25 @@
 #!/bin/sh
 
 ARCH=`uname -m`
+NAME="$1"
+BRANCH="$2"
+MODULE="$3"
 
-while getopts :hm: opt; do
-    case "$opt" in
-        m)
-            MODULE="$OPTARG"
-        ;;
-        h)
-            echo "USAGE: $0 (-m MODULE:STREAM) (mock options)"
-            echo
-        ;;
-        *)
-            true
-        ;;
-    esac
-done
+if [ -z "$NAME" ]; then
+    echo "USAGE: $0 [PACKAGE NAME] [BRANCH]"
+    exit 1
+else
+    shift
+fi
+
+if [ -z "$BRANCH" ]; then
+    BRANCH="r8"
+else
+    shift
+fi
+
 
 if [ -z "$MODULE" ]; then
-    if basename $PWD | grep -q "^r8-"; then 
-        echo "ERROR: This branch seems to be a module, append '-m MODULE:STREAM' to the rockybuild command"
-        exit 255
-    fi
     MOCKCONFIG="/etc/mock/rocky.$ARCH/baseos.cfg"
 else
     if [ -f "/etc/mock/rocky.$ARCH/modules/$MODULE.cfg" ]; then
@@ -32,18 +30,34 @@ else
         exit 255
     fi
 fi
+
+if [ ! -d "${HOME}/rocky/rpms/${NAME}" ]; then
+    echo "Importing package: ${NAME}"
+    if ! rockyget "${NAME}"; then
+        echo "Failed to import package: ${NAME}"
+        exit 255
+    fi
+fi
+
+if [ ! -d "${HOME}/rocky/rpms/${NAME}/${BRANCH}" ]; then
+    echo "This package branch does not exist."
+    exit 255
+fi
     
-set -xe
+test -d "${HOME}/rocky/builds/${NAME}/${BRANCH}" || mkdir -p "${HOME}/rocky/builds/${NAME}/${BRANCH}"
+
+set -e
 
 createrepo /usr/share/nginx/html/repo
 
-rpmbuild -bs --nodeps --define "%_topdir `pwd`" --define "dist .el8" SPECS/*.spec
 
-touch /tmp/mock-include.tpl
+#cd "${HOME}/rocky/rpms/${NAME}/${BRANCH}"
 
-mock -r "$MOCKCONFIG" --resultdir=`pwd` SRPMS/*.src.rpm --cleanup-after  "$@"
+rpmbuild -bs --nodeps --define "%_topdir ${HOME}/rocky/rpms/${NAME}/${BRANCH}" --define "dist .el8" "${HOME}/rocky/rpms/${NAME}/${BRANCH}/SPECS/${NAME}.spec"
 
-cp *.rpm SRPMS/*.src.rpm /usr/share/nginx/html/repo/
+mock -r "$MOCKCONFIG" --resultdir="${HOME}/rocky/builds/${NAME}/${BRANCH}" ${HOME}/rocky/rpms/${NAME}/${BRANCH}/SRPMS/${NAME}*.src.rpm --cleanup-after ${MOCKARGS:-}
+
+cp ${HOME}/rocky/builds/${NAME}/${BRANCH}/*.rpm ${HOME}/rocky/rpms/${NAME}/${BRANCH}/SRPMS/*.src.rpm /usr/share/nginx/html/repo/
 
 createrepo /usr/share/nginx/html/repo
 
