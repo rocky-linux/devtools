@@ -3,9 +3,9 @@
 all: srpmproc/srpmproc
 
 .dnf:
-	sudo yum -y install epel-release
-	sudo yum -y groupinstall "Development Tools"
-	sudo yum -y install golang mock nginx createrepo
+	sudo dnf -y install epel-release
+	sudo dnf -y groupinstall "Development Tools"
+	sudo dnf -y install golang mock nginx createrepo git
 	touch .dnf
 
 .system:
