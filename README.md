@@ -48,6 +48,9 @@ these files and then you can rerun the following get and build scripts:
     rockybuild curl
 ```
 
+More documentation about the format of the Proto3 CFG file can be found here:
+https://wiki.rockylinux.org/en/team/development/debranding/how-to
+
 note: You need to rerun the `rockyget` tool to integrate the CFG changes which
 will be applied to all branches of the package automatically. You can verify
 that before calling `rockybuild` in the `~/rocky/rpms/curl/r8/` directory.
