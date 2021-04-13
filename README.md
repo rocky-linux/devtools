@@ -21,33 +21,33 @@ you are on a shared system.
 Once these tools are installed, you will be able to do the following:
 
 ```
-    mkdir -p $HOME/rocky
-    cd $HOME/rocky
     rockyget curl
-    cd curl/r8
-    rockybuild
+    rockybuild curl
 ```
 
-All of the built RPMs and logs can be found in the current directory and
-will be also made available in the package repository mentioned above.
+This will create a directory structure at `~/rocky/` and you will be able
+to find the RPM sources as well as the build directory, logs, and
+artificats there.
 
-## Debugging module streams
-Mock supports enabling and using Module Streams as part of the build
-process. Devtools supports this and integrates the various mock configs
-a developer would need for any configuration (these configs are still
-being built now).
+## Creating a local patch CFG file
+If you find that you need to modify the configuration of the package, there
+are some helper scripts you can use:
 
-To use this, do the following:
 ```
-    mkdir -p $HOME/rocky
-    cd $HOME/rocky
-    rockyget apache-ivy
-    cd apache-ivy/r8-stream-201801
-    rockybuild javapackages-tools:201801
+    rockymkpatch curl
 ```
 
-note: Apache-Ivy has two c8-stream modules to choose from (at the time of
-this writing they are: `r8-stream-201801` and `r8-stream-201902`). Each
-of them correlate to the `javapackages-tools` module with the respective
-streams of `201801` and `201902`. When we call `rockybuild` we need to
-include the module:stream that we want this package built for.
+Once you have made your patch directory, you can create the `*.cfg` file in
+the `~/rocky/patch/curl.git/ROCKY/CFG/` directory. Any supporting files or
+patches you need to create should be put in the `_supporting/` directory.
+
+After you have made your changes there, you should remember to `git commit -a`
+these files and then you can rerun the following get and build scripts:
+```
+    rockyget curl
+    rockybuild curl
+```
+
+note: You need to rerun the `rockyget` tool to integrate the CFG changes which
+will be applied to all branches of the package automatically. You can verify
+that before calling `rockybuild` in the `~/rocky/rpms/curl/r8/` directory.
