@@ -46,7 +46,7 @@ func main() {
 	}
 
 	fmt.Printf("config_opts['module_setup_commands'] = [\n")
-	fmt.Printf("    ('enable, '%s:%s'),\n", config.Type.Name, config.Type.Stream)
+	fmt.Printf("    ('enable', '%s:%s'),\n", config.Type.Name, config.Type.Stream)
 	fmt.Printf("]\n\n")
 
 	scanner := bufio.NewScanner(strings.NewReader(config.Type.Buildopts.Rpm.Macros))

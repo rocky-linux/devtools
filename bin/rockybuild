@@ -2,18 +2,33 @@
 
 ARCH=`uname -m`
 
-if [ -z "$1" ]; then
+while getopts :hm: opt; do
+    case "$opt" in
+        m)
+            MODULE="$OPTARG"
+        ;;
+        h)
+            echo "USAGE: $0 (-m MODULE:STREAM) (mock options)"
+            echo
+        ;;
+        *)
+            true
+        ;;
+    esac
+done
+
+if [ -z "$MODULE" ]; then
     if basename $PWD | grep -q "^r8-"; then 
-        echo "ERROR: This branch seems to be a module, append the module:stream to the rockybuild command"
+        echo "ERROR: This branch seems to be a module, append '-m MODULE:STREAM' to the rockybuild command"
         exit 255
     fi
     MOCKCONFIG="/etc/mock/rocky.$ARCH/baseos.cfg"
 else
-    if [ -f "/etc/mock/rocky.$ARCH/modules/$1.cfg" ]; then
-        MOCKCONFIG="/etc/mock/rocky.$ARCH/modules/$1.cfg"
+    if [ -f "/etc/mock/rocky.$ARCH/modules/$MODULE.cfg" ]; then
+        MOCKCONFIG="/etc/mock/rocky.$ARCH/modules/$MODULE.cfg"
         shift
     else
-        echo "ERROR: Could not find module config for: '$1'"
+        echo "ERROR: Could not find module config for: '$MODULE'"
         exit 255
     fi
 fi
