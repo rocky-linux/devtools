@@ -63,8 +63,8 @@ help:
 	@echo ""
 
 build:
-	(mkdir -p $(HOME)/rocky && cd $(HOME)/rocky && rockyget $(filter-out $@,$(MAKECMDGOALS)))
-	(cd $(HOME)/rocky/$(filter-out $@,$(MAKECMDGOALS))/r8 && rockybuild-notest)
+	 rockyget $(filter-out $@,$(MAKECMDGOALS))
+	 rockybuild $(filter-out $@,$(MAKECMDGOALS))
 
 
 
