@@ -2,32 +2,26 @@
 
 set -xe
 
-if [ ! -d "_work" ]; then
-    echo "No _work directory found, run 'rockyprep' first"
-    exit 255
-fi
+SOURCEDIR=`ls -d _work/* 2>/dev/null | head -n 1`
 
-if [ -z "$1" ]; then
-    echo "USAGE: $0 [patch file name]"
+if [ -z "$SOURCEDIR" ]; then
+    echo "ERROR: no working directory found, run 'rockyprep' first"
     exit 255
 fi
-PATCHFILE="$1"
 
 test -d _patch && rm -rf _patch
 
-rpmbuild --quiet -bp --nodeps --define "%_topdir `pwd`" --define "dist .el8" SPECS/*.spec
-
-SOURCEDIR=`ls -d _work/*`
-
 mkdir _patch
-ln -s ../$SOURCEDIR _patch/a
-mv BUILD/* _patch/b
 
-( cd _patch; diff -ru a b ) > "SOURCES/$PATCHFILE"
+rpmbuild --quiet -bp --nodeps --define "%_topdir `pwd`" --define "_builddir `pwd`/_patch" --define "dist .el8" SPECS/*.spec >/dev/null
+
+PATCHDIR=`cd _patch; ls -d * 2>/dev/null | head -n 1`
+
+ln -s "../$SOURCEDIR" _patch/a
+ln -s "$PATCHDIR" _patch/b
+
+( cd _patch; diff -ru a b ) ||:
 
 rm -rf _patch
 
 set +x
-
-echo "WROTE: SOURCES/$PATCHFILE"
-

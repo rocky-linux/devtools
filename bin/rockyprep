@@ -5,11 +5,9 @@ set -xe
 test -d BUILD && rm -rf BUILD
 test -d _work && rm -rf _work
 
-rpmbuild --quiet -bp --nodeps --define "%_topdir `pwd`" --define "dist .el8" SPECS/*.spec
-
-mkdir _work
-mv BUILD/* _work/
+rpmbuild --quiet -bp --nodeps --define "%_topdir `pwd`" --define "_builddir `pwd`/_work" --define "dist .el8" SPECS/*.spec
 
 set +x
 
 echo "Created _work/"
+
