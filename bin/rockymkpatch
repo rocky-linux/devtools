@@ -1,0 +1,31 @@
+#!/bin/sh
+
+NAME="$1"
+
+if [ -z "$NAME" ]; then
+    echo "USAGE: $0 [PACKAGE NAME]"
+    exit 1
+fi
+
+if [ -d "$HOME/rocky/patch/${NAME}.git" ]; then
+    echo "Patch structure already exists at: $HOME/rocky/patch/${NAME}.git"
+    exit
+fi
+
+set -e
+
+mkdir -p "$HOME/rocky/patch/${NAME}.git/ROCKY/CFG"
+mkdir -p "$HOME/rocky/patch/${NAME}.git/ROCKY/_supporting"
+cd "$HOME/rocky/patch/${NAME}.git"
+git init
+git checkout -b main
+
+echo "Rocky patch directory created for package '${NAME}' and can be found in:"
+echo "   $HOME/rocky/patch/${NAME}.git"
+echo
+echo "Once you have added/changed your files, be sure to 'git' commit your changes."
+echo
+
+if [ -d "${HOME}/rocky/rpms/${NAME}" ]; then
+    echo "WARNING: You will have to rerun 'rockyget ${NAME}' to test"
+fi
