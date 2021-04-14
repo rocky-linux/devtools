@@ -1,6 +1,6 @@
 .PHONY: all
 
-all: srpmproc/srpmproc
+all: srpmproc/srpmproc .go-setup
 
 .dnf:
 	sudo dnf -y install epel-release
@@ -14,10 +14,13 @@ all: srpmproc/srpmproc
 	sudo systemctl enable nginx
 	touch .system
 
+.go-setup:
+	go get gopkg.in/yaml.v2
+	touch .go-setup
+	
 
 srpmproc:
 	git clone https://git.rockylinux.org/release-engineering/public/srpmproc.git
-	cd srpmproc; git checkout -b working 99809a4ead5c3cc8907739365a07df35117a2669 # srpmproc HEAD is broken right now
 
 
 srpmproc/srpmproc: srpmproc
