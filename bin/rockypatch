@@ -1,0 +1,81 @@
+#!/bin/sh
+
+set -e
+
+ARCH=`uname -m`
+
+NAME=`pwd | sed -e "s@^$HOME/rocky/_work/@@" | awk -F '/' '{print $1}'`
+BRANCH=`pwd | sed -e "s@^$HOME/rocky/_work/@@" | awk -F '/' '{print $2}'`
+
+PATCHNAME="$1"
+
+if [ -z "$NAME" -o -z "$BRANCH" ]; then
+    echo "Directory structure doesn't seem to be a Rocky _workdir"
+fi
+
+if [ -z "$PATCHNAME" ]; then
+    echo "USAGE: $0 [PATCH NAME]"
+    exit 1
+else
+    shift
+fi
+
+if [ ! -d "${HOME}/rocky/rpms/${NAME}" ]; then
+    echo "ERROR: Package name not found: ${NAME}"
+    exit 255
+fi
+
+if [ ! -d "${HOME}/rocky/rpms/${NAME}/${BRANCH}" ]; then
+    echo "ERROR: Package branch not found: ${NAME}/${BRANCH}"
+    exit 255
+fi
+
+
+test -d "${HOME}/rocky/_work/${NAME}/${BRANCH}/.patchdir" && rm -rf "${HOME}/rocky/_work/${NAME}/${BRANCH}/.patchdir"
+mkdir -p "${HOME}/rocky/_work/${NAME}/${BRANCH}/.patchdir"
+
+if [ ! -d "$HOME/rocky/patch/${NAME}.git/ROCKY/CFG" ]; then
+    mkdir -p "$HOME/rocky/patch/${NAME}.git/ROCKY/CFG"
+    mkdir -p "$HOME/rocky/patch/${NAME}.git/ROCKY/_supporting"
+    ( cd "$HOME/rocky/patch/${NAME}.git" && git init && git checkout -b main )
+fi
+
+rpmbuild -bp --nodeps --define "%_topdir ${HOME}/rocky/rpms/${NAME}/${BRANCH}" --define "_builddir ${HOME}/rocky/_work/${NAME}/${BRANCH}/.patchdir" --define "dist .el8" ${HOME}/rocky/rpms/${NAME}/${BRANCH}/SPECS/*.spec
+
+cd "${HOME}/rocky/_work/${NAME}/${BRANCH}/.patchdir"
+
+mv * a
+ln -s ${HOME}/rocky/_work/${NAME}/${BRANCH}/* b
+
+set +e
+
+diff -ru a b > "$HOME/rocky/patch/${NAME}.git/ROCKY/_supporting/$PATCHNAME"
+if [ $? -gt "1" ]; then
+    echo "ERROR: Diff failed"
+    exit 255
+fi
+
+cat <<EOF >> "$HOME/rocky/patch/${NAME}.git/ROCKY/CFG/$NAME.cfg"
+add {
+    file: "ROCKY/_supporting/$PATCHNAME"
+}
+
+spec_change {
+    # Adds a Patch line with the file name as listed above
+    file {
+        name: "$PATCHNAME"
+        type: Patch
+        add: true
+        add_to_prep: true
+        n_path: 1 
+    }
+}
+EOF
+
+( cd "${HOME}/rocky/patch/${NAME}.git"; git add .; git commit -m "Add patch: $PATCHNAME" ) ||:
+
+cd ..
+rm -rf ".patchdir"
+
+echo "Regetting '${NAME}' to integrate patch..."
+rockyget ${NAME}

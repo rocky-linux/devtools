@@ -1,0 +1,46 @@
+#!/bin/sh
+
+set -e
+
+ARCH=`uname -m`
+NAME="$1"
+BRANCH="$2"
+
+if [ -z "$NAME" ]; then
+    echo "USAGE: $0 [PACKAGE NAME] [BRANCH]"
+    exit 1
+else
+    shift
+fi
+
+if [ -z "$BRANCH" ]; then
+    BRANCH="r8"
+else
+    shift
+fi
+
+if [ ! -d "${HOME}/rocky/rpms/${NAME}" ]; then
+    echo "ERROR: Package name not found: ${NAME}"
+    exit 255
+fi
+
+if [ ! -d "${HOME}/rocky/rpms/${NAME}/${BRANCH}" ]; then
+    echo "ERROR: Package branch not found: ${NAME}/${BRANCH}"
+    exit 255
+fi
+
+
+test -d "${HOME}/rocky/_work/${NAME}/${BRANCH}" && rm -rf "${HOME}/rocky/_work/${NAME}/${BRANCH}"
+mkdir -p "${HOME}/rocky/_work/${NAME}/${BRANCH}"
+
+if [ ! -d "$HOME/rocky/patch/${NAME}.git/ROCKY/CFG" ]; then
+    mkdir -p "$HOME/rocky/patch/${NAME}.git/ROCKY/CFG"
+    mkdir -p "$HOME/rocky/patch/${NAME}.git/ROCKY/_supporting"
+    ( cd "$HOME/rocky/patch/${NAME}.git" && git init && git checkout -b main )
+fi
+
+
+rpmbuild -bp --nodeps --define "%_topdir ${HOME}/rocky/rpms/${NAME}/${BRANCH}" --define "_builddir ${HOME}/rocky/_work/${NAME}/${BRANCH}" --define "dist .el8" ${HOME}/rocky/rpms/${NAME}/${BRANCH}/SPECS/*.spec
+
+echo "Created ${HOME}/rocky/_work/${NAME}/${BRANCH}/"
+
