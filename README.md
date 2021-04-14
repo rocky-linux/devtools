@@ -17,40 +17,38 @@ note: The permissions on this repository are wide open, so please tune if
 you are on a shared system.
 
 
-## Using these tools
+## Getting and building a Rocky Linux package
 Once these tools are installed, you will be able to do the following:
 
 ```
-    rockyget curl
-    rockybuild curl
+    rockyget sed
+    rockybuild sed
 ```
 
 This will create a directory structure at `~/rocky/` and you will be able
 to find the RPM sources as well as the build directory, logs, and
 artificats there.
 
-## Creating a local patch CFG file
-If you find that you need to modify the configuration of the package, there
-are some helper scripts you can use:
+## Debugging and patching packages
+When build errors happen, and you need to create a patch for a package,
+you can use the following example to get you going:
 
 ```
-    rockymkpatch curl
+    # Creates a working directory, will take optional branch
+    rockyprep sed
+    cd ~/rocky/_work/sed/*
+
+    # A build error exists when running in nspawn container on the builder
+    # for this test, so let's "exit 0" near the top...
+    vim testsuite/inplace-selinux.sh
+
+    # Create a patch configuration from the working directory and name the
+    # patch file. This will create the patch, integrate it into the SPEC
+    # file, and "reget" the sed package. If you need to edit or view the
+    # Proto3 config and patch, it can be found here: ~/rocky/patch/sed/r8/
+    rockypatch inplace-selinux-notest.patch
+
+    # Now you can test your build
+    rockybuild sed
+
 ```
-
-Once you have made your patch directory, you can create the `*.cfg` file in
-the `~/rocky/patch/curl.git/ROCKY/CFG/` directory. Any supporting files or
-patches you need to create should be put in the `_supporting/` directory.
-
-After you have made your changes there, you should remember to `git commit -a`
-these files and then you can rerun the following get and build scripts:
-```
-    rockyget curl
-    rockybuild curl
-```
-
-More documentation about the format of the Proto3 CFG file can be found here:
-https://wiki.rockylinux.org/en/team/development/debranding/how-to
-
-note: You need to rerun the `rockyget` tool to integrate the CFG changes which
-will be applied to all branches of the package automatically. You can verify
-that before calling `rockybuild` in the `~/rocky/rpms/curl/r8/` directory.
