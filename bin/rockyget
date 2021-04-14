@@ -5,7 +5,7 @@ NAME="$1"
 set -e
 
 if [ -z "${NAME}" ]; then
-    echo "usage: import_package.sh NAME"
+    echo "usage: rockyget NAME"
     exit 1
 fi
 
