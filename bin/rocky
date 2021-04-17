@@ -85,7 +85,7 @@ case $1 in
 	test -d /tmp/srpmproc-cache || mkdir /tmp/srpmproc-cache
 	mkdir -p "$HOME/rocky/rpms/${NAME}"
 	${SRPMPROC} --version 8 --upstream-prefix "file://$HOME/rocky" --storage-addr file:///tmp/srpmproc-cache --source-rpm "$NAME" --tmpfs-mode "$HOME/rocky/rpms/${NAME}"
-	echo "Package has been pulled to: $HOME/rocky/rpms/${NAME}"
+	echo "Package has been pulled to: $HOME/rocky/rpms/${NAME} by srpmproc"
 	;;
     build)
 	NAME="$2"
