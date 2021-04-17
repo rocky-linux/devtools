@@ -17,7 +17,6 @@ all: srpmproc/srpmproc .go-setup
 .go-setup:
 	go get gopkg.in/yaml.v2
 	touch .go-setup
-	
 
 srpmproc:
 	git clone https://git.rockylinux.org/release-engineering/public/srpmproc.git
@@ -69,6 +68,10 @@ build:
 	 rockyget $(filter-out $@,$(MAKECMDGOALS))
 	 rockybuild $(filter-out $@,$(MAKECMDGOALS))
 
+upsteam:
+	git fetch upstream
+	git checkout main
+	git merge upstream/main
 
 
 
