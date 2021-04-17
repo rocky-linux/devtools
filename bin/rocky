@@ -7,7 +7,7 @@
 #       rocky   - Getting a Rocky package maintainer build development configuration setup.
 #
 # REVISION HISTORY
-#       04/01/2021    GMK  original
+#       04/01/2021    Gregory M. Kurtzer original
 #       04/17/2021    T.J. Yang  merging rocky* commands.
 #
 # DESCRIPTION
