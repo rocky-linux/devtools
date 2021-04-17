@@ -24,14 +24,11 @@
 # ---------------------------- CONSTANT DECLARATION ---------------------------
 # WHAT: Define PATH.
 # WHY:  Mainly for security reasons.
-# NOTE: This should only be changed if you know what you're doing.
-#
-PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin
+
+PATH=/bin:/usr/bin:/usr/sbin:/usr/local/bin
 
 # WHAT: Define exit status flags.
 # WHY:  Easier to program with a mnemonic than with the numbers.
-# NOTE: THESE DO NOT CHANGE UNLESS NOTIFIED BY HP!  Startup depends on these
-#       exit statuses being defined this way.
 #
 SUCCESS=0
 ERROR=1
