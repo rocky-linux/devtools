@@ -291,7 +291,7 @@ EOF
 	;;
     help)
 	echo "$0 get   sed : get sed srpm locally via srpmproc."
-	echo "$0 build sed : build sed srpm local mock."
+	echo "$0 build sed : build sed srpm in local mock."
 	echo "$0 patch sed : patching sed."
 	echo "$0 mkcfg sed : patching sed."
 	;;
