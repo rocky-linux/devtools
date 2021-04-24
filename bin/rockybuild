@@ -53,7 +53,7 @@ createrepo /usr/share/nginx/html/repo
 
 #cd "${HOME}/rocky/rpms/${NAME}/${BRANCH}"
 
-rpmbuild -bs --nodeps --define "%_topdir ${HOME}/rocky/rpms/${NAME}/${BRANCH}" --define "dist .el8" "${HOME}/rocky/rpms/${NAME}/${BRANCH}/SPECS/${NAME}.spec"
+rpmbuild -bs --nodeps --define "%_topdir ${HOME}/rocky/rpms/${NAME}/${BRANCH}" --define "dist .el8" "${HOME}/rocky/rpms/${NAME}/${BRANCH}/SPECS/*.spec"
 
 mock -r "$MOCKCONFIG" --resultdir="${HOME}/rocky/builds/${NAME}/${BRANCH}" ${HOME}/rocky/rpms/${NAME}/${BRANCH}/SRPMS/${NAME}*.src.rpm --isolation=simple --cleanup-after ${MOCKARGS:-}
 
