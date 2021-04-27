@@ -1,0 +1,100 @@
+---
+document: modulemd
+version: 2
+data:
+  name: container-tools
+  stream: "1.0"
+  summary: >-
+    Stable versions of podman 1.0, buildah 1.5, skopeo 0.1, runc, conmon, CRIU,
+    Udica, etc as well as dependencies such as container-selinux built and
+    tested together, and supported for 24 months.
+  description: >-
+    Stable versions of podman 1.0 , buildah 1.5, skopeo 0.1, runc, conmon,
+    CRIU, Udica, etc as well as dependencies such as container-selinux built
+    and tested together. Released with RHEL 8.0 and supported for 24 months.
+    During the support lifecycle, back ports of important, critical
+    vulnerabilities (CVEs, RHSAs) and bug fixes (RHBAs) are provided to this
+    stream, and versions do not move forward. For more information see:
+    https://access.redhat.com/support/policy/updates/containertools
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      go-toolset: [rhel8]
+      golang-ecosystem: [1.0]
+      platform: [el8.3.0]
+    requires:
+      platform: [el8]
+  references:
+    community: https://github.com/projectatomic
+    documentation: https://projectatomic.io
+    tracker: https://github.com/projectatomic
+  profiles:
+    common:
+      rpms:
+      - buildah
+      - container-selinux
+      - containernetworking-plugins
+      - criu
+      - fuse-overlayfs
+      - oci-systemd-hook
+      - oci-umount
+      - podman
+      - runc
+      - skopeo
+      - slirp4netns
+  api:
+    rpms:
+    - buildah
+    - container-selinux
+    - containernetworking-plugins
+    - containers-common
+    - fuse-overlayfs
+    - oci-systemd-hook
+    - oci-umount
+    - podman
+    - podman-docker
+    - runc
+    - skopeo
+    - slirp4netns
+  buildopts:
+    rpms:
+      macros: |
+        %_with_ignore_tests 1
+  components:
+    rpms:
+      buildah:
+        rationale: Primary component of this module
+        ref: e1f9206b579c700e9cad26934c0ca6e5244b8e6c
+      container-selinux:
+        rationale: Primary component of this module
+        ref: ed97593d15f72a6dbbe034bec82431a87eda5445
+      containernetworking-plugins:
+        rationale: Primary component of this module
+        ref: 3332ed144cb1b1d47200641e9f7294d77969dee7
+      criu:
+        rationale: Primary component of this module
+        ref: 701bb3e289fd47dcb8d99ad8cc1a70f612fd306d
+      fuse-overlayfs:
+        rationale: Primary component of this module
+        ref: fc9b6c393e4243957320d4ab4a215594b4c27811
+      oci-systemd-hook:
+        rationale: Primary component of this module
+        ref: cb02e265d389faddabf59322b4cb4428fa2a587a
+      oci-umount:
+        rationale: Primary component of this module
+        ref: ad1cb57373adf9bb9e5381080732dbdc433a16fb
+      podman:
+        rationale: Primary component of this module
+        ref: 3b15a951edf8279b92ab39742c90511a75df8d24
+      runc:
+        rationale: Primary component of this module
+        ref: 66272cd6606e3cc8f0099e35c36dbcf41ddbd02d
+      skopeo:
+        rationale: Primary component of this module
+        ref: 5993528046540d9ce1ff7cffdbc6229352dc97cb
+      slirp4netns:
+        rationale: Primary component of this module
+        ref: 82861ef6d0e6849ce4dc9966f3b3e2fe148c59a2
+...

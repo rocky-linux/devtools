@@ -1,0 +1,46 @@
+---
+document: modulemd
+version: 2
+data:
+  name: go-toolset
+  summary: Go
+  description: Go Tools and libraries
+  stream: rhel8
+  license:
+    module: [MIT]
+  dependencies:
+    - buildrequires:
+        platform: [el8.3.0]
+        go-toolset: [rhel8]
+      requires:
+        platform: [el8]
+  profiles:
+    common:
+      rpms:
+        - go-toolset
+  api:
+    rpms:
+      - golang
+  buildopts:
+    rpms:
+      whitelist:
+        - go-toolset-1.10
+        - go-toolset-1.10-golang
+        - go-toolset
+        - go-toolset-golang
+        - golang
+        - delve
+  components:
+    rpms:
+      go-toolset:
+        rationale: Meta package for go-toolset providing scl enable scripts.
+        ref: aa63ef676570563bfc67f67cb229e73f3f19f0cb
+        buildorder: 0
+      golang:
+        rationale: Package providing the Go compiler toolchain.
+        ref: 9da48d30e08da733da5aa2c729229da2ea29fc3d
+        buildorder: 1
+      delve:
+        rationale: A debugger for the Go programming language
+        ref: b083e282d84df869f1cb9fc2a2b69c2b235984d0
+        buildorder: 2

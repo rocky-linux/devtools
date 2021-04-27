@@ -1,0 +1,44 @@
+---
+document: modulemd
+version: 2
+data:
+  name: varnish
+  stream: 6
+  summary: Varnish HTTP cache
+  description: >-
+    Varnish Cache web application accelerator
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      platform: [el8.3.0]
+    requires:
+      platform: [el8]
+  references:
+    documentation: http://varnish-cache.org/docs/
+    tracker: https://github.com/varnishcache/varnish-cache/issues
+  profiles:
+    common:
+      rpms:
+      - varnish
+      - varnish-modules
+  api:
+    rpms:
+    - varnish
+    - varnish-modules
+  buildopts:
+    rpms:
+      macros: |
+        %_without_python2 1
+        %_with_python3 1
+  components:
+    rpms:
+      varnish:
+        rationale: Module API.
+        ref: 140ef6638e458a88bdad2a274710a2438836c215
+      varnish-modules:
+        rationale: Extension modules.
+        ref: 18ff7bd559104cbe0e96d4ea8ecd23309bc8ef66
+        buildorder: 1
+...

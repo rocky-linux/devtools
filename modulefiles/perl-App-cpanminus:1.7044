@@ -1,0 +1,69 @@
+---
+document: modulemd
+version: 2
+data:
+  name: perl-App-cpanminus
+  stream: 1.7044
+  summary: Get, unpack, build and install CPAN modules
+  description: >
+    This is a CPAN client that requires zero configuration, and stands alone but it's
+    maintainable and extensible with plug-ins and friendly to shell scripting.
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      perl: []
+      platform: [el8.3.0]
+    requires:
+      perl: []
+      perl-YAML: []
+      platform: [el8]
+  references:
+    community: https://metacpan.org/release/App-cpanminus
+  profiles:
+    common:
+      description: App-cpanminus distribution
+      rpms:
+      - perl-App-cpanminus
+  api:
+    rpms:
+    - perl-App-cpanminus
+  filter:
+    rpms:
+    - perl-CPAN-DistnameInfo-dummy
+    - perl-Test-Deep
+  buildopts:
+    rpms:
+      macros: >
+        %_without_perl_CPAN_Meta_Check_enables_extra_test 1
+  components:
+    rpms:
+      perl-App-cpanminus:
+        rationale: The API.
+        ref: f1dea4e1f2d8acc552aff0862225f66427841a5c
+        buildorder: 1
+      perl-CPAN-DistnameInfo:
+        rationale: Run-time dependency.
+        ref: 6b0880d722915b0316cab1352f6a7eb18b9f5885
+      perl-CPAN-Meta-Check:
+        rationale: Run-time dependency.
+        ref: 0d4f016dfb1e8fb228c2aaf2184e98df009f3cdf
+        buildorder: 1
+      perl-File-pushd:
+        rationale: Run-time dependency.
+        ref: e142a5651c74b28bbb04be2d752a2ec1659e845a
+      perl-Module-CPANfile:
+        rationale: Run-time dependency.
+        ref: 87605b2588d1a577c5ab6d33051aefe4bf1bd254
+      perl-Parse-PMFile:
+        rationale: Run-time dependency.
+        ref: 5b906f9d5bb9e45b7e71cd2171f3d5be3d2d77c7
+      perl-String-ShellQuote:
+        rationale: Run-time dependency.
+        ref: e431e61aef5ea0743f23397920596b9a4b2336b4
+      perl-Test-Deep:
+        rationale: Build-time dependency.
+        ref: c78022cb9856627bd76672f99de92bad6d25d6d6
+...
+

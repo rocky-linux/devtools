@@ -1,0 +1,50 @@
+---
+document: modulemd
+version: 2
+data:
+  name: libselinux-python
+  stream: 2.8
+  summary: Python 2 bindings for libselinux
+  description: >-
+    The libselinux-python package contains the python bindings for developing SELinux
+    applications.
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      platform: [el8.2.0]
+      python27: [2.7]
+    requires:
+      platform: [el8]
+      python27: [2.7]
+  profiles:
+    common:
+      rpms:
+      - libselinux-python
+  api:
+    rpms:
+    - libselinux-python
+  filter:
+    rpms:
+    - libselinux
+    - libselinux-debugsource
+    - libselinux-devel
+    - libselinux-ruby
+    - libselinux-ruby-debuginfo
+    - libselinux-static
+    - libselinux-utils
+    - libselinux-utils-debuginfo
+    - python3-libselinux
+    - python3-libselinux-debuginfo
+  buildopts:
+    rpms:
+      macros: >
+        %with_python2 1
+  components:
+    rpms:
+      libselinux:
+        rationale: Provides libselinux python bindings
+        ref: 0cca4bdf2dd0fc78a0a379a7e910071a8ca9f064
+...
+

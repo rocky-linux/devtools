@@ -1,0 +1,39 @@
+---
+document: modulemd
+version: 2
+data:
+  name: mailman
+  stream: 2.1
+  summary: Electronic mail discussion and e-newsletter lists managing software
+  description: >-
+    An initial version of the mailman mailing list management software
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      platform: [el8.3.0]
+      python27: [2.7]
+    requires:
+      platform: [el8]
+      python27: [2.7]
+  references:
+    documentation: https://launchpad.net/mailman
+    tracker: https://bugs.launchpad.net/mailman
+  profiles:
+    common:
+      rpms:
+      - mailman
+  api:
+    rpms:
+    - mailman
+  filter:
+    rpms:
+    - python3-dns
+  components:
+    rpms:
+      mailman:
+        rationale: Module API.
+        ref: e873e95349dfe5c5e5872ffc777f386d571f9cb1
+        buildorder: 1
+...

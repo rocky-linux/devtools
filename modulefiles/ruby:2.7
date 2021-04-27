@@ -1,0 +1,82 @@
+---
+document: modulemd
+version: 2
+data:
+  name: ruby
+  stream: "2.7"
+  summary: An interpreter of object-oriented scripting language
+  description: >-
+    Ruby is the interpreted scripting language for quick and easy object-oriented
+    programming.  It has many features to process text files and to do system management
+    tasks (as in Perl).  It is simple, straight-forward, and extensible.
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      platform: [el8.3.0]
+    requires:
+      platform: [el8]
+  references:
+    community: http://ruby-lang.org/
+    documentation: https://www.ruby-lang.org/en/documentation/
+    tracker: https://bugs.ruby-lang.org/
+  profiles:
+    common:
+      rpms:
+      - ruby
+  api:
+    rpms:
+    - ruby
+    - ruby-default-gems
+    - ruby-devel
+    - ruby-libs
+    - rubygem-abrt
+    - rubygem-bigdecimal
+    - rubygem-bson
+    - rubygem-bundler
+    - rubygem-io-console
+    - rubygem-irb
+    - rubygem-json
+    - rubygem-minitest
+    - rubygem-mongo
+    - rubygem-mysql2
+    - rubygem-net-telnet
+    - rubygem-openssl
+    - rubygem-pg
+    - rubygem-power_assert
+    - rubygem-psych
+    - rubygem-rake
+    - rubygem-rdoc
+    - rubygem-test-unit
+    - rubygem-xmlrpc
+    - rubygems
+    - rubygems-devel
+  components:
+    rpms:
+      ruby:
+        rationale: An interpreter of object-oriented scripting language
+        ref: e227b87adc96648183f7ed224719bb7ca18bdce9
+        buildorder: 101
+        multilib: [x86_64]
+      rubygem-abrt:
+        rationale: ABRT support for Ruby
+        ref: 36fb0075697e9a8a12da759cb4bbf7450846f6a3
+        buildorder: 102
+      rubygem-bson:
+        rationale: Ruby Implementation of the BSON specification
+        ref: a6fcd0b268e76da9470c613e72118e8ff93ac1e8
+        buildorder: 102
+      rubygem-mongo:
+        rationale: Ruby driver for MongoDB
+        ref: 78db93aff6f35b4f0338eb55e553528dfb09fb40
+        buildorder: 103
+      rubygem-mysql2:
+        rationale: A simple, fast Mysql library for Ruby, binding to libmysql
+        ref: 07070b57684e021bad0b6233e1101e6605821f1c
+        buildorder: 102
+      rubygem-pg:
+        rationale: A Ruby interface to the PostgreSQL RDBMS
+        ref: fc2ddb8c58ba210dc41dfd2016b7b020d97d11d1
+        buildorder: 102
+...

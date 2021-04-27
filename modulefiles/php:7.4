@@ -1,0 +1,89 @@
+---
+document: modulemd
+version: 2
+data:
+  name: php
+  stream: 7.4
+  summary: PHP scripting language
+  description: >-
+    php 7.4 module
+  license:
+    module:
+    - GPLv2+
+    content:
+    - BSD
+    - MIT
+    - PHP
+    - Zend
+  dependencies:
+  - buildrequires:
+      httpd: [2.4]
+      nginx: [1.14]
+      platform: [el8.3.0]
+    requires:
+      httpd: [2.4]
+      nginx: []
+      platform: [el8]
+  references:
+    documentation: http://php.net/
+    tracker: https://bugs.php.net/
+  profiles:
+    common:
+      rpms:
+      - php-cli
+      - php-common
+      - php-fpm
+      - php-json
+      - php-mbstring
+      - php-xml
+    devel:
+      rpms:
+      - libzip
+      - php-cli
+      - php-common
+      - php-devel
+      - php-fpm
+      - php-json
+      - php-mbstring
+      - php-pear
+      - php-pecl-zip
+      - php-process
+      - php-xml
+    minimal:
+      rpms:
+      - php-cli
+      - php-common
+  api:
+    rpms:
+    - php-fpm
+  components:
+    rpms:
+      libzip:
+        rationale: ZIP library
+        ref: 726d0a945dd54653977a16f8d040063ac5076bba
+        buildorder: 1
+      php:
+        rationale: Module API.
+        ref: e3a6b0793f61dd404d19c888ebaaed9d602c64c7
+        buildorder: 1
+      php-pear:
+        rationale: Extension management
+        ref: da4f7b18351509ad22d5077809d43a1bca85e03d
+        buildorder: 2
+      php-pecl-apcu:
+        rationale: APCu extension
+        ref: 778aaeff426cb404392dd79cad2990672d2e7d40
+        buildorder: 3
+      php-pecl-rrd:
+        rationale: RRD extension
+        ref: 1e43aac16164894485b86969681311b791016296
+        buildorder: 3
+      php-pecl-xdebug:
+        rationale: Xdebug extension
+        ref: 492757b264ce8439aa19e4b86c6cfafb17ed5eba
+        buildorder: 3
+      php-pecl-zip:
+        rationale: ZIP extension
+        ref: 8e9cf1e77c5d1098f280e0edbebf456450546e3e
+        buildorder: 3
+...

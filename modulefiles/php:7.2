@@ -1,0 +1,82 @@
+---
+document: modulemd
+version: 2
+data:
+  name: php
+  stream: 7.2
+  summary: PHP scripting language
+  description: >-
+    php 7.2 module
+  license:
+    module:
+    - GPLv2+
+    content:
+    - BSD
+    - MIT
+    - PHP
+    - Zend
+  dependencies:
+  - buildrequires:
+      httpd: [2.4]
+      nginx: [1.14]
+      platform: [el8.2.0]
+    requires:
+      httpd: [2.4]
+      nginx: []
+      platform: [el8]
+  references:
+    documentation: http://php.net/
+    tracker: https://bugs.php.net/
+  profiles:
+    common:
+      rpms:
+      - php-cli
+      - php-common
+      - php-fpm
+      - php-json
+      - php-mbstring
+      - php-xml
+    devel:
+      rpms:
+      - libzip
+      - php-cli
+      - php-common
+      - php-devel
+      - php-fpm
+      - php-json
+      - php-mbstring
+      - php-pear
+      - php-pecl-zip
+      - php-process
+      - php-xml
+    minimal:
+      rpms:
+      - php-cli
+      - php-common
+  api:
+    rpms:
+    - php-fpm
+  components:
+    rpms:
+      libzip:
+        rationale: ZIP library
+        ref: a5cb6ffd894b2a38ecc11fc8520d3e7e894c937b
+        buildorder: 1
+      php:
+        rationale: Module API.
+        ref: 2524fa8f4070dd11442b2c9d7a26c8f644e56142
+        buildorder: 1
+      php-pear:
+        rationale: Extension management
+        ref: 208b4ff881bb7d665829611b2d9df80d8eab22f8
+        buildorder: 2
+      php-pecl-apcu:
+        rationale: APCu extension
+        ref: 1f2df27a2981229c609a8e0a5f752bf130b09c6a
+        buildorder: 3
+      php-pecl-zip:
+        rationale: ZIP extension
+        ref: e3c16d70f83cd969387f725848f2da625d50428a
+        buildorder: 3
+...
+

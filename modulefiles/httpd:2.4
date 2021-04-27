@@ -1,0 +1,54 @@
+document: modulemd
+version: 2
+data:
+    name: httpd
+    stream: 2.4
+    summary: Apache HTTP Server
+    description: Apache httpd is a powerful, efficient, and extensible HTTP server.
+    license:
+        module: [ MIT ]
+    dependencies:
+        - buildrequires:
+                platform: [el8.3.0]
+          requires:
+                platform: [el8]
+    references:
+        documentation: https://httpd.apache.org/docs/2.4/
+        tracker: https://bz.apache.org/bugzilla/
+    profiles:
+        common:
+            rpms:
+                - httpd
+                - httpd-filesystem
+                - httpd-tools
+                - mod_ssl
+                - mod_http2
+        devel:
+            rpms:
+                - httpd
+                - httpd-filesystem
+                - httpd-devel
+                - httpd-tools
+        minimal:
+            rpms:
+                - httpd
+    api:
+        rpms:
+            - httpd
+            - httpd-devel
+            - httpd-filesystem
+            - mod_ssl
+    components:
+        rpms:
+            httpd:
+                rationale: Apache httpd
+                ref: 2f74eecf85362e67c403b7b1386a729da3e5c33d
+                buildorder: 10
+            mod_http2:
+                rationale: HTTP/2 support for Apache httpd
+                ref: 848061f013db12a9dd99041c2177b3d4698931a7
+                buildorder: 20
+            mod_md:
+                rationale: Certificate provisioning using ACME for Apache httpd
+                ref: 1ae57639c05e03c3dac9eb707544ef31cc31f0fe
+                buildorder: 20

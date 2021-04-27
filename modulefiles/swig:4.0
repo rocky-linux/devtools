@@ -1,0 +1,57 @@
+---
+document: modulemd
+version: 2
+data:
+    name: swig
+    stream: "4.0"
+    summary: Connects C/C++/Objective C to some high-level programming languages
+    description: >
+        Simplified Wrapper and Interface Generator (SWIG) is a software
+        development tool for connecting C, C++ and Objective C programs
+        with a variety of high-level programming languages. SWIG is
+        primarily used with Perl, Python and Tcl/TK, but it has also been
+        extended to Java, Eiffel and Guile. SWIG is normally used to create
+        high-level interpreted programming environments, systems
+        integration, and as a tool for building user interfaces
+    license:
+        module: [MIT]
+    dependencies:
+        - buildrequires:
+              platform: [el8.4.0]
+          requires:
+              platform: [el8]
+    references:
+        community: http://swig.org/
+        documentation: http://swig.org/doc.html
+        tracker: https://bugzilla.redhat.com/buglist.cgi?classification=Red%20Hat&component=swig-4.0-module&product=Red%20Hat%20Enterprise%20Linux%208
+    profiles:
+        common:
+            description: Simplified Wrapper and Interface Generator (SWIG)
+            rpms:
+                - swig
+        complete:
+            description: SWIG, documentation and commands for easier debugging
+            rpms:
+                - swig
+                - swig-doc
+                - swig-gdb
+    api:
+        rpms:
+            - swig
+            - swig-doc
+            - swig-gdb
+    buildopts:
+        rpms:
+            macros: |
+                %golang 0
+                %guile 0
+                %javalang 0
+                %octave 0
+                %phplang 0
+                %Rlang 0
+                %_without_build_ccache_swig 1
+    components:
+        rpms:
+            swig:
+                rationale: SWIG package
+                ref: 8c06700584beb0c80cf801beb93c4ef2930c5c72

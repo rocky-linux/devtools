@@ -1,0 +1,104 @@
+---
+document: modulemd
+version: 2
+data:
+  name: idm
+  stream: DL1
+  summary: The Red Hat Enterprise Linux Identity Management system module
+  description: >-
+    RHEL IdM is an integrated solution to provide centrally managed Identity (users,
+    hosts, services), Authentication (SSO, 2FA), and Authorization (host access control,
+    SELinux user roles, services). The solution provides features for further integration
+    with Linux based clients (SUDO, automount) and integration with Active Directory
+    based infrastructures (Trusts).
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      389-ds: [1.4]
+      httpd: [2.4]
+      pki-core: [10.6]
+      platform: [el8.3.0]
+    requires:
+      389-ds: [1.4]
+      httpd: [2.4]
+      pki-core: [10.6]
+      platform: [el8]
+  references:
+    community: https://www.freeipa.org/
+    documentation: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/linux_domain_identity_authentication_and_policy_guide/index
+    tracker: https://pagure.io/freeipa/issues
+  profiles:
+    adtrust:
+      description: RHEL IdM Server Integration with Active Directory
+      rpms:
+      - ipa-healthcheck
+      - ipa-healthcheck-core
+      - ipa-server-trust-ad
+    client:
+      description: RHEL IdM Client
+      rpms:
+      - ipa-client
+    common:
+      description: A default profile for RHEL IdM client
+      rpms:
+      - ipa-client
+    dns:
+      description: RHEL IdM with integrated DNS server and integrated CA
+      rpms:
+      - ipa-healthcheck
+      - ipa-healthcheck-core
+      - ipa-server
+      - ipa-server-dns
+    server:
+      description: Base RHEL IdM Server with integrated CA and no integrated DNS
+      rpms:
+      - ipa-healthcheck
+      - ipa-healthcheck-core
+      - ipa-server
+  components:
+    rpms:
+      bind-dyndb-ldap:
+        rationale: Driver for BIND to store DNS information in LDAP
+        ref: 30a4b96c815c2e127d43fff31457541e78a8b34c
+      custodia:
+        rationale: Remote access to secrets and credentials in IdM topology
+        ref: 3e36f334a88b7492234af55861dcc6a6b8c26ffc
+        buildorder: 2
+      ipa:
+        rationale: Module API
+        ref: 03e2f44ec44f8ad43085cc289ca22b23854686d1
+      ipa-healthcheck:
+        rationale: A tool to detect issues in IdM clusters
+        ref: ef63c653251cc4eddbc5781f0b3f101b1b2514fc
+        buildorder: 3
+      opendnssec:
+        rationale: An implementation of DNSSEC support for IdM integrated DNS server
+        ref: edec7de1b5f7fc7727da85f844ba75cbbb0c834b
+      python-jwcrypto:
+        rationale: JSON Web Cryptographic Tokens used by Custodia
+        ref: a7acdb518b6c868712223761a6913f8f8d1079b9
+        buildorder: 1
+      python-kdcproxy:
+        rationale: MS-KKDCP (kerberos proxy) WSGI module
+        ref: 68b28b48ee00ddef71c995f0fa5fd78f9f3e33be
+      python-qrcode:
+        rationale: QR code generator for IdM two-factor authentication
+        ref: 04dbcfa1acef36bad9bfe6e8bf24c3a8495ea91f
+      python-yubico:
+        rationale: Support for Yubikey-based tokens for IdM two-factor authentication
+        ref: 5f944eba9d9ac4db71edc33d64af6f08e1aea7ad
+        buildorder: 2
+      pyusb:
+        rationale: Python USB support to access USB tokens for IdM two-factor authentication
+        ref: 40dfaea526d72ef3be32628eb2bc1e64b894ae2e
+        buildorder: 1
+      slapi-nis:
+        rationale: Compatibility plugin to serve legacy clients
+        ref: 8025fab9eda007e14da9cff5813f7915673dbf70
+        arches: [aarch64, ppc64le, s390x, x86_64]
+      softhsm:
+        rationale: Software version of a PKCS#11 Hardware Security Module
+        ref: 3041c77316124b3ad35cd2c06f77ef4d38dce3cb
+...

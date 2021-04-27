@@ -1,0 +1,49 @@
+---
+document: modulemd
+version: 2
+data:
+  name: postgresql
+  stream: "12"
+  summary: PostgreSQL server and client module
+  description: PostgreSQL is an advanced Object-Relational database management
+               system (DBMS). The postgresql-server package contains the
+               programs needed to create and run a PostgreSQL server, which
+               will in turn allow you to create and maintain PostgreSQL
+               databases. The base postgresql package contains the client
+               programs that you'll need to access a PostgreSQL DBMS server.
+  license:
+    module: [MIT]
+  dependencies:
+    - buildrequires:
+        platform: [el8.3.0]
+      requires:
+        platform: [el8]
+  references:
+    community: https://www.postgresql.org
+    documentation: https://www.postgresql.org/docs/12/index.html
+    tracker: http://bugzilla.redhat.com
+  api:
+    rpms:
+      - postgresql
+      - postgresql-server
+  profiles:
+      server:
+        rpms:
+          - postgresql-server
+      client:
+        rpms:
+          - postgresql
+  components:
+    rpms:
+      postgresql:
+        rationale: Module API.
+        ref: acb9aa67b602da42dffce349af6f1ff9b6f44401
+        buildorder: 0
+      pgaudit:
+        rationale: pgaudit extension
+        ref: 9ce6dcc2a05e49f99d714f62918815eb4e35c012
+        buildorder: 1
+      postgres-decoderbufs:
+        rationale: postgres-decoderbufs extension
+        ref: 0d7fb1da1b92be7892510f6329eca536513897c1
+        buildorder: 1

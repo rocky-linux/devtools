@@ -1,0 +1,307 @@
+---
+document: modulemd
+version: 2
+data:
+  name: tycho
+  stream: rhel8
+  summary: Plugins and extensions for building Eclipse plugins and OSGI bundles with
+    Maven
+  description: >-
+    Tycho is a set of Maven plugins and extensions for building Eclipse plugins and
+    OSGI bundles with Maven. Eclipse plugins and OSGI bundles have their own metadata
+    for expressing dependencies, source folder locations, etc. that are normally found
+    in a Maven POM. Tycho uses native metadata for Eclipse plugins and OSGi bundles
+    and uses the POM to configure and drive the build. Tycho supports bundles, fragments,
+    features, update site projects and RCP applications. Tycho also knows how to run
+    JUnit test plugins using OSGi runtime and there is also support for sharing build
+    results using Maven artifact repositories.
+
+    Tycho plugins introduce new packaging types and the corresponding lifecycle bindings
+    that allow Maven to use OSGi and Eclipse metadata during a Maven build. OSGi rules
+    are used to resolve project dependencies and package visibility restrictions are
+    honored by the OSGi-aware JDT-based compiler plugin. Tycho will use OSGi metadata
+    and OSGi rules to calculate project dependencies dynamically and injects them
+    into the Maven project model at build time. Tycho supports all attributes supported
+    by the Eclipse OSGi resolver (Require-Bundle, Import-Package, Eclipse-GenericRequire,
+    etc). Tycho will use proper classpath access rules during compilation. Tycho supports
+    all project types supported by PDE and will use PDE/JDT project metadata where
+    possible. One important design goal in Tycho is to make sure there is no duplication
+    of metadata between POM and OSGi metadata.
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      javapackages-tools: [201801]
+      platform: [el8.3.0]
+      tycho: [rhel8]
+    requires:
+      javapackages-tools: [201801]
+      platform: [el8]
+  profiles:
+    common:
+      rpms:
+      - tycho
+      - tycho-extras
+  api:
+    rpms:
+    - cbi-plugins
+    - tycho
+    - tycho-extras
+  buildopts:
+    rpms:
+      macros: >
+        %_with_jp_minimal 1
+
+        %_without_contrib_tools 1
+
+        %_without_junit5 1
+  components:
+    rpms:
+      apache-commons-el:
+        rationale: 'Runtime dependency of eclipse. Build dependency of eclipse.
+
+          '
+        ref: 73c188c765cbdb518e89f4fdf4421f9acdd8069b
+        buildorder: 10
+        arches: [x86_64]
+      apiguardian:
+        rationale: 'Build dependency of junit5.
+
+          '
+        ref: 1c5854838390a252016ba1b681c3e20be9afecbb
+        buildorder: 10
+        arches: [x86_64]
+      auto:
+        rationale: 'Runtime dependency of cbi-plugins. Build dependency of cbi-plugins.
+
+          '
+        ref: a26fa6c482e3f274d9380ec8961b6823e4b23ba0
+        buildorder: 20
+        arches: [x86_64]
+      batik:
+        rationale: 'Runtime dependency of eclipse, tycho. Build dependency of eclipse,
+          tycho.
+
+          '
+        ref: 27b16643afcea32bf9bbbb340ce7d0bb9c91ad9d
+        buildorder: 20
+        arches: [x86_64]
+      cbi-plugins:
+        rationale: 'Module API. Build dependency of eclipse.
+
+          '
+        ref: 1493ad6e39077394476acb08b7698fde4a85d5ea
+        buildorder: 50
+        arches: [x86_64]
+      decentxml:
+        rationale: 'Runtime dependency of cbi-plugins, tycho. Build dependency of
+          cbi-plugins, tycho.
+
+          '
+        ref: 123ea3dab3936f0ce72d5aa42b155a15231a4a16
+        buildorder: 10
+        arches: [x86_64]
+      ecj:
+        rationale: 'Runtime dependency of tycho. Build dependency of glassfish-jsp,
+          tycho.
+
+          '
+        ref: bd3beb85da56da17d680e40e19dffe0ccafe4b82
+        buildorder: 10
+        arches: [x86_64]
+      eclipse:
+        rationale: 'Module application.
+
+          '
+        ref: 11dc0f1839ff9e3cd88918db941f434e3222b8fe
+        buildorder: 80
+        arches: [x86_64]
+      eclipse-ecf:
+        rationale: 'Runtime dependency of eclipse. Build dependency of eclipse.
+
+          '
+        ref: 402b5ef86ac82b8527502440353488c04f3c7b3f
+        buildorder: 70
+        arches: [x86_64]
+      eclipse-emf:
+        rationale: 'Runtime dependency of eclipse. Build dependency of eclipse, eclipse-ecf.
+
+          '
+        ref: 7fec2c24b40c859f4e7997a77d12987a1f3b416e
+        buildorder: 60
+        arches: [x86_64]
+      eclipse-license:
+        rationale: 'Build dependency of eclipse, eclipse-ecf.
+
+          '
+        ref: 99ea0762dce631a850a7c405410b601c77fedf35
+        buildorder: 50
+        arches: [x86_64]
+      felix-gogo-command:
+        rationale: 'Runtime dependency of eclipse. Build dependency of eclipse.
+
+          '
+        ref: 66c5ca805f9f48fb8904019c646424ee973cced1
+        buildorder: 30
+        arches: [x86_64]
+      felix-gogo-parent:
+        rationale: "Build dependency of felix-gogo-command,\n     felix-gogo-runtime,
+          felix-gogo-shell.\n"
+        ref: 0139b2350a9eb4c91ccb466ce5074302d1a8d04f
+        buildorder: 10
+        arches: [x86_64]
+      felix-gogo-runtime:
+        rationale: "Runtime dependency of eclipse, felix-gogo-command,\n     felix-gogo-shell.\nBuild
+          dependency of eclipse, felix-gogo-command,\n     felix-gogo-shell, felix-scr.\n"
+        ref: 314afbcab18cdb1ba4f218d05cd6ddff3afb90f9
+        buildorder: 20
+        arches: [x86_64]
+      felix-gogo-shell:
+        rationale: 'Runtime dependency of eclipse. Build dependency of eclipse.
+
+          '
+        ref: 9e3cfdfa64d02abbda98ed733d4deb63b7909cd8
+        buildorder: 30
+        arches: [x86_64]
+      felix-scr:
+        rationale: 'Runtime dependency of eclipse, tycho. Build dependency of eclipse,
+          tycho.
+
+          '
+        ref: 3e33d9f5a17267d9b36ede877eb8df8ece936341
+        buildorder: 30
+        arches: [x86_64]
+      glassfish-jsp:
+        rationale: 'Runtime dependency of eclipse, tycho. Build dependency of eclipse,
+          tycho.
+
+          '
+        ref: c26768aa09e8b760e8c36539735ad06d919b5981
+        buildorder: 20
+        arches: [x86_64]
+      google-gson:
+        rationale: 'Runtime dependency of eclipse Build dependency of eclipse
+
+          '
+        ref: 2dc41ac8de20730ace8591693065f39f758c82d8
+        buildorder: 10
+        arches: [x86_64]
+      icu4j:
+        rationale: 'Runtime dependency of eclipse, tycho. Build dependency of eclipse,
+          tycho.
+
+          '
+        ref: c5f702a4e72885786cb11355f29a28407c22dfce
+        buildorder: 10
+        arches: [x86_64]
+      javapoet:
+        rationale: 'Runtime dependency of auto Build dependency of auto
+
+          '
+        ref: d418582a47ee5af2a9dfb8a659b3f10763fae4ca
+        buildorder: 10
+        arches: [x86_64]
+      jetty:
+        rationale: 'Runtime dependency of eclipse. Build dependency of eclipse.
+
+          '
+        ref: a5b854bac76ad7f420676836cc2b71af4953d9ab
+        buildorder: 10
+        arches: [x86_64]
+      junit5:
+        rationale: 'Build dependency of tycho, eclipse.
+
+          '
+        ref: 0f9283f20a9081e6e020e5d74fe65d9b4a352135
+        buildorder: 20
+        arches: [x86_64]
+      kxml:
+        rationale: 'Runtime dependency of felix-scr. Build dependency of felix-scr.
+
+          '
+        ref: 34aedd622a1e4526303aaed0fcc71702965d44c4
+        buildorder: 20
+        arches: [x86_64]
+      lucene:
+        rationale: 'Runtime dependency of eclipse. Build dependency of eclipse.
+
+          '
+        ref: 3451909e6b3e6669438f9487e5b50c0bd75cb535
+        buildorder: 10
+        arches: [x86_64]
+      opentest4j:
+        rationale: 'Build dependency of junit5.
+
+          '
+        ref: 71c3d279c0dd83eca3acf362fd3276b808684a87
+        buildorder: 10
+        arches: [x86_64]
+      sac:
+        rationale: 'Runtime dependency of eclipse, tycho. Build dependency of eclipse,
+          tycho.
+
+          '
+        ref: 2a18fc5c8881b258148853d45ee306cb0bfae3ef
+        buildorder: 10
+        arches: [x86_64]
+      sat4j:
+        rationale: 'Runtime dependency of eclipse, tycho. Build dependency of eclipse,
+          tycho.
+
+          '
+        ref: 95e1cea02add331e4c4d7a937bddf7fc317fb0bc
+        buildorder: 10
+        arches: [x86_64]
+      tesla-polyglot:
+        rationale: 'Runtime dependency of tycho-extras. Build dependency of tycho-extras.
+
+          '
+        ref: bc210f3bb0fc1e23c4bd3705138e5081a0863e41
+        buildorder: 10
+        arches: [x86_64]
+      tycho:
+        rationale: "Module API. Runtime dependency of cbi-plugins,\n     tycho-extras.\nBuild
+          dependency of cbi-plugins, eclipse, eclipse-ecf,\n     eclipse-emf, eclipse-license,\n
+          \    tycho-extras.\n"
+        ref: 35a07c253d334be8ea1478ca33eee2161a02f128
+        buildorder: 40
+        arches: [x86_64]
+      tycho-extras:
+        rationale: 'Module API. Build dependency of eclipse, eclipse-ecf, eclipse-emf.
+
+          '
+        ref: 4a48adccbf9778ab9a894cc8b0b21dff75b78ee1
+        buildorder: 50
+        arches: [x86_64]
+      univocity-parsers:
+        rationale: 'Build dependency of junit5.
+
+          '
+        ref: 79d7f75ea45fda2cd5ec9cbb3cf8ecc050626132
+        buildorder: 10
+        arches: [x86_64]
+      xml-maven-plugin:
+        rationale: 'Build dependency of eclipse.
+
+          '
+        ref: 8bbd982a67b229d0d7b07f6845c31be77af8e7ed
+        buildorder: 10
+        arches: [x86_64]
+      xmlgraphics-commons:
+        rationale: 'Runtime dependency of batik. Build dependency of batik.
+
+          '
+        ref: 4a021482c412e7cd4a44375a9aa234363d49c1e6
+        buildorder: 10
+        arches: [x86_64]
+      xpp3:
+        rationale: 'Runtime dependency of felix-scr, kxml. Build dependency of felix-scr,
+          kxml.
+
+          '
+        ref: 9a6f301add742ba10c9f3c07c3ba92239aea43fe
+        buildorder: 10
+        arches: [x86_64]
+...
+

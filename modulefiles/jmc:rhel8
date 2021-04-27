@@ -1,0 +1,84 @@
+---
+document: modulemd
+version: 2
+data:
+  name: jmc
+  stream: rhel8
+  summary: Java Mission Control is a profiling and diagnostics tool for the Hotspot
+    JVM
+  description: >-
+    Java Mission Control is a powerful profiler for HotSpot JVMs and has an advanced
+    set of tools that enables efficient and detailed analysis of the extensive data
+    collected by Java Flight Recorder. The tool chain enables developers and administrators
+    to collect and analyze data from Java applications running locally or deployed
+    in production environments.
+  license:
+    module:
+    - GPL
+  dependencies:
+  - buildrequires:
+      javapackages-tools: [201801]
+      platform: [el8.2.0]
+      tycho: [rhel8]
+    requires:
+      platform: [el8]
+  profiles:
+    common:
+      rpms:
+      - jmc
+    core:
+      rpms:
+      - jmc-core
+  api:
+    rpms:
+    - jmc-core
+  components:
+    rpms:
+      HdrHistogram:
+        rationale: 'Dependency of jmc.
+
+'
+        ref: 8add928bce0199ac9cc64b706057ba258d4fd2cd
+        buildorder: 2
+        arches: [x86_64]
+      directory-maven-plugin:
+        rationale: 'Dependency of jmc and jaf.
+
+'
+        ref: 5e05fb62c0f2baf7f1340ba8bf0e5bbf8b4bd8a3
+        arches: [x86_64]
+      ee4j-parent:
+        rationale: 'Dependency of jaf.
+
+'
+        ref: bb6f89ef6386a8a724c20c5b9bceb16af9e038cb
+        arches: [x86_64]
+      jaf:
+        rationale: 'Dependency of jmc.
+
+'
+        ref: b3ed3bdc04002980b7f1c9a3e2de5d7a1201b5d7
+        buildorder: 1
+        arches: [x86_64]
+      jmc:
+        rationale: 'Standalone application.
+
+'
+        ref: 95ad2904b3309003349ff476627906a6896cb1d2
+        buildorder: 3
+        arches: [x86_64]
+      jmc-core:
+        rationale: 'Core API. Dependency of jmc.
+
+'
+        ref: b48ad15bf363f4127392ac0dec8008fbcddbd006
+        buildorder: 1
+        arches: [x86_64]
+      owasp-java-encoder:
+        rationale: 'Dependency of jmc-core.
+
+'
+        ref: 577f3e94a0f4a029159df2ed862dd81e4018fe9c
+        arches: [x86_64]
+...
+

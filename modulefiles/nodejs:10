@@ -1,0 +1,66 @@
+---
+document: modulemd
+version: 2
+data:
+  name: nodejs
+  stream: "10"
+  summary: Javascript runtime
+  description: >-
+    Node.js is a platform built on Chrome's JavaScript runtime for easily building
+    fast, scalable network applications. Node.js uses an event-driven, non-blocking
+    I/O model that makes it lightweight and efficient, perfect for data-intensive
+    real-time applications that run across distributed devices.
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      platform: [el8.3.0]
+    requires:
+      platform: [el8]
+  references:
+    community: http://nodejs.org
+    documentation: http://nodejs.org/en/docs
+    tracker: https://github.com/nodejs/node/issues
+  profiles:
+    common:
+      rpms:
+      - nodejs
+      - npm
+    development:
+      rpms:
+      - nodejs
+      - nodejs-devel
+      - npm
+    minimal:
+      rpms:
+      - nodejs
+    s2i:
+      rpms:
+      - nodejs
+      - nodejs-nodemon
+      - npm
+  api:
+    rpms:
+    - nodejs
+    - nodejs-devel
+    - npm
+  buildopts:
+    rpms:
+      macros: |
+        %_with_bootstrap 1
+  components:
+    rpms:
+      nodejs:
+        rationale: Javascript runtime and npm package manager.
+        ref: 575c46a529df49f7509ebf00525c979ea2dbae67
+        buildorder: 10
+      nodejs-nodemon:
+        rationale: Simple monitor script for use during development of a node.js app
+        ref: 31d1e8f07ada1da75080a7d050a68ac3ba55a799
+        buildorder: 200
+      nodejs-packaging:
+        rationale: RPM Macros and Utilities for Node.js Packaging
+        ref: 072c286fc5ce5539a266627ee0199304d0dc83be
+        buildorder: 100
+...

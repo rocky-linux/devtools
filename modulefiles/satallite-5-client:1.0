@@ -1,0 +1,60 @@
+---
+document: modulemd
+version: 2
+data:
+  name: satellite-5-client
+  stream: 1.0
+  summary: Red Hat Satellite 5 client packages
+  description: >-
+    Red Hat Satellite 5 client packages provide programs and libraries to allow your
+    system to receive software updates from Red Hat Satellite 5.
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      platform: [el8.1.0]
+    requires:
+      platform: [el8]
+  references:
+    community: https://github.com/spacewalkproject/spacewalk/
+    documentation: https://access.redhat.com/documentation/en-us/red_hat_satellite/5.8/
+    tracker: https://bugzilla.redhat.com/
+  profiles:
+    common:
+      rpms:
+      - dnf-plugin-spacewalk
+      - rhn-client-tools
+      - rhn-setup
+      - rhnlib
+      - rhnsd
+    gui:
+      rpms:
+      - dnf-plugin-spacewalk
+      - rhn-client-tools
+      - rhn-setup
+      - rhn-setup-gnome
+      - rhnlib
+      - rhnsd
+  components:
+    rpms:
+      dnf-plugin-spacewalk:
+        rationale: DNF plugin for communication with Red Hat Satellite 5.
+        ref: e77f0511edd95a5c5e391d2599b8d1a4161690dd
+        buildorder: 10
+      rhn-client-tools:
+        rationale: Binaries to allow system to receive software updates from Red Hat
+          Satellite 5.
+        ref: 6b6cbe731f7a7c466f5b008a5dcc22e0d0856011
+        buildorder: 10
+      rhnlib:
+        rationale: Libraries to allow system to receive software updates from Red
+          Hat Satellite 5.
+        ref: 893c2b1845bb7d9e7f99ac65159ebc9bd1cc6945
+        buildorder: 10
+      rhnsd:
+        rationale: Red Hat Satellite update agent.
+        ref: 062feb09b53484176b377d0aaa7302cb274d178b
+        buildorder: 10
+...
+

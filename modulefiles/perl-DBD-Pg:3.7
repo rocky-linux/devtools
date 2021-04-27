@@ -1,0 +1,37 @@
+document: modulemd
+version: 2
+data:
+    stream: '3.7'
+    summary: A PostgreSQL interface for Perl
+    description: >
+        DBD::Pg is a Perl module that works with the DBI module to provide
+        access to PostgreSQL databases.
+    license:
+        module: [ MIT ]
+    dependencies:
+        - buildrequires:
+              perl-DBI: []
+              perl: [5.24, 5.26]
+              platform: [el8]
+              # Tests:
+              postgresql: [10]
+          requires:
+              perl-DBI: []
+              perl: [5.24, 5.26]
+              platform: [el8]
+              # libpq.so will be provided by a new bare package, not a module
+    references:
+        community: http://search.cpan.org/dist/DBD-Pg/
+    profiles:
+        common:
+            description: DBD-Pg distribution
+            rpms:
+                - perl-DBD-Pg
+    api:
+        rpms:
+            - perl-DBD-Pg
+    components:
+        rpms:
+            perl-DBD-Pg:
+                rationale: The API.
+                ref: stream-3.7-rhel-8.1.1

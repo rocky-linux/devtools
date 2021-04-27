@@ -1,0 +1,532 @@
+---
+document: modulemd
+version: 2
+data:
+  name: perl
+  stream: 5.24
+  summary: Practical Extraction and Report Language
+  description: >
+    Perl is a high-level programming language with roots in C, sed, awk and shell
+    scripting. Perl is good at handling processes and files, and is especially good
+    at handling text. Perl's hallmarks are practicality and efficiency. While it is
+    used to do a lot of different things, Perl's most common applications are system
+    administration utilities and web programming.
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      perl-bootstrap: [5.24]
+      platform: [el8.1.0]
+    requires:
+      platform: [el8]
+  references:
+    community: https://docs.pagure.org/modularity/
+  profiles:
+    common:
+      rpms:
+      - perl-core
+    minimal:
+      rpms:
+      - perl
+  api:
+    rpms:
+    - perl
+    - perl-Algorithm-Diff
+    - perl-Archive-Tar
+    - perl-Archive-Zip
+    - perl-Attribute-Handlers
+    - perl-B-Debug
+    - perl-CPAN
+    - perl-CPAN-Meta
+    - perl-CPAN-Meta-Requirements
+    - perl-CPAN-Meta-YAML
+    - perl-Carp
+    - perl-Compress-Bzip2
+    - perl-Compress-Raw-Bzip2
+    - perl-Compress-Raw-Zlib
+    - perl-Config-Perl-V
+    - perl-DB_File
+    - perl-Data-Dumper
+    - perl-Data-OptList
+    - perl-Data-Section
+    - perl-Devel-PPPort
+    - perl-Devel-Peek
+    - perl-Devel-SelfStubber
+    - perl-Devel-Size
+    - perl-Digest
+    - perl-Digest-MD5
+    - perl-Digest-SHA
+    - perl-Encode
+    - perl-Encode-devel
+    - perl-Env
+    - perl-Errno
+    - perl-Exporter
+    - perl-ExtUtils-CBuilder
+    - perl-ExtUtils-Command
+    - perl-ExtUtils-Embed
+    - perl-ExtUtils-Install
+    - perl-ExtUtils-MM-Utils
+    - perl-ExtUtils-MakeMaker
+    - perl-ExtUtils-Manifest
+    - perl-ExtUtils-Miniperl
+    - perl-ExtUtils-ParseXS
+    - perl-Fedora-VSP
+    - perl-File-Fetch
+    - perl-File-HomeDir
+    - perl-File-Path
+    - perl-File-Temp
+    - perl-File-Which
+    - perl-Filter
+    - perl-Filter-Simple
+    - perl-Getopt-Long
+    - perl-HTTP-Tiny
+    - perl-IO
+    - perl-IO-Compress
+    - perl-IO-Socket-IP
+    - perl-IO-Zlib
+    - perl-IPC-Cmd
+    - perl-IPC-SysV
+    - perl-IPC-System-Simple
+    - perl-JSON-PP
+    - perl-Locale-Codes
+    - perl-Locale-Maketext
+    - perl-Locale-Maketext-Simple
+    - perl-MIME-Base64
+    - perl-MRO-Compat
+    - perl-Math-BigInt
+    - perl-Math-BigInt-FastCalc
+    - perl-Math-BigRat
+    - perl-Math-Complex
+    - perl-Memoize
+    - perl-Module-Build
+    - perl-Module-CoreList
+    - perl-Module-CoreList-tools
+    - perl-Module-Load
+    - perl-Module-Load-Conditional
+    - perl-Module-Loaded
+    - perl-Module-Metadata
+    - perl-Net-Ping
+    - perl-Package-Generator
+    - perl-Params-Check
+    - perl-Params-Util
+    - perl-PathTools
+    - perl-Perl-OSType
+    - perl-PerlIO-via-QuotedPrint
+    - perl-Pod-Checker
+    - perl-Pod-Escapes
+    - perl-Pod-Html
+    - perl-Pod-Parser
+    - perl-Pod-Perldoc
+    - perl-Pod-Simple
+    - perl-Pod-Usage
+    - perl-Scalar-List-Utils
+    - perl-SelfLoader
+    - perl-Socket
+    - perl-Software-License
+    - perl-Storable
+    - perl-Sub-Exporter
+    - perl-Sub-Install
+    - perl-Sys-Syslog
+    - perl-Term-ANSIColor
+    - perl-Term-Cap
+    - perl-Test
+    - perl-Test-Harness
+    - perl-Test-Simple
+    - perl-Text-Balanced
+    - perl-Text-Diff
+    - perl-Text-Glob
+    - perl-Text-ParseWords
+    - perl-Text-Tabs+Wrap
+    - perl-Text-Template
+    - perl-Thread-Queue
+    - perl-Time-HiRes
+    - perl-Time-Local
+    - perl-Time-Piece
+    - perl-URI
+    - perl-Unicode-Collate
+    - perl-Unicode-Normalize
+    - perl-autodie
+    - perl-bignum
+    - perl-constant
+    - perl-devel
+    - perl-encoding
+    - perl-experimental
+    - perl-generators
+    - perl-homedir
+    - perl-inc-latest
+    - perl-interpreter
+    - perl-libnet
+    - perl-libnetcfg
+    - perl-libs
+    - perl-local-lib
+    - perl-macros
+    - perl-open
+    - perl-parent
+    - perl-perlfaq
+    - perl-podlators
+    - perl-tests
+    - perl-threads
+    - perl-threads-shared
+    - perl-utils
+    - perl-version
+  buildopts:
+    rpms:
+      macros: >
+        %_with_perl_enables_groff 1
+
+        %_without_perl_enables_syslog_test 1
+
+        %_with_perl_enables_systemtap 1
+
+        %_without_perl_enables_tcsh 1
+
+        %_without_perl_Compress_Bzip2_enables_optional_test 1
+
+        %_without_perl_CPAN_Meta_Requirements_enables_optional_test 1
+
+        %_without_perl_IPC_System_Simple_enables_optional_test 1
+
+        %_without_perl_LWP_MediaTypes_enables_mailcap 1
+
+        %_without_perl_Module_Build_enables_optional_test 1
+
+        %_without_perl_Perl_OSType_enables_optional_test 1
+
+        %_without_perl_Pod_Perldoc_enables_tk_test 1
+
+        %_without_perl_Software_License_enables_optional_test 1
+
+        %_without_perl_Sys_Syslog_enables_optional_test 1
+
+        %_without_perl_Test_Harness_enables_optional_test 1
+
+        %_without_perl_URI_enables_Business_ISBN 1
+  components:
+    rpms:
+      perl:
+        rationale: The Perl interpreter.
+        ref: dcb3b7e641b0b41efa52504cd710dce325c35325
+      perl-Algorithm-Diff:
+        rationale: A run-time dependency.
+        ref: 72005732d48ccf8a9fc7248510afc2c1226918cb
+      perl-Archive-Tar:
+        rationale: Core Perl API.
+        ref: f28471d8cc94ccdfa7a2bc14ea0693d138c745fd
+      perl-Archive-Zip:
+        rationale: A run-time dependency.
+        ref: 2f1b9baa69bc99ed2643252ac09a207d2ad6c293
+      perl-B-Debug:
+        rationale: Core Perl API.
+        ref: ce51d7b52b94747835b5f2625c983d066a3ec7bd
+      perl-CPAN:
+        rationale: Core Perl API.
+        ref: 5cfe56befd0469310867ea011af3a900f41144ed
+      perl-CPAN-Meta:
+        rationale: Core Perl API.
+        ref: 3c7265448defd0533e876eb1a6b9a0655c0ba644
+      perl-CPAN-Meta-Requirements:
+        rationale: Core Perl API.
+        ref: dd6cf9571290f0fcac4584c7fb62a4209a0795c2
+      perl-CPAN-Meta-YAML:
+        rationale: Core Perl API.
+        ref: 742bb14d76602ee0e99033a3d92753cc90266b4d
+      perl-Carp:
+        rationale: Core Perl API.
+        ref: 80b298584aa1e017064b3e8c98840998a581f2e4
+      perl-Compress-Bzip2:
+        rationale: A run-time dependency.
+        ref: ffd34990e5800f506b112c18d004a3be6b47bfbd
+      perl-Compress-Raw-Bzip2:
+        rationale: Core Perl API.
+        ref: 47fb90af93502da79b8123eab55e643922ef678f
+      perl-Compress-Raw-Zlib:
+        rationale: Core Perl API.
+        ref: 4d14571ee2799505c2ae414f815a1b9477e162d3
+      perl-Config-Perl-V:
+        rationale: Core Perl API.
+        ref: c287405822d6314ca17cf9ad849c2a3e8061fadd
+      perl-DB_File:
+        rationale: Core Perl API.
+        ref: c6293286d8dc707d64ceceec4d39313386febde6
+      perl-Data-Dumper:
+        rationale: Core Perl API.
+        ref: 7bbea37c34862a84869bcbf62375bafd583f0b79
+      perl-Data-OptList:
+        rationale: A run-time dependency.
+        ref: 76a2e2246aca63048931114ff26fb7135cc98a90
+      perl-Data-Section:
+        rationale: A run-time dependency.
+        ref: e002ff8992d4fc3f9f2a568eba25b87636c34bcb
+      perl-Devel-PPPort:
+        rationale: Core Perl API.
+        ref: 7ff536a9e208287a19288f54028614c3307bd605
+      perl-Devel-Size:
+        rationale: A run-time dependency.
+        ref: 4e72b264ca1e7c757f7adb24c5c826bd935847c0
+      perl-Digest:
+        rationale: Core Perl API.
+        ref: 3b02174981d02606cc81f3b81ab40be1d2e8afe5
+      perl-Digest-MD5:
+        rationale: Core Perl API.
+        ref: 23ad50e87aba74054aba3f7a8beb5d6b3150f055
+      perl-Digest-SHA:
+        rationale: Core Perl API.
+        ref: f8a0ffcfe86c1d30f12950e44f8eebb9a7a6ad89
+      perl-Encode:
+        rationale: Core Perl API.
+        ref: 146238b281d2e981e41ff354d79c539ec0a5ba46
+      perl-Env:
+        rationale: Core Perl API.
+        ref: 6151d7f4c357ae2686b0c0849aff01e298ae5643
+      perl-Exporter:
+        rationale: Core Perl API.
+        ref: c00bb1eb3b972aacc96920eb611768821bc99e29
+      perl-ExtUtils-CBuilder:
+        rationale: Core Perl API.
+        ref: 9199d951083c3bd668847f50cee84b4dd6730d47
+      perl-ExtUtils-Install:
+        rationale: Core Perl API.
+        ref: 3c29a4f22530dd51b6bcd46d180de37fce408b99
+      perl-ExtUtils-MakeMaker:
+        rationale: Core Perl API.
+        ref: 9738edc1b9c00b777287afd5ad43f02d7bf66c21
+      perl-ExtUtils-Manifest:
+        rationale: Core Perl API.
+        ref: 4ed41d41906173834afdf7608d8904a147d9ac02
+      perl-ExtUtils-ParseXS:
+        rationale: Core Perl API.
+        ref: 2fac475f64b27ec0335a97c02318d5e6ab426b81
+      perl-Fedora-VSP:
+        rationale: RPM dependency generator.
+        ref: a5b2257b0d253ea8ecf8ef9a91b7a9c6a50b0120
+      perl-File-Fetch:
+        rationale: Core Perl API.
+        ref: b9495d378abfd237aaf2bcea220b508f5ca1dc14
+      perl-File-HomeDir:
+        rationale: A run-time dependency.
+        ref: 5d7e37e1b922d862a9105e613e5f85977a47f125
+      perl-File-Path:
+        rationale: Core Perl API.
+        ref: 4070b878a24b43b6e76e4909316c33cda8595b97
+      perl-File-Temp:
+        rationale: Core Perl API.
+        ref: f61b412012497551aca5ee6a4449fbbf44badb72
+      perl-File-Which:
+        rationale: A run-time dependency.
+        ref: fd20676871959ff2d8e5bfe3fde7d819b4f0d13b
+      perl-Filter:
+        rationale: Core Perl API.
+        ref: 539ec98a0f1b0b9e778f2337860d8162a87abb05
+      perl-Filter-Simple:
+        rationale: Core Perl API.
+        ref: d5271f05b3c98c60127ac0e55fb6ffe2045f5b61
+      perl-Getopt-Long:
+        rationale: Core Perl API.
+        ref: 12f78146f79c52a8a1a6bf8127298e21a88b1875
+      perl-HTTP-Tiny:
+        rationale: Core Perl API.
+        ref: ebcf3d883990c7fe3a60bced79c44d3d1adba372
+      perl-IO-Compress:
+        rationale: Core Perl API.
+        ref: e5aec81e0dd634a0146611ca9793dbeeb0f0d7fd
+      perl-IO-Socket-IP:
+        rationale: Core Perl API.
+        ref: b2941b30a4cd3cad60400f63719f601da66d69d1
+      perl-IPC-Cmd:
+        rationale: Core Perl API.
+        ref: 0ad40547343b99e6604c1d78235a0f2ff9fcaa22
+      perl-IPC-SysV:
+        rationale: Core Perl API.
+        ref: c6fbe63f616dd93def7a261ee5afdf56d478d985
+      perl-IPC-System-Simple:
+        rationale: A run-time dependency.
+        ref: 2240dc062c24e9af99c704ef0da2c7c14e999f70
+      perl-JSON-PP:
+        rationale: Core Perl API.
+        ref: 9bcc6a27afaf37503b081f9c08550c66c7b887cc
+      perl-Locale-Codes:
+        rationale: Core Perl API.
+        ref: b0859f5620ddba5b480be5b663fddd4e6aa56723
+      perl-Locale-Maketext:
+        rationale: Core Perl API.
+        ref: 10ad9c25d7438d2a5a7926e2d1216217719a4a73
+      perl-MIME-Base64:
+        rationale: Core Perl API.
+        ref: 9d378ce04cd02a43399cff0753bdc67d779c1d1f
+      perl-MRO-Compat:
+        rationale: A run-time dependency.
+        ref: f2ec4040a14c5d1401234de50799915230daddc3
+      perl-Math-BigInt:
+        rationale: Core Perl API.
+        ref: 66cf2903120f67f5a2c241d87c6dc41844498b62
+      perl-Math-BigInt-FastCalc:
+        rationale: Core Perl API.
+        ref: aff87d655f4213f83ddaf0e17b2aaa7e15bef1a4
+      perl-Math-BigRat:
+        rationale: Core Perl API.
+        ref: 5d665382f20ddfc411415336a250112df5791f84
+      perl-Module-Build:
+        rationale: A run-time dependency.
+        ref: 3a74435633eb736efb8d1e9094dbbbaaccdafee3
+      perl-Module-CoreList:
+        rationale: Core Perl API.
+        ref: 80bf1f74da06c47f126a0395e9ea32a4d3ee69d4
+      perl-Module-Load:
+        rationale: Core Perl API.
+        ref: 93c7761d2f357d936a07945d34e2d6fd93eec32b
+      perl-Module-Load-Conditional:
+        rationale: Core Perl API.
+        ref: 0512fb0c16b943cd1a8384de86ce4bf288e9d5a5
+      perl-Module-Metadata:
+        rationale: Core Perl API.
+        ref: da1474d0aae3a83fde07308e841b42fbdb2be9db
+      perl-Package-Generator:
+        rationale: A run-time dependency.
+        ref: 9a1c183d69160ae35550b5c3aa43d20b82085060
+      perl-Params-Check:
+        rationale: Core Perl API.
+        ref: 4954e6690334a5b6625c1539a2d8a7cfdb70c5a1
+      perl-Params-Util:
+        rationale: A run-time dependency.
+        ref: fa7d591564f874a8dec3fc8e127285ea189490b8
+      perl-PathTools:
+        rationale: Core Perl API.
+        ref: a4e02b0b2485831152b3b795403979d9e61bc29c
+      perl-Perl-OSType:
+        rationale: Core Perl API.
+        ref: d61f474e35d732405b31e0f6838d498c317a9a9e
+      perl-PerlIO-via-QuotedPrint:
+        rationale: Core Perl API.
+        ref: 7f4f8584cc5fc0c21ded48ad03c991f267c13416
+      perl-Pod-Checker:
+        rationale: Core Perl API.
+        ref: c019c1576ff2dda72add6ad2a5acaa58cf8e61d7
+      perl-Pod-Escapes:
+        rationale: Core Perl API.
+        ref: 01cb65d3f429cb565b790743723e76095db16ecc
+      perl-Pod-Parser:
+        rationale: Core Perl API.
+        ref: b542e1720b7a213a8823e62b2f1a180342254460
+      perl-Pod-Perldoc:
+        rationale: Core Perl API.
+        ref: e2dcc4d77ad5fa5aba339fb54951ff3de73a946f
+      perl-Pod-Simple:
+        rationale: Core Perl API.
+        ref: 9b46783d14a0b371aed0d248af689204bb395ac1
+      perl-Pod-Usage:
+        rationale: Core Perl API.
+        ref: e69c829a6e3bba2e384ac4755d97e62e69e3e21a
+      perl-Scalar-List-Utils:
+        rationale: Core Perl API.
+        ref: 499e7fc430b87e935b4ad5f2be2acb2d59969f5b
+      perl-Socket:
+        rationale: Core Perl API.
+        ref: 483b29d1892949203991999bdc1af40093519868
+      perl-Software-License:
+        rationale: A run-time dependency.
+        ref: d13b99101a06362e9feb488de164f18e8c2d7b4f
+      perl-Storable:
+        rationale: Core Perl API.
+        ref: a82caea9b8c1cd4b44ac6576e7779d3c780c418d
+      perl-Sub-Exporter:
+        rationale: A run-time dependency.
+        ref: dc267632488ac8fdd220d9ffd85b5905b602bf0f
+      perl-Sub-Install:
+        rationale: A run-time dependency.
+        ref: f7f6a390b26f68fa32424952ee891273e30dd2a1
+      perl-Sys-Syslog:
+        rationale: Core Perl API.
+        ref: 11bbdde325ea1a6739f683e9c2e9599584e3d64d
+      perl-Term-ANSIColor:
+        rationale: Core Perl API.
+        ref: 044efb5862c20ace63992e30d998b554c760fe11
+      perl-Term-Cap:
+        rationale: Core Perl API.
+        ref: 2bd5c72a30696024e9606c342525e6a38741cc81
+      perl-Test-Harness:
+        rationale: Core Perl API.
+        ref: 696c23dfac16a247d33b7cb62d1878cf59d849fe
+      perl-Test-Simple:
+        rationale: Core Perl API.
+        ref: 54d94cf9c30f84dd8119ec22531e162d553aa14e
+      perl-Text-Balanced:
+        rationale: Core Perl API.
+        ref: a2379bc9265464c7bb4c38763d1d87f4a93ba4b7
+      perl-Text-Diff:
+        rationale: A run-time dependency.
+        ref: 712a52f5ffc7f75a3077e6b95a63d5d688fa7de7
+      perl-Text-Glob:
+        rationale: A run-time dependency.
+        ref: 2af26dc36c2c5dbf8f07245fb06c8b365c00166a
+      perl-Text-ParseWords:
+        rationale: Core Perl API.
+        ref: 5bfab14d9dc9789404d0b561c004dcb7d497260a
+      perl-Text-Tabs+Wrap:
+        rationale: Core Perl API.
+        ref: 0fc45e0309ba9cd7961b3ca92d5da189de16efd1
+      perl-Text-Template:
+        rationale: A run-time dependency.
+        ref: 72a666658e9935601bb7232ea051dad0b72be8ed
+      perl-Thread-Queue:
+        rationale: Core Perl API.
+        ref: 9b3707fefae53738baa187373d9431e19da344e8
+      perl-Time-HiRes:
+        rationale: Core Perl API.
+        ref: aebfadec8c1265f574a38ad0f029ea71a6e4d722
+      perl-Time-Local:
+        rationale: Core Perl API.
+        ref: 6124a0ae1bc5d90c48c4ac8079604b49bdcb9618
+      perl-URI:
+        rationale: A run-time dependency.
+        ref: 50820d8cbdc16625467adc2acc8cbcb4487ce7f9
+      perl-Unicode-Collate:
+        rationale: Core Perl API.
+        ref: ac1eb0f835602dd8df6535f020630264a70025db
+      perl-Unicode-Normalize:
+        rationale: Core Perl API.
+        ref: 9f15c38e21ee2cee02ce92435eae975b37862947
+      perl-autodie:
+        rationale: Core Perl API.
+        ref: a4570a38c546b7bfe25121686ed6af541c2c4714
+      perl-bignum:
+        rationale: Core Perl API.
+        ref: 5e739bbfdf05703b6c2ac058d0aa94b2554d96bc
+      perl-constant:
+        rationale: Core Perl API.
+        ref: f707a9e9f643460a2f610798c9605d2150262d93
+      perl-experimental:
+        rationale: Core Perl API.
+        ref: 43da81442381957bb1d6ba426eb35c657e07f102
+      perl-generators:
+        rationale: RPM dependency generator.
+        ref: 609bbcfd4a527574b647aaaea1f827e452aad077
+      perl-inc-latest:
+        rationale: A run-time dependency.
+        ref: 11b04b31c07582ee55ba8789efb713e1ad2613db
+      perl-libnet:
+        rationale: Core Perl API.
+        ref: fea270ecda58d792b120fa7087cfeeb395cb130a
+      perl-local-lib:
+        rationale: A run-time dependency.
+        ref: ca0a344ee1dc61e5944de50b84a74c78533aeeb6
+      perl-parent:
+        rationale: Core Perl API.
+        ref: 87a37f4d33e1753394cef4576a01066b6f37e71a
+      perl-perlfaq:
+        rationale: Core Perl API.
+        ref: 47ec53e03d9d174337442e5ec955c7c4d9408523
+      perl-podlators:
+        rationale: Core Perl API.
+        ref: cb2ee5989595697187e9abc076cb69df32911a24
+      perl-threads:
+        rationale: Core Perl API.
+        ref: 0961b9e4e021194d961358cbebb7df3ce1586198
+      perl-threads-shared:
+        rationale: Core Perl API.
+        ref: 87ab5998ad216a3f22e0205a8ffeccd226a30e4e
+      perl-version:
+        rationale: Core Perl API.
+        ref: c810524669c1a87dbec1e8d86f58cd3392b13e4e
+...
+

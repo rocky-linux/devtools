@@ -1,0 +1,41 @@
+document: modulemd
+version: 2
+data:
+    stream: '1.24'
+    summary: Perl parser for YAML
+    description: >
+        The YAML.pm module implements a YAML Loader and Dumper based on the
+        YAML 1.0 specification. YAML is a generic data serialization language
+        that is optimized for human readability. It can be used to express
+        the data structures of most modern programming languages, including
+        Perl. For information on the YAML syntax, please refer to the YAML
+        specification.
+    license:
+        module: [ MIT ]
+    dependencies:
+        - buildrequires:
+              platform: [el8]
+              perl: []
+              perl-YAML-bootstrap: [1.24]
+          requires:
+              platform: [el8]
+              perl: []
+    references:
+        community: https://metacpan.org/release/YAML
+    profiles:
+        common:
+            description: YAML distribution
+            rpms:
+                - perl-YAML
+    api:
+        rpms:
+            - perl-YAML
+    buildopts:
+        rpms:
+            macros: |
+                %_with_perl_YAML_enables_test 1
+    components:
+        rpms:
+            perl-YAML:
+                rationale: The API.
+                ref: stream-1.24-rhel-8.1.0

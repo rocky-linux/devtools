@@ -1,0 +1,56 @@
+---
+document: modulemd
+version: 2
+data:
+  name: freeradius
+  stream: 3.0
+  summary: High-performance and highly configurable free RADIUS server
+  description: >-
+    The FreeRADIUS Server Project is a high performance and highly configurable GPL'd
+    free RADIUS server. The server is similar in some respects to Livingston's 2.0
+    server.  While FreeRADIUS started as a variant of the Cistron RADIUS server, they
+    don't share a lot in common any more. It now has many more features than Cistron
+    or Livingston, and is much more configurable.
+
+    FreeRADIUS is an Internet authentication daemon, which implements the RADIUS protocol,
+    as defined in RFC 2865 (and others). It allows Network Access Servers (NAS boxes)
+    to perform authentication for dial-up users. There are also RADIUS clients available
+    for Web servers, firewalls, Unix logins, and more.  Using RADIUS allows authentication
+    and authorization for a network to be centralized, and minimizes the amount of
+    re-configuration which has to be done when adding or deleting new users.
+  license:
+    module:
+    - GPL
+  dependencies:
+  - buildrequires:
+      perl: [5.26]
+      platform: [el8.3.0]
+    requires:
+      perl: [5.26]
+      platform: [el8]
+  profiles:
+    server:
+      description: The FreeRADIUS Server
+      rpms:
+      - freeradius
+  api:
+    rpms:
+    - freeradius
+    - freeradius-devel
+    - freeradius-doc
+    - freeradius-krb5
+    - freeradius-ldap
+    - freeradius-mysql
+    - freeradius-perl
+    - freeradius-postgresql
+    - freeradius-rest
+    - freeradius-sqlite
+    - freeradius-unixODBC
+    - freeradius-utils
+  components:
+    rpms:
+      freeradius:
+        rationale: Provides the FreeRADIUS server
+        ref: 42d0ad4c00afbbcecfa9e32f387f7d51d25a5590
+        buildorder: 10
+...

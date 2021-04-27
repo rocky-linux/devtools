@@ -1,0 +1,74 @@
+document: modulemd
+version: 2
+data:
+  name: llvm-toolset
+  stream: rhel8
+  summary: LLVM
+  description: LLVM Tools and libraries
+  license:
+    module: [MIT]
+  dependencies:
+    - buildrequires:
+        platform: [el8.3.0]
+      requires:
+        platform: [el8]
+  profiles:
+    common:
+      rpms:
+        - llvm-toolset
+  api:
+    rpms:
+      - clang
+      - clang-analyzer
+      - clang-libs
+      - clang-devel
+      - clang-tools-extra
+      - git-clang-format
+      - lldb
+      - lldb-devel
+      - llvm
+      - llvm-devel
+      - llvm-libs
+      - lld
+      - lld-libs
+  components:
+    rpms:
+      llvm-toolset:
+        rationale: Meta package for llvm-toolset providing scl enable scripts.
+        multilib: [x86_64]
+        ref: 10fe5562186b146f746e9c6f129aba788ce424bd
+        buildorder: 0
+      python-lit:
+        rationale: Lit test runner for LLVM
+        ref: 2b856783b5ffab0920be8edc15cc34f3d99889df
+        buildorder: 0
+      libomp:
+        rationale: LLVM OpenMP runtime
+        multilib: [x86_64]
+        ref: 99a6c257ee303c003f1ee5173489cbf81bb810a3
+        buildorder: 0
+      llvm:
+        rationale: LLVM tools and libraries
+        multilib: [x86_64]
+        ref: 1e30ac6a36822920a324a9762f0c5d71d795453f
+        buildorder: 0
+      compiler-rt:
+        rationale: LLVM compiler intrinsic and sanitizer libraries
+        multilib: [x86_64]
+        ref: 286992764b6f0480b9c7c3bbed4b23ad5fcb7e4f
+        buildorder: 1
+      lld:
+        rationale: LLVM linker
+        multilib: [x86_64]
+        ref: 1d4e6c11a012c1c011671bb8ffcf3bcce08d6165
+        buildorder: 1
+      clang:
+        rationale: clang tools and libraries
+        multilib: [x86_64]
+        ref: fa4e0258456e5055992b82a9559f5482a314cf20
+        buildorder: 1
+      lldb:
+        rationale: lldb debugger
+        multilib: [x86_64]
+        ref: 513308960827f3654776fe3ffc4afdf62e3d0b0b
+        buildorder: 2

@@ -1,0 +1,109 @@
+---
+document: modulemd
+version: 2
+data:
+  name: virt
+  stream: rhel
+  summary: Virtualization module
+  description: A virtualization module
+  license:
+    module:
+      - MIT
+  dependencies:
+    - buildrequires:
+        platform: [el8.3.0]
+      requires:
+        platform: [el8]
+  profiles:
+    common:
+      rpms:
+        - libguestfs
+        - libvirt-client
+        - libvirt-daemon-config-network
+        - libvirt-daemon-kvm
+  filter:
+    rpms:
+      - ocaml-hivex
+      - ocaml-hivex-debuginfo
+      - ocaml-hivex-devel
+      - ocaml-libguestfs
+      - ocaml-libguestfs-debuginfo
+      - ocaml-libguestfs-devel
+      - ocaml-libnbd
+      - ocaml-libnbd-debuginfo
+      - ocaml-libnbd-devel
+      - qemu-kvm-tests
+      - qemu-kvm-tests-debuginfo
+  buildopts:
+    rpms:
+      macros: |
+        %_smp_ncpus_max 16
+  components:
+    rpms:
+      SLOF:
+        rationale: qemu-kvm dep
+        ref: 847f6e1c0e8d8dc0886bd3726ebe8bd825cafe98
+        buildorder: 1
+        arches: [ppc64le]
+      hivex:
+        rationale: libguestfs dep
+        ref: f2549c3fd9b592db59aada9a9b25f016fb1c997b
+        buildorder: 1
+      libguestfs:
+        rationale: Primary module content
+        ref: b155d0d70d120953f1cf04290e944b84037e9cf4
+        buildorder: 4
+      libguestfs-winsupport:
+        rationale: Primary module content
+        ref: 44672074eda2e0c3328d681be4032d9ed2ea4ef6
+        buildorder: 5
+      libiscsi:
+        rationale: qemu-kvm dep
+        ref: d01aaaa741472ce4e30cabe97a0aa710ca0ea6ed
+        buildorder: 1
+      libvirt:
+        rationale: Primary module content
+        ref: f43bc96dd1a44ac4cc1e911aab2420870f98000d
+        buildorder: 3
+      libvirt-dbus:
+        rationale: libvirt-dbus is part of the virtualization module
+        ref: afe8b10024196301cf9e666fa25bb7cf2656ec15
+        buildorder: 4
+      libvirt-python:
+        rationale: Primary module content
+        ref: c0fa7d360f160f505f62c51aac7154d532da5e3c
+        buildorder: 4
+      libnbd:
+        rationale: Primary module content
+        ref: 1084a39e85cac9b4eb432531942316c77be8975b
+        buildorder: 1
+      nbdkit:
+        rationale: Primary module content
+        ref: 60545cd41a1b832c6f8cb3e7aa6acb17ff698603
+        buildorder: 5
+      netcf:
+        rationale: libvirt dep
+        ref: 6872ba63231ae8f0293258bdc51a26d991a1ba94
+        buildorder: 1
+      perl-Sys-Virt:
+        rationale: Primary module content
+        ref: 8cde70d73b92286e49d1cc2662b8dcb5679db5ff
+        buildorder: 4
+      qemu-kvm:
+        rationale: Primary module content
+        ref: 32dd7bbed3f83460401dc71890c64857f8560615
+        buildorder: 2
+      seabios:
+        rationale: qemu-kvm dep
+        ref: d8cdc362874b9e1f12fe4ef68d254224448c9b41
+        buildorder: 1
+        arches: [ppc64le, x86_64]
+      sgabios:
+        rationale: qemu-kvm dep
+        ref: 62568a54f56c6a78e4ccf9c408976c5abc68209e
+        buildorder: 1
+        arches: [ppc64le, x86_64]
+      supermin:
+        rationale: libguestfs dep
+        ref: 4140b7a3689b3dac09c4136198a073f8131c1e89
+        buildorder: 2

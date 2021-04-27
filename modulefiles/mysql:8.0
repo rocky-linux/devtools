@@ -1,0 +1,67 @@
+---
+document: modulemd
+version: 2
+data:
+  name: mysql
+  stream: 8.0
+  summary: MySQL Module
+  description: >-
+    MySQL is a multi-user, multi-threaded SQL database server. MySQL is a client/server
+    implementation consisting of a server daemon (mysqld) and many different client
+    programs and libraries. The base package contains the standard MySQL client programs
+    and generic MySQL files.
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      platform: [el8.2.0]
+    requires:
+      platform: [el8]
+  references:
+    community: https://dev.mysql.com/
+    documentation: https://dev.mysql.com/doc/refman/8.0/en/
+    tracker: http://bugzilla.redhat.com/
+  profiles:
+    client:
+      rpms:
+      - mysql
+    server:
+      rpms:
+      - mysql-server
+  api:
+    rpms:
+    - mysql
+    - mysql-server
+  filter:
+    rpms:
+    - mecab-devel
+    - rapidjson
+    - rapidjson-devel
+    - rapidjson-doc
+  buildopts:
+    rpms:
+      macros: >
+        %runselftest 1
+
+        %check_testsuite 1
+  components:
+    rpms:
+      mecab:
+        rationale: A dependency of mysql
+        ref: 5789ec297e80c2e5ac008f1abf0d2fe330a55f33
+        buildorder: 8
+      mecab-ipadic:
+        rationale: A dictionary for mecab
+        ref: 453491a3407a43db9c5d631068473e05bb3b4cf9
+        buildorder: 9
+      mysql:
+        rationale: MySQL server package
+        ref: a596b26d1aa10030544e0690840cd2e93f3b75a5
+        buildorder: 10
+      rapidjson:
+        rationale: A build-time only dependency of mysql
+        ref: eddf2f66fc7f2f1ef5f6fde0010f3db5f9dc56eb
+        buildorder: 7
+...
+

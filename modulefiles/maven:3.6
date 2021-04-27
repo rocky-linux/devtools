@@ -1,0 +1,220 @@
+---
+document: modulemd
+version: 2
+data:
+    name: maven
+    stream: 3.6
+
+    summary: Java project management and project comprehension tool
+    description: >-
+        Maven is a software project management and comprehension tool.
+        Based on the concept of a project object model (POM), Maven
+        can manage a project's build, reporting and documentation from
+        a central piece of information.
+    license:
+        module:
+            - MIT
+    dependencies:
+        - buildrequires:
+              javapackages-tools: [201902]
+              platform: [el8.3.0]
+          requires:
+              platform: [el8]
+    profiles:
+        common:
+            rpms:
+                - maven
+    api:
+        rpms:
+            - maven
+    filter:
+        rpms:
+            - aopalliance-javadoc
+            - apache-commons-cli-javadoc
+            - apache-commons-codec-javadoc
+            - apache-commons-io-javadoc
+            - apache-commons-lang3-javadoc
+            - atinject-javadoc
+            - atinject-tck
+            - cdi-api-javadoc
+            - geronimo-annotation-javadoc
+            - google-guice-javadoc
+            - guava-javadoc
+            - guava-testlib
+            - guice-assistedinject
+            - guice-bom
+            - guice-extensions
+            - guice-grapher
+            - guice-jmx
+            - guice-jndi
+            - guice-multibindings
+            - guice-parent
+            - guice-servlet
+            - guice-throwingproviders
+            - httpcomponents-client-javadoc
+            - httpcomponents-core-javadoc
+            - jansi-javadoc
+            - jsoup-javadoc
+            - jsr-305-javadoc
+            - jul-to-slf4j
+            - log4j-over-slf4j
+            - maven-javadoc
+            - maven-resolver-javadoc
+            - maven-shared-utils-javadoc
+            - maven-wagon-javadoc
+            - plexus-cipher-javadoc
+            - plexus-classworlds-javadoc
+            - plexus-containers
+            - plexus-containers-component-metadata
+            - plexus-containers-container-default
+            - plexus-containers-javadoc
+            - plexus-interpolation-javadoc
+            - plexus-sec-dispatcher-javadoc
+            - plexus-utils-javadoc
+            - sisu-javadoc
+            - slf4j-javadoc
+            - slf4j-jcl
+            - slf4j-jdk14
+            - slf4j-log4j12
+            - slf4j-manual
+            - slf4j-sources
+    components:
+        rpms:
+            aopalliance:
+                buildorder: 10
+                ref: e750ebfc9462cfcb04d0279f7b8463459e98cfbf
+                rationale: >
+                    Runtime dependency of google-guice.
+            apache-commons-cli:
+                buildorder: 10
+                ref: e0525e5e0a6a541a14f7f92d5985276bca75fd72
+                rationale: >
+                    Runtime dependency of maven.
+            apache-commons-codec:
+                buildorder: 10
+                ref: 6ff6cd3cb6b8fb28bc8dd3068f52d7042fc68aca
+                rationale: >
+                    Runtime dependency of httpcomponents-client.
+            apache-commons-io:
+                buildorder: 10
+                ref: 5848c9311f054c2334d52a5ce19806d27294bdc6
+                rationale: >
+                    Runtime dependency of maven-shared-utils, maven-wagon.
+            apache-commons-lang3:
+                buildorder: 10
+                ref: 1eba01aa2e8f827f02c2d961c6c9e6d75be89474
+                rationale: >
+                    Runtime dependency of maven.
+            atinject:
+                buildorder: 10
+                ref: e783812b1d1cf8fcdf3bac2e625a51710349630c
+                rationale: >
+                    Runtime dependency of cdi-api, google-guice, maven.
+            cdi-api:
+                buildorder: 20
+                ref: 5e44de781c28b5e2ef39a825f7a3c71e6a09cd9e
+                rationale: >
+                    Runtime dependency of sisu.
+            geronimo-annotation:
+                buildorder: 10
+                ref: 4f9993011a37ee61b9d8210ab1960c98fc70a958
+                rationale: >
+                    Runtime dependency of maven.
+            google-guice:
+                buildorder: 30
+                ref: d9e3244b0932566850e0841e174a2458f6dc7f69
+                rationale: >
+                    Runtime dependency of maven.
+            guava:
+                buildorder: 20
+                ref: 7ca6044b1dd56968b8f9363a79e80cc69a902ec4
+                rationale: >
+                    Runtime dependency of google-guice.
+            httpcomponents-client:
+                buildorder: 20
+                ref: ba9e2751f59ac02a8a66a755053dd0a7aa3894d6
+                rationale: >
+                    Runtime dependency of maven-wagon.
+            httpcomponents-core:
+                buildorder: 10
+                ref: 0626439647683f40d3b107121211161e1ed75132
+                rationale: >
+                    Runtime dependency of httpcomponents-client,
+                         maven-wagon.
+            jansi:
+                buildorder: 10
+                ref: 01dcd0aac964b17fdbbbb0d3de142a8a27cceeec
+                rationale: >
+                    Runtime dependency of maven.
+            jsoup:
+                buildorder: 10
+                ref: 667561f8df558865269187af80a79eefd84e2114
+                rationale: >
+                    Runtime dependency of maven-wagon.
+            jsr-305:
+                buildorder: 10
+                ref: f000e657edc41f3d4d0af67384d6c2fda1ca21f2
+                rationale: >
+                    Runtime dependency of guava.
+            maven:
+                buildorder: 50
+                ref: d466cd489181ba1e359bf66851dc11887034fafa
+                rationale: >
+                    Module API.
+            maven-resolver:
+                buildorder: 40
+                ref: 109d1513a2177078a4c0bcc53c484477b5212f7d
+                rationale: >
+                    Runtime dependency of maven.
+            maven-shared-utils:
+                buildorder: 20
+                ref: a7a2df56bacac582819475efd1b2afde476c6e80
+                rationale: >
+                    Runtime dependency of maven.
+            maven-wagon:
+                buildorder: 30
+                ref: 26dd90b229305096924d3f618e925701f5876dd2
+                rationale: >
+                    Runtime dependency of maven, maven-resolver.
+            plexus-cipher:
+                buildorder: 10
+                ref: 5e6510b3bbc3a6e6988a34e848040f84bc672d88
+                rationale: >
+                    Runtime dependency of maven, plexus-sec-dispatcher.
+            plexus-classworlds:
+                buildorder: 10
+                ref: d28f54f726bc10f4c106632462b159952e7ec922
+                rationale: >
+                    Runtime dependency of maven, sisu.
+            plexus-containers:
+                buildorder: 10
+                ref: 323f697e746aa588d3cd91aef7a14f84225ee5db
+                rationale: >
+                    Runtime dependency of maven, sisu.
+            plexus-interpolation:
+                buildorder: 10
+                ref: 01afe25b69460ca2668bb1cb7b628ce5b311f2a2
+                rationale: >
+                    Runtime dependency of maven.
+            plexus-sec-dispatcher:
+                buildorder: 20
+                ref: d8388f7f0ee59e9171bd5e901284d548f145ce67
+                rationale: >
+                    Runtime dependency of maven.
+            plexus-utils:
+                buildorder: 10
+                ref: 876d048c1e6a1ca8873110296e90aef9bda30687
+                rationale: >
+                    Runtime dependency of maven, maven-wagon,
+                         plexus-sec-dispatcher, sisu.
+            sisu:
+                buildorder: 30
+                ref: 1cc0f6873852480ccf4e776425ac2c4fc2f38564
+                rationale: >
+                    Runtime dependency of maven.
+            slf4j:
+                buildorder: 10
+                ref: 46335df482c8710a1c14f704afb89d192bc28c55
+                rationale: >
+                    Runtime dependency of maven, maven-resolver,
+                         maven-wagon.

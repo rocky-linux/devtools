@@ -1,0 +1,37 @@
+document: modulemd
+version: 2
+data:
+    name: perl-DBD-MySQL
+    stream: '4.046'
+    summary: A MySQL interface for Perl
+    description: >
+        DBD::mysql is the Perl5 Database Interface driver for the MySQL
+        database. In other words: DBD::mysql is an interface between the Perl
+        programming language and the MySQL programming API that comes with the
+        MySQL relational database management system.
+    license:
+        module: [ MIT ]
+    dependencies:
+        - buildrequires:
+              perl-DBI: []
+              platform: [el8]
+              perl: []
+          requires:
+              perl-DBI: []
+              platform: [el8]
+              perl: []
+    references:
+        community: http://search.cpan.org/dist/DBD-mysql/
+    profiles:
+        common:
+            description: DBD-mysql distribution
+            rpms:
+                - perl-DBD-MySQL
+    api:
+        rpms:
+            - perl-DBD-MySQL
+    components:
+        rpms:
+            perl-DBD-MySQL:
+                rationale: The API.
+                ref: stream-4.046-rhel-8.1.0

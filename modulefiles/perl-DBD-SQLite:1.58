@@ -1,0 +1,47 @@
+document: modulemd
+version: 2
+data:
+    stream: '1.58'
+    summary: SQLite DBI driver
+    description: >
+        SQLite is a public domain RDBMS database engine that you can find at
+        http://www.hwaci.com/sw/sqlite/. This Perl module provides a SQLite
+        RDBMS module that uses the system SQLite libraries.
+    license:
+        module: [ MIT ]
+    dependencies:
+        - buildrequires:
+              perl-DBI: []
+              perl: []
+              platform: [el8]
+          requires:
+              perl-DBI: []
+              perl: []
+              platform: [el8]
+    references:
+        community: http://search.cpan.org/dist/DBD-SQLite/
+    profiles:
+        common:
+            description: DBD-SQLite distribution
+            rpms:
+                - perl-DBD-SQLite
+    api:
+        rpms:
+            - perl-DBD-SQLite
+    filter:
+        rpms:
+            - perl-Test-NoWarnings
+    buildopts:
+        rpms:
+            macros: |
+                %_without_perl_Test_NoWarnings_enables_stack_trace 1
+    components:
+        rpms:
+            perl-Test-NoWarnings:
+                rationale: A build-time dependency.
+                ref: stream-1.04-rhel-8.1.0
+                buildorder: 0
+            perl-DBD-SQLite:
+                rationale: The API.
+                ref: stream-1.58-rhel-8.1.0
+                buildorder: 1

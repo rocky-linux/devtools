@@ -1,0 +1,1239 @@
+---
+document: modulemd
+version: 2
+data:
+  summary: Tools and macros for Java packaging support
+  stream: 201801
+  description: >-
+    Java Packages Tools is a collection of tools that make it easier to build
+    RPM packages containing software running on Java platform.
+  license:
+    module:
+      - MIT
+  dependencies:
+    - buildrequires:
+        javapackages-tools:
+          - 201801
+        platform:
+          - el8.0.0
+      requires:
+        platform:
+          - el8
+  profiles:
+    common:
+      rpms:
+        - javapackages-tools
+  api:
+    rpms:
+    - ivy-local
+    - javapackages-local
+    - javapackages-tools
+    - maven-local
+    - os-maven-plugin
+  buildopts:
+    rpms:
+      macros: |
+        %_with_xmvn_javadoc 1
+        %_without_asciidoc 1
+        %_without_avalon 1
+        %_without_bouncycastle 1
+        %_without_cython 1
+        %_without_dafsa 1
+        %_without_desktop 1
+        %_without_dom4j 1
+        %_without_doxygen 1
+        %_without_dtd 1
+        %_without_eclipse 1
+        %_without_ehcache 1
+        %_without_emacs 1
+        %_without_equinox 1
+        %_without_fop 1
+        %_without_ftp 1
+        %_without_gradle 1
+        %_without_groovy 1
+        %_without_hadoop 1
+        %_without_hsqldb 1
+        %_without_itext 1
+        %_without_jackson 1
+        %_without_jmh 1
+        %_without_jna 1
+        %_without_jpa 1
+        %_without_junit5 1
+        %_without_logback 1
+        %_without_markdown 1
+        %_without_memcached 1
+        %_without_memoryfilesystem 1
+        %_without_obr 1
+        %_without_python 1
+        %_without_reporting 1
+        %_without_scm 1
+        %_without_snakeyaml 1
+        %_without_snappy 1
+        %_without_spring 1
+        %_without_ssh 1
+        %_without_testlib 1
+        %_without_vfs 1
+  components:
+    rpms:
+      ant:
+        ref: 2eaf095676540e2805ee7e8c7f6f78285c428fdc
+        rationale: >
+          Runtime dependency of ant-contrib, aqute-bnd, jflex,g     maven-antrun-plugin,
+          maven-invoker-plugin,g     maven-plugin-tools, maven-script-interpreter,
+              plexus-ant-factory.gBuild dependency of ant, ant-contrib, antlr,
+              aopalliance, apache-commons-collections, apache-ivy,g     aqute-bnd,
+          bsf, bsh, cglib, hamcrest, isorelax,g     jakarta-commons-httpclient,
+          jakarta-oro, java_cup,g     javacc, jdepend, jdom, jdom2, jflex, jtidy,
+          log4j12,g     maven-antrun-plugin, maven-invoker-plugin,     maven-plugin-tools,
+          maven-script-interpreter, mockito,g     plexus-ant-factory, plexus-classworlds,
+          regexp, testng,g     velocity, xalan-j2, xerces-j2, xml-commons-apis,
+              xml-commons-resolver, xmlunit, xz-java.g"
+      ant-contrib:
+        ref: 46d7f5391ac87a3d4e870fcf40e01438f1e5bd06
+        rationale: 'Build dependency of apache-ivy, log4j12.
+
+          '
+      antlr:
+        ref: 279764e0c7ffac109c7e7c064ec32521033e0dc0
+        rationale: 'Runtime dependency of ant. Build dependency of ant, velocity.
+
+          '
+      aopalliance:
+        ref: cc86ef1267276ce477ca88165d0741a736b03855
+        rationale: 'Runtime dependency of google-guice, maven. Build dependency of
+          google-guice.
+
+          '
+      apache-commons-beanutils:
+        ref: 914ae859290416630fd32e2a664680e51867e874
+        rationale: 'Build dependency of apache-commons-jxpath.
+
+          '
+      apache-commons-cli:
+        ref: d16706653ff6d9b22e10601263f127e542de505b
+        rationale: "Runtime dependency of hawtjni, maven, plexus-cli,\n     plexus-containers,\
+          \ xmvn.\nBuild dependency of hawtjni, maven, plexus-cli,\n     plexus-containers.\n"
+      apache-commons-codec:
+        ref: 15d6d19f7ffaaac48cefa4ad75ee694b1b28b269
+        rationale: "Runtime dependency of httpcomponents-client,\n     jakarta-commons-httpclient,\
+          \ maven,\n     maven-artifact-transfer, maven-assembly-plugin,\n     maven-install-plugin.\n\
+          Build dependency of httpcomponents-client,\n     jakarta-commons-httpclient,\
+          \ maven-artifact-transfer,\n     maven-assembly-plugin, maven-install-plugin.\n"
+      apache-commons-collections:
+        ref: bfa5d90f4662bc6b6c79f9cfd518302631a30597
+        rationale: "Runtime dependency of apache-commons-beanutils,\n     maven-dependency-plugin,\
+          \ maven-doxia-sitetools,\n     plexus-velocity, velocity.\nBuild dependency\
+          \ of apache-commons-beanutils,\n     maven-dependency-plugin, maven-doxia-sitetools,\n\
+          \     plexus-velocity, velocity.\n"
+      apache-commons-compress:
+        ref: 9f83850ab29e2e62be34033bf44d15d8a032ce70
+        rationale: 'Runtime dependency of plexus-archiver, xmvn. Build dependency
+          of plexus-archiver, xmvn.
+
+          '
+      apache-commons-exec:
+        ref: 35594c7176acd54663928c2c081bfc9920bbd942
+        rationale: 'Runtime dependency of exec-maven-plugin. Build dependency of exec-maven-plugin.
+
+          '
+      apache-commons-io:
+        ref: 14facd3244fdccb7bfe4e3798bb2f73a8087a68e
+        rationale: "Runtime dependency of jdependency, maven,\n     maven-archiver,\
+          \ maven-assembly-plugin,\n     maven-dependency-plugin, maven-doxia-sitetools,\n\
+          \     maven-invoker-plugin, maven-plugin-testing,\n     maven-resources-plugin,\
+          \ maven-shade-plugin,\n     maven-shared-utils, maven-surefire, maven-wagon,\n\
+          \     plexus-io.\nBuild dependency of jdependency, maven-archiver,\n   \
+          \  maven-assembly-plugin, maven-dependency-plugin,\n     maven-doxia-sitetools,\
+          \ maven-invoker-plugin,\n     maven-plugin-testing, maven-resources-plugin,\n\
+          \     maven-shade-plugin, maven-shared-utils, maven-surefire,\n     maven-wagon,\
+          \ plexus-archiver, plexus-io.\n"
+      apache-commons-jxpath:
+        ref: 20064f6ca0d09c12fd7e671a52269fc026c216de
+        rationale: 'Build dependency of maven.
+
+          '
+      apache-commons-lang:
+        ref: e12d0f7daf6379c2fb772c3925a553fc78f3913a
+        rationale: "Runtime dependency of maven-dependency-plugin,\n     maven-doxia,\
+          \ maven-enforcer, velocity.\nBuild dependency of apache-ivy,\n     maven-dependency-plugin,\
+          \ maven-doxia,\n     maven-doxia-sitetools, maven-enforcer, slf4j, velocity.\n"
+      apache-commons-lang3:
+        ref: 9d530bf0d98255da1a3221884e4a6d451e456800
+        rationale: "Runtime dependency of maven, maven-doxia-sitetools,\n     maven-surefire,\
+          \ xmvn.\nBuild dependency of httpcomponents-core, maven,\n     maven-shared-utils,\
+          \ maven-surefire.\n"
+      apache-commons-logging:
+        ref: 8c10fb8f865e33c9543d5ca056bddbbb8fbedc4c
+        rationale: "Runtime dependency of ant, apache-commons-beanutils,\n     bsf,\
+          \ httpcomponents-client, jakarta-commons-httpclient,\n     maven, slf4j,\
+          \ xbean.\nBuild dependency of ant, ant-contrib,\n     apache-commons-beanutils,\
+          \ bsf, httpcomponents-client,\n     httpcomponents-core, jakarta-commons-httpclient,\n\
+          \     plexus-classworlds, powermock, slf4j, velocity, xbean.\n"
+      apache-commons-net:
+        ref: 48aa38d840e9de5b91b2f880c42ccc04382cc371
+        rationale: 'Runtime dependency of ant, maven-wagon. Build dependency of ant,
+          maven-wagon.
+
+          '
+      apache-commons-parent:
+        ref: 681b73079ba93f35f303a7ca9bebd9f756162d3c
+        rationale: "Build dependency of ant-contrib,\n     apache-commons-beanutils,\
+          \ apache-commons-cli,\n     apache-commons-codec, apache-commons-collections,\n\
+          \     apache-commons-compress, apache-commons-exec,\n     apache-commons-io,\
+          \ apache-commons-jxpath,\n     apache-commons-lang, apache-commons-lang3,\n\
+          \     apache-commons-logging, apache-commons-net, apache-ivy,\n     bcel.\n"
+      apache-ivy:
+        ref: 31bcaec3a464df643c0f1f85e006a55225cf50f0
+        rationale: 'Runtime dependency of javapackages-tools. Build dependency of
+          ant-contrib, xmvn.
+
+          '
+      apache-parent:
+        ref: 08f43f4b04779b82480d7cd894f7b1cd4c3ba8c9
+        rationale: "Runtime dependency of apache-commons-parent,\n     felix-parent,\
+          \ httpcomponents-project, maven-parent.\nBuild dependency of apache-commons-parent,\
+          \ apache-ivy,\n     bsf, felix-parent, httpcomponents-project,\n     maven-parent,\
+          \ velocity, xalan-j2, xerces-j2,\n     xml-commons-apis, xml-commons-resolver.\n"
+      apache-resource-bundles:
+        ref: 1a901b3ad046158d7227ee2594d77ca6dfe9efe3
+        rationale: "Runtime dependency of apache-parent. Build dependency of apache-parent,\
+          \ easymock,\n     google-guice, objenesis.\n"
+      aqute-bnd:
+        ref: 3dcf6c59c53cf551b59a22c6e737a745a59c5936
+        rationale: "Runtime dependency of maven-plugin-bundle. Build dependency of\
+          \ jdom2, maven-plugin-bundle,\n     mockito.\n"
+      assertj-core:
+        ref: eaf106358f54ae4252e1070c2530f0eaf7baa51d
+        rationale: 'Build dependency of maven-archiver, powermock.
+
+          '
+      atinject:
+        ref: e85c03735db3f68f803d8382373a2d74f8fc3fc0
+        rationale: "Runtime dependency of cdi-api, google-guice, maven,\n     xmvn.\n\
+          Build dependency of cdi-api, google-guice, maven,\n     maven-resolver,\
+          \ plexus-cipher, plexus-languages, sisu.\n"
+      bcel:
+        ref: 6bdce4ce1c62793e0d44341e47a4263ece1972b3
+        rationale: "Runtime dependency of ant, xalan-j2. Build dependency of ant,\
+          \ ant-contrib, velocity,\n     xalan-j2.\n"
+      beust-jcommander:
+        ref: 5358adce2846b8295c2f2e4692d137faddd75785
+        rationale: 'Runtime dependency of testng, xmvn. Build dependency of testng,
+          xmvn.
+
+          '
+      bsf:
+        ref: 5d84a9a5a5fc01beb8accd0677815c7df9965304
+        rationale: 'Runtime dependency of ant, bsh. Build dependency of ant, bsh.
+
+          '
+      bsh:
+        ref: 7f4ab773059564bda3c9f7cd032505902e9e2619
+        rationale: "Runtime dependency of maven-enforcer,\n     maven-invoker-plugin,\
+          \ maven-plugin-build-helper,\n     maven-plugin-tools, maven-script-interpreter,\n\
+          \     plexus-bsh-factory.\nBuild dependency of maven-enforcer,\n     maven-invoker-plugin,\
+          \ maven-plugin-build-helper,\n     maven-plugin-tools, maven-script-interpreter,\n\
+          \     plexus-bsh-factory, testng.\n"
+      byaccj:
+        ref: 8473c0ec68a11deb739f1ac266a7013a6f050569
+        rationale: 'Build dependency of qdox.
+
+          '
+      cal10n:
+        ref: 386b590265f3d75747c50dcb0dfbf30a52050824
+        rationale: 'Build dependency of slf4j.
+
+          '
+      cdi-api:
+        ref: 09d1348fc5176128dd3425bc9ae415d54c407a9f
+        rationale: 'Runtime dependency of maven, sisu. Build dependency of plexus-cipher,
+          sisu.
+
+          '
+      cglib:
+        ref: 4b31a7ca2484240f01410f462c781a004988bc71
+        rationale: "Runtime dependency of easymock, mockito, powermock. Build dependency\
+          \ of assertj-core, easymock,\n     google-guice, mockito, powermock, xmvn.\n"
+      easymock:
+        ref: 61071daebb74f0b7b5f2ab2257c20c76939a6a96
+        rationale: "Runtime dependency of felix-parent, hamcrest,\n     maven-plugin-testing,\
+          \ maven-plugin-tools.\nBuild dependency of felix-parent, hamcrest,\n   \
+          \  httpcomponents-client, jline, maven-artifact-resolver,\n     maven-common-artifact-filters,\
+          \ maven-plugin-testing,\n     maven-plugin-tools, maven-shared-io, powermock,\
+          \ xmvn.\n"
+      exec-maven-plugin:
+        ref: aa68432e09b66a97b5c3749ecd4e395efc682c87
+        rationale: 'Build dependency of apache-commons-net, qdox.
+
+          '
+      felix-osgi-compendium:
+        ref: e14bc92ac357c2672f2e5af5c61a66d0de81fd2d
+        rationale: 'Build dependency of felix-utils.
+
+          '
+      felix-osgi-core:
+        ref: a98d37276ed39752fedebbce7bce3599e3714650
+        rationale: "Runtime dependency of felix-osgi-compendium. Build dependency\
+          \ of apache-commons-compress,\n     felix-osgi-compendium, felix-utils,\
+          \ xbean.\n"
+      felix-osgi-foundation:
+        ref: c4b1a0c44b5adfed24df0448a5863b3e884abaed
+        rationale: 'Runtime dependency of felix-osgi-compendium. Build dependency
+          of felix-osgi-compendium.
+
+          '
+      felix-parent:
+        ref: fa3d4a90e6dcae668f085a7406efcfa6268910b5
+        rationale: "Build dependency of felix-osgi-compendium,\n     felix-osgi-core,\
+          \ felix-osgi-foundation, felix-utils,\n     maven-plugin-bundle.\n"
+      felix-utils:
+        ref: 8cf825a664f68bdb503582e25eb32a0e1de4cf8a
+        rationale: 'Runtime dependency of maven-plugin-bundle. Build dependency of
+          maven-plugin-bundle.
+
+          '
+      forge-parent:
+        ref: 820ac11627b6b932069eaf18856ae5bb7c9c6e67
+        rationale: "Runtime dependency of sonatype-plugins-parent,\n     spice-parent.\n\
+          Build dependency of sonatype-plugins-parent,\n     spice-parent.\n"
+      fusesource-pom:
+        ref: 0846f42e053593c080910ffdad4fe21bbaa4bc58
+        rationale: 'Build dependency of hawtjni, jansi, jansi-native.
+
+          '
+      geronimo-annotation:
+        ref: a6a8a724ccbccce3c92877183e72959ea5098765
+        rationale: 'Runtime dependency of maven. Build dependency of maven.
+
+          '
+      geronimo-jms:
+        ref: d98cb2ccc45f2947143ef8ceae320b6dbe73c64e
+        rationale: 'Build dependency of log4j12.
+
+          '
+      geronimo-jpa:
+        ref: 814bc8ff0d1e5aca49d1fe8576297f0d89a38617
+        rationale: 'Build dependency of osgi-compendium.
+
+          '
+      geronimo-parent-poms:
+        ref: d846f0b796ff8a4c0f8d9fbbffa375710b4ef97f
+        rationale: "Build dependency of geronimo-annotation, geronimo-jms,\n     geronimo-jpa.\n"
+      glassfish-annotation-api:
+        ref: 21d7b4c8b052fe74aea7deb64823a9b8b292392d
+        rationale: 'Build dependency of sisu.
+
+          '
+      glassfish-el:
+        ref: 98f4c97a5919cfaf25266305395e5beb0e4a1d06
+        rationale: 'Runtime dependency of cdi-api, glassfish-jsp-api. Build dependency
+          of cdi-api, glassfish-jsp-api.
+
+          '
+      glassfish-jsp-api:
+        ref: 0479655b82e20841289de5893606eae764b61215
+        rationale: 'Build dependency of apache-commons-jxpath.
+
+          '
+      glassfish-legal:
+        ref: ac900024df8c996fdba34b958dc79aa2c022ddad
+        rationale: "Build dependency of glassfish-annotation-api,\n     glassfish-el.\n"
+      glassfish-master-pom:
+        ref: c667e6f3ea78372469714d03607ec0c76906821d
+        rationale: 'Runtime dependency of glassfish-legal. Build dependency of glassfish-legal.
+
+          '
+      glassfish-servlet-api:
+        ref: 485e7a77935b910cc8d10c25aa734c87f3317c5f
+        rationale: "Runtime dependency of felix-osgi-compendium,\n     glassfish-jsp-api,\
+          \ xalan-j2.\nBuild dependency of apache-commons-jxpath,\n     apache-commons-logging,\
+          \ bsh, felix-osgi-compendium,\n     glassfish-jsp-api, google-guice, osgi-compendium,\n\
+          \     powermock, sisu, velocity, xalan-j2.\n"
+      google-guice:
+        ref: d0f8217d18c98daf8b7d624ad85c5c9826845e13
+        rationale: "Runtime dependency of maven, xmvn. Build dependency of maven,\
+          \ maven-resolver, sisu,\n     testng.\n"
+      guava20:
+        ref: 7ee22609401a223b858c0eb617f961af40f6d7ec
+        rationale: "Runtime dependency of google-guice, maven,\n     maven-shade-plugin,\
+          \ plexus-containers, xmvn.\nBuild dependency of google-guice, maven,\n \
+          \    maven-shade-plugin, plexus-containers.\n"
+      hamcrest:
+        ref: 6bc20a514b6237d7f206f3efc01cda3637f4f3b7
+        rationale: "Runtime dependency of junit, mockito, powermock. Build dependency\
+          \ of ant, junit, maven-resolver,\n     maven-shared-utils, mockito, powermock.\n"
+      hawtjni:
+        ref: 0d5d666b09288ee9c2970458bf46e6a501d427f1
+        rationale: 'Runtime dependency of jansi, jansi-native, maven. Build dependency
+          of jansi, jansi-native.
+
+          '
+      httpcomponents-client:
+        ref: a106b085dcd55972b8221a2a46fa642a8f49f609
+        rationale: "Runtime dependency of maven, maven-doxia,\n     maven-resolver,\
+          \ maven-wagon.\nBuild dependency of maven-doxia, maven-resolver,\n     maven-wagon.\n"
+      httpcomponents-core:
+        ref: fbba5f41596cff26dcf3cff4ef6f5d9016433b4d
+        rationale: "Runtime dependency of httpcomponents-client, maven,\n     maven-doxia,\
+          \ maven-resolver, maven-wagon.\nBuild dependency of httpcomponents-client,\
+          \ maven-doxia,\n     maven-resolver, maven-wagon.\n"
+      httpcomponents-project:
+        ref: 3e23dcad40271f33a236bec9a7b8ed92978ec8b9
+        rationale: "Build dependency of httpcomponents-client,\n     httpcomponents-core.\n"
+      isorelax:
+        ref: fe6788b4a29dbe6810bd62eb15d3e4d330c0a1f4
+        rationale: 'Build dependency of jdom2.
+
+          '
+      jakarta-commons-httpclient:
+        ref: f20e4f957ff3f0cac69ce608ed086beb433a9793
+        rationale: 'Build dependency of ant-contrib, apache-ivy.
+
+          '
+      jakarta-oro:
+        ref: 05d8ba2a0822e842bc2c657a4c8adb2f593ae098
+        rationale: 'Runtime dependency of ant. Build dependency of ant, apache-ivy,
+          log4j12, velocity.
+
+          '
+      jansi:
+        ref: 471285c4cf109854f90b2ed922d5b73def9e0f16
+        rationale: "Runtime dependency of jline, maven. Build dependency of jline,\
+          \ maven, maven-shared-utils,\n     maven-surefire.\n"
+      jansi-native:
+        ref: b78b22c4192faf7d138cc938af1aced9037e0bf1
+        rationale: 'Runtime dependency of jansi, maven. Build dependency of jansi.
+
+          '
+      java_cup:
+        ref: aea8bf269b45979007d6d5cc6c7e5bb76c849099
+        rationale: 'Runtime dependency of jflex, xalan-j2. Build dependency of java_cup,
+          jflex, xalan-j2.
+
+          '
+      javacc:
+        ref: cc4b6fe84a8e57aacfb9ff053d0828a08216cfef
+        rationale: 'Runtime dependency of javacc-maven-plugin. Build dependency of
+          bsh, javacc, javacc-maven-plugin.
+
+          '
+      javacc-maven-plugin:
+        ref: be10bbbf175c00765a00573d015f5c6f60adcafe
+        rationale: 'Build dependency of glassfish-el, maven-surefire.
+
+          '
+      javamail:
+        ref: 5c3e34685865b9195d57e5258c622a679c8dc3fb
+        rationale: 'Runtime dependency of ant. Build dependency of ant, log4j12.
+
+          '
+      javapackages-tools:
+        ref: 90cb3131cc2234ab84740d81d8421adebc5804a8
+        rationale: "Module API. Runtime dependency of ant, ant-contrib, antlr,\n \
+          \    aopalliance, apache-commons-beanutils,\n     apache-commons-cli, apache-commons-codec,\n\
+          \     apache-commons-collections, apache-commons-compress,\n     apache-commons-exec,\
+          \ apache-commons-io,\n     apache-commons-jxpath, apache-commons-lang,\n\
+          \     apache-commons-lang3, apache-commons-logging,\n     apache-commons-net,\
+          \ apache-commons-parent, apache-ivy,\n     apache-parent, apache-resource-bundles,\
+          \ aqute-bnd,\n     assertj-core, atinject, bcel, beust-jcommander, bsf,\n\
+          \     bsh, cal10n, cdi-api, cglib, easymock,\n     exec-maven-plugin, felix-osgi-compendium,\n\
+          \     felix-osgi-core, felix-osgi-foundation, felix-parent,\n     felix-utils,\
+          \ forge-parent, fusesource-pom,\n     geronimo-annotation, geronimo-jms,\
+          \ geronimo-jpa,\n     geronimo-parent-poms, glassfish-annotation-api,\n\
+          \     glassfish-el, glassfish-jsp-api, glassfish-legal,\n     glassfish-master-pom,\
+          \ glassfish-servlet-api,\n     google-guice, guava20, hamcrest, hawtjni,\n\
+          \     httpcomponents-client, httpcomponents-core,\n     httpcomponents-project,\
+          \ isorelax,\n     jakarta-commons-httpclient, jakarta-oro, jansi,\n    \
+          \ jansi-native, java_cup, javacc, javacc-maven-plugin,\n     javamail, javassist,\
+          \ jaxen, jboss-interceptors-1.2-api,\n     jboss-parent, jdepend, jdependency,\
+          \ jdom, jdom2, jflex,\n     jline, jsch, jsoup, jsr-305, jtidy, junit,\n\
+          \     jvnet-parent, jzlib, log4j12, maven,\n     maven-antrun-plugin, maven-archiver,\n\
+          \     maven-artifact-resolver, maven-artifact-transfer,\n     maven-assembly-plugin,\
+          \ maven-clean-plugin,\n     maven-common-artifact-filters, maven-compiler-plugin,\n\
+          \     maven-dependency-analyzer, maven-dependency-plugin,\n     maven-dependency-tree,\
+          \ maven-doxia,\n     maven-doxia-sitetools, maven-enforcer,\n     maven-file-management,\
+          \ maven-filtering,\n     maven-install-plugin, maven-invoker,\n     maven-invoker-plugin,\
+          \ maven-jar-plugin, maven-parent,\n     maven-plugin-build-helper, maven-plugin-bundle,\n\
+          \     maven-plugin-testing, maven-plugin-tools,\n     maven-plugins-pom,\
+          \ maven-remote-resources-plugin,\n     maven-reporting-api, maven-reporting-impl,\n\
+          \     maven-resolver, maven-resources-plugin,\n     maven-script-interpreter,\
+          \ maven-shade-plugin,\n     maven-shared, maven-shared-incremental,\n  \
+          \   maven-shared-io, maven-shared-utils,\n     maven-source-plugin, maven-surefire,\
+          \ maven-verifier,\n     maven-wagon, maven2, mockito, modello, mojo-parent,\n\
+          \     munge-maven-plugin, objectweb-asm, objectweb-pom,\n     objenesis,\
+          \ os-maven-plugin, osgi-annotation,\n     osgi-compendium, osgi-core, plexus-ant-factory,\n\
+          \     plexus-archiver, plexus-bsh-factory, plexus-build-api,\n     plexus-cipher,\
+          \ plexus-classworlds, plexus-cli,\n     plexus-compiler, plexus-component-api,\n\
+          \     plexus-component-factories-pom, plexus-components-pom,\n     plexus-containers,\
+          \ plexus-i18n, plexus-interactivity,\n     plexus-interpolation, plexus-io,\
+          \ plexus-languages,\n     plexus-pom, plexus-resources, plexus-sec-dispatcher,\n\
+          \     plexus-utils, plexus-velocity, powermock, qdox, regexp,\n     sisu,\
+          \ sisu-mojos, slf4j, sonatype-oss-parent,\n     sonatype-plugins-parent,\
+          \ spec-version-maven-plugin,\n     spice-parent, testng, velocity, weld-parent,\
+          \ xalan-j2,\n     xbean, xerces-j2, xml-commons-apis,\n     xml-commons-resolver,\
+          \ xmlunit, xmvn, xz-java.\nBuild dependency of ant, ant-contrib, antlr,\n\
+          \     aopalliance, apache-commons-beanutils,\n     apache-commons-cli, apache-commons-codec,\n\
+          \     apache-commons-collections, apache-commons-compress,\n     apache-commons-exec,\
+          \ apache-commons-io,\n     apache-commons-jxpath, apache-commons-lang,\n\
+          \     apache-commons-lang3, apache-commons-logging,\n     apache-commons-net,\
+          \ apache-commons-parent, apache-ivy,\n     apache-parent, apache-resource-bundles,\
+          \ aqute-bnd,\n     assertj-core, atinject, bcel, beust-jcommander, bsf,\n\
+          \     bsh, cal10n, cdi-api, cglib, easymock,\n     exec-maven-plugin, felix-osgi-compendium,\n\
+          \     felix-osgi-core, felix-osgi-foundation, felix-parent,\n     felix-utils,\
+          \ forge-parent, fusesource-pom,\n     geronimo-annotation, geronimo-jms,\
+          \ geronimo-jpa,\n     geronimo-parent-poms, glassfish-annotation-api,\n\
+          \     glassfish-el, glassfish-jsp-api, glassfish-legal,\n     glassfish-master-pom,\
+          \ glassfish-servlet-api,\n     google-guice, guava20, hamcrest, hawtjni,\n\
+          \     httpcomponents-client, httpcomponents-core,\n     httpcomponents-project,\
+          \ isorelax,\n     jakarta-commons-httpclient, jakarta-oro, jansi,\n    \
+          \ jansi-native, java_cup, javacc, javacc-maven-plugin,\n     javamail, javassist,\
+          \ jaxen, jboss-interceptors-1.2-api,\n     jboss-parent, jdepend, jdependency,\
+          \ jdom, jdom2, jflex,\n     jline, jsch, jsoup, jsr-305, jtidy, junit,\n\
+          \     jvnet-parent, jzlib, log4j12, maven,\n     maven-antrun-plugin, maven-archiver,\n\
+          \     maven-artifact-resolver, maven-artifact-transfer,\n     maven-assembly-plugin,\
+          \ maven-clean-plugin,\n     maven-common-artifact-filters, maven-compiler-plugin,\n\
+          \     maven-dependency-analyzer, maven-dependency-plugin,\n     maven-dependency-tree,\
+          \ maven-doxia,\n     maven-doxia-sitetools, maven-enforcer,\n     maven-file-management,\
+          \ maven-filtering,\n     maven-install-plugin, maven-invoker,\n     maven-invoker-plugin,\
+          \ maven-jar-plugin, maven-parent,\n     maven-plugin-build-helper, maven-plugin-bundle,\n\
+          \     maven-plugin-testing, maven-plugin-tools,\n     maven-plugins-pom,\
+          \ maven-remote-resources-plugin,\n     maven-reporting-api, maven-reporting-impl,\n\
+          \     maven-resolver, maven-resources-plugin,\n     maven-script-interpreter,\
+          \ maven-shade-plugin,\n     maven-shared, maven-shared-incremental,\n  \
+          \   maven-shared-io, maven-shared-utils,\n     maven-source-plugin, maven-surefire,\
+          \ maven-verifier,\n     maven-wagon, maven2, mockito, modello, mojo-parent,\n\
+          \     munge-maven-plugin, objectweb-asm, objectweb-pom,\n     objenesis,\
+          \ os-maven-plugin, osgi-annotation,\n     osgi-compendium, osgi-core, plexus-ant-factory,\n\
+          \     plexus-archiver, plexus-bsh-factory, plexus-build-api,\n     plexus-cipher,\
+          \ plexus-classworlds, plexus-cli,\n     plexus-compiler, plexus-component-api,\n\
+          \     plexus-component-factories-pom, plexus-components-pom,\n     plexus-containers,\
+          \ plexus-i18n, plexus-interactivity,\n     plexus-interpolation, plexus-io,\
+          \ plexus-languages,\n     plexus-pom, plexus-resources, plexus-sec-dispatcher,\n\
+          \     plexus-utils, plexus-velocity, powermock, qdox, regexp,\n     sisu,\
+          \ sisu-mojos, slf4j, sonatype-oss-parent,\n     sonatype-plugins-parent,\
+          \ spec-version-maven-plugin,\n     spice-parent, testng, velocity, weld-parent,\
+          \ xalan-j2,\n     xbean, xerces-j2, xml-commons-apis,\n     xml-commons-resolver,\
+          \ xmlunit, xmvn, xz-java.\n"
+      javassist:
+        ref: f84d3220fda8f4a5cc22007f058016089608ce86
+        rationale: 'Runtime dependency of powermock. Build dependency of powermock,
+          slf4j.
+
+          '
+      jaxen:
+        ref: c2870f76b7930e9dcff6b71cdbb7c1615e932725
+        rationale: 'Build dependency of jdom, jdom2, velocity.
+
+          '
+      jboss-interceptors-1.2-api:
+        ref: b6deae0c359de6fa84bb4f427c52f3f2bb214568
+        rationale: 'Runtime dependency of cdi-api. Build dependency of cdi-api.
+
+          '
+      jboss-parent:
+        ref: 71d7b51581c7d331ca2062fb2a00acf143e3253b
+        rationale: 'Build dependency of jboss-interceptors-1.2-api.
+
+          '
+      jdepend:
+        ref: 75939e30020038ba4a8474ff994e6015b9175af4
+        rationale: 'Runtime dependency of ant. Build dependency of ant.
+
+          '
+      jdependency:
+        ref: fb7fd0368601855dc01d16147b72dbe8d772cdcb
+        rationale: 'Runtime dependency of maven-shade-plugin. Build dependency of
+          maven-shade-plugin.
+
+          '
+      jdom:
+        ref: d09e05a1ab4559a4a697d727a2d22f66a4d0ac5d
+        rationale: "Runtime dependency of maven-shade-plugin. Build dependency of\
+          \ apache-commons-jxpath, jaxen,\n     maven-shade-plugin, velocity.\n"
+      jdom2:
+        ref: a54a359993431c2ca908170ffe6d12ae9a6f63ba
+        rationale: 'Runtime dependency of plexus-containers. Build dependency of plexus-containers.
+
+          '
+      jflex:
+        ref: 35f776bbafb835e7f6eef35e8721a6af525ce404
+        rationale: 'Build dependency of java_cup, jflex, qdox.
+
+          '
+      jline:
+        ref: c80d0ebb5b96b29447d88121ddf84bd980bc37d0
+        rationale: 'Runtime dependency of bsh, plexus-interactivity. Build dependency
+          of plexus-interactivity.
+
+          '
+      jsch:
+        ref: eae7b1df869a1241a2f85b9a155204356e6f8a2e
+        rationale: 'Runtime dependency of ant. Build dependency of ant, apache-ivy.
+
+          '
+      jsoup:
+        ref: 488a8e0367b5b3eafabd959b938e6e03af8ecfed
+        rationale: 'Runtime dependency of maven-wagon, modello. Build dependency of
+          maven-wagon, modello.
+
+          '
+      jsr-305:
+        ref: 8d98b3925c46a9781dc7b234ccab0eec0e40a42c
+        rationale: "Runtime dependency of guava20. Build dependency of guava20, maven-assembly-plugin,\n\
+          \     maven-enforcer, maven-filtering, maven-shared-utils,\n     maven-surefire,\
+          \ plexus-archiver, plexus-io, testng.\n"
+      jtidy:
+        ref: fb88169471fb5d8d9ba83311fe851c89593ce428
+        rationale: 'Runtime dependency of maven-plugin-tools. Build dependency of
+          maven-plugin-tools.
+
+          '
+      junit:
+        ref: 2e2786828e8be19f5977ada2f5d2cb1c4be89b5c
+        rationale: "Runtime dependency of ant, ant-contrib, atinject,\n     guava20,\
+          \ hamcrest, javapackages-tools, maven-verifier,\n     mockito, modello,\
+          \ powermock, xmlunit.\nBuild dependency of ant, ant-contrib,\n     apache-commons-cli,\
+          \ apache-commons-compress,\n     apache-commons-exec, apache-commons-io,\n\
+          \     apache-commons-jxpath, apache-commons-logging,\n     apache-commons-net,\
+          \ aqute-bnd, assertj-core, atinject,\n     bsh, cal10n, cglib, easymock,\
+          \ felix-parent,\n     glassfish-el, guava20, hamcrest, httpcomponents-client,\n\
+          \     httpcomponents-core, jakarta-commons-httpclient, jansi,\n     jansi-native,\
+          \ javacc-maven-plugin, javamail, javassist,\n     jdependency, jflex, jline,\
+          \ log4j12, maven,\n     maven-archiver, maven-artifact-resolver,\n     maven-artifact-transfer,\
+          \ maven-clean-plugin,\n     maven-common-artifact-filters, maven-doxia,\n\
+          \     maven-file-management, maven-invoker,\n     maven-plugin-testing,\
+          \ maven-reporting-impl,\n     maven-resolver, maven-script-interpreter,\n\
+          \     maven-shared-io, maven-shared-utils,\n     maven-source-plugin, maven-surefire,\
+          \ maven-verifier,\n     mockito, modello, munge-maven-plugin, objenesis,\n\
+          \     os-maven-plugin, plexus-cipher, plexus-containers,\n     plexus-interpolation,\
+          \ plexus-sec-dispatcher, powermock,\n     sisu, sisu-mojos, spec-version-maven-plugin,\
+          \ testng,\n     velocity, xmlunit, xmvn.\n"
+      jvnet-parent:
+        ref: 5f9f439361cf83d1220785b04ade89793435be4d
+        rationale: "Build dependency of glassfish-annotation-api,\n     glassfish-el,\
+          \ glassfish-jsp-api, glassfish-servlet-api,\n     javamail, spec-version-maven-plugin.\n"
+      jzlib:
+        ref: 8fa634fc8729aa06a74564af870c33b1727dec02
+        rationale: 'Runtime dependency of jsch. Build dependency of jsch.
+
+          '
+      log4j12:
+        ref: 54804ac6aada53e375acede69b7c6e27fad54c71
+        rationale: "Runtime dependency of ant, slf4j, xbean. Build dependency of ant,\
+          \ apache-commons-logging, jdom2,\n     slf4j, velocity, xbean.\n"
+      maven:
+        ref: a36598ec8c481f6eaeebb99d77c6672bb4c1ef1a
+        rationale: "Runtime dependency of cal10n, exec-maven-plugin,\n     hawtjni,\
+          \ javacc-maven-plugin, maven-antrun-plugin,\n     maven-archiver, maven-artifact-resolver,\n\
+          \     maven-artifact-transfer, maven-assembly-plugin,\n     maven-clean-plugin,\
+          \ maven-common-artifact-filters,\n     maven-compiler-plugin, maven-dependency-analyzer,\n\
+          \     maven-dependency-plugin, maven-doxia-sitetools,\n     maven-enforcer,\
+          \ maven-file-management, maven-filtering,\n     maven-install-plugin, maven-invoker-plugin,\n\
+          \     maven-jar-plugin, maven-plugin-build-helper,\n     maven-plugin-bundle,\
+          \ maven-plugin-tools,\n     maven-remote-resources-plugin, maven-reporting-impl,\n\
+          \     maven-resources-plugin, maven-script-interpreter,\n     maven-shade-plugin,\
+          \ maven-shared-incremental,\n     maven-shared-io, maven-source-plugin,\
+          \ maven-surefire,\n     maven2, modello, munge-maven-plugin, os-maven-plugin,\n\
+          \     plexus-containers, sisu-mojos,\n     spec-version-maven-plugin, xmvn.\n\
+          Build dependency of aqute-bnd, cal10n,\n     exec-maven-plugin, hawtjni,\
+          \ javacc-maven-plugin,\n     maven-antrun-plugin, maven-archiver,\n    \
+          \ maven-artifact-resolver, maven-artifact-transfer,\n     maven-assembly-plugin,\
+          \ maven-clean-plugin,\n     maven-common-artifact-filters, maven-compiler-plugin,\n\
+          \     maven-dependency-analyzer, maven-dependency-plugin,\n     maven-dependency-tree,\
+          \ maven-doxia-sitetools,\n     maven-enforcer, maven-file-management, maven-filtering,\n\
+          \     maven-install-plugin, maven-invoker-plugin,\n     maven-jar-plugin,\
+          \ maven-plugin-build-helper,\n     maven-plugin-bundle, maven-plugin-testing,\n\
+          \     maven-plugin-tools, maven-remote-resources-plugin,\n     maven-reporting-impl,\
+          \ maven-resources-plugin,\n     maven-script-interpreter, maven-shade-plugin,\n\
+          \     maven-shared-incremental, maven-shared-io,\n     maven-shared-utils,\
+          \ maven-source-plugin,\n     maven-surefire, modello, munge-maven-plugin,\n\
+          \     os-maven-plugin, plexus-containers, sisu-mojos,\n     spec-version-maven-plugin,\
+          \ xmvn.\n"
+      maven-antrun-plugin:
+        ref: 8a531612351fa537750ae4003c80055d033491ab
+        rationale: "Runtime dependency of apache-commons-parent,\n     felix-parent.\n\
+          Build dependency of apache-commons-cli,\n     apache-commons-collections,\
+          \ apache-commons-compress,\n     apache-commons-exec, apache-commons-io,\n\
+          \     apache-commons-lang3, apache-commons-net,\n     apache-commons-parent,\
+          \ felix-parent, jdependency,\n     log4j12, maven-invoker, slf4j.\n"
+      maven-archiver:
+        ref: e6ca7b0752486c483346b9e9bf80792ed24a4181
+        rationale: "Runtime dependency of hawtjni, maven-assembly-plugin,\n     maven-jar-plugin,\
+          \ maven-plugin-bundle,\n     maven-source-plugin.\nBuild dependency of hawtjni,\
+          \ maven-assembly-plugin,\n     maven-jar-plugin, maven-plugin-bundle,\n\
+          \     maven-source-plugin.\n"
+      maven-artifact-resolver:
+        ref: a71ab652f0f16955ae65950ecf40fcfc8f73aacc
+        rationale: 'Runtime dependency of maven-remote-resources-plugin. Build dependency
+          of maven-remote-resources-plugin.
+
+          '
+      maven-artifact-transfer:
+        ref: 3e86d3ccae4439e748ebc531a8e15db8863c7a35
+        rationale: "Runtime dependency of maven-assembly-plugin,\n     maven-dependency-plugin,\
+          \ maven-enforcer,\n     maven-shade-plugin.\nBuild dependency of maven-assembly-plugin,\n\
+          \     maven-dependency-plugin, maven-enforcer,\n     maven-shade-plugin.\n"
+      maven-assembly-plugin:
+        ref: 7777e5ef0e6ab1eeb45bb7aa474aa3e8dade0019
+        rationale: "Runtime dependency of apache-commons-parent. Build dependency\
+          \ of apache-commons-codec,\n     apache-commons-jxpath, apache-commons-parent,\
+          \ jaxen,\n     log4j12, maven, maven-enforcer, plexus-component-api,\n \
+          \    qdox, xmvn.\n"
+      maven-clean-plugin:
+        ref: ee3885065308163525724577aebb025b15ce5745
+        rationale: 'Build dependency of maven-invoker.
+
+          '
+      maven-common-artifact-filters:
+        ref: f6249e72e459ad493c9a23371e869e40ebe33b79
+        rationale: "Runtime dependency of maven-artifact-transfer,\n     maven-assembly-plugin,\
+          \ maven-dependency-plugin,\n     maven-enforcer, maven-remote-resources-plugin,\n\
+          \     maven-surefire, sisu-mojos.\nBuild dependency of maven-artifact-transfer,\n\
+          \     maven-assembly-plugin, maven-dependency-plugin,\n     maven-enforcer,\
+          \ maven-remote-resources-plugin,\n     maven-surefire, sisu-mojos.\n"
+      maven-compiler-plugin:
+        ref: a46fb8aaf2216a2946311515c8c7a5b7b2754263
+        rationale: "Runtime dependency of apache-commons-parent,\n     felix-parent,\
+          \ geronimo-parent-poms,\n     glassfish-master-pom, javapackages-tools,\
+          \ xmvn.\n"
+      maven-dependency-analyzer:
+        ref: 8d979f6add10e564189f0899859803c1c8796cba
+        rationale: 'Runtime dependency of maven-dependency-plugin. Build dependency
+          of maven-dependency-plugin.
+
+          '
+      maven-dependency-plugin:
+        ref: 706776bc87ca0186171cc27a395015f1198b7b43
+        rationale: "Build dependency of apache-commons-logging, javamail,\n     maven,\
+          \ maven-surefire, modello, plexus-classworlds,\n     xmvn.\n"
+      maven-dependency-tree:
+        ref: ddd31a46ff14ae296507ede283e0f2471e47b88c
+        rationale: "Runtime dependency of maven-dependency-plugin,\n     maven-enforcer,\
+          \ maven-plugin-bundle,\n     maven-shade-plugin.\nBuild dependency of maven-dependency-plugin,\n\
+          \     maven-enforcer, maven-plugin-bundle,\n     maven-shade-plugin.\n"
+      maven-doxia:
+        ref: 8fb95d069cd34e24e899d0b416eb82a5c5d892ff
+        rationale: "Runtime dependency of javacc-maven-plugin,\n     maven-dependency-plugin,\
+          \ maven-doxia-sitetools,\n     maven-invoker-plugin, maven-plugin-tools,\n\
+          \     maven-reporting-api, maven-reporting-impl.\nBuild dependency of javacc-maven-plugin,\n\
+          \     maven-dependency-plugin, maven-doxia-sitetools,\n     maven-invoker-plugin,\
+          \ maven-plugin-tools,\n     maven-reporting-api, maven-reporting-impl.\n"
+      maven-doxia-sitetools:
+        ref: 5dc6e708df77fdaa81cd41e7a7db0f895b612918
+        rationale: "Runtime dependency of javacc-maven-plugin,\n     maven-dependency-plugin,\
+          \ maven-invoker-plugin,\n     maven-plugin-tools, maven-reporting-impl,\n\
+          \     maven-surefire.\nBuild dependency of javacc-maven-plugin,\n     maven-dependency-plugin,\
+          \ maven-invoker-plugin,\n     maven-plugin-tools, maven-reporting-impl,\n\
+          \     maven-surefire.\n"
+      maven-enforcer:
+        ref: 36f65da78f6707e0feb103316c11dd1b50668b26
+        rationale: "Runtime dependency of apache-parent, objectweb-pom,\n     plexus-pom.\n\
+          Build dependency of apache-parent, cdi-api, javamail,\n     jboss-interceptors-1.2-api,\
+          \ junit, jvnet-parent,\n     maven-dependency-analyzer, maven-plugin-tools,\
+          \ maven2,\n     objectweb-pom, plexus-archiver, plexus-classworlds,\n  \
+          \   plexus-io, plexus-pom, plexus-utils.\n"
+      maven-file-management:
+        ref: 8eb4f6d7bb24b26408fbfc9391a81464ab6bca97
+        rationale: "Runtime dependency of maven-assembly-plugin,\n     maven-dependency-plugin.\n\
+          Build dependency of maven-assembly-plugin,\n     maven-dependency-plugin.\n"
+      maven-filtering:
+        ref: 5aa6320cec2215e5af7255a5d46596d094e5495a
+        rationale: "Runtime dependency of maven-assembly-plugin,\n     maven-remote-resources-plugin,\
+          \ maven-resources-plugin.\nBuild dependency of maven-assembly-plugin,\n\
+          \     maven-remote-resources-plugin, maven-resources-plugin.\n"
+      maven-install-plugin:
+        ref: 59573d9d4d9cf477e37806375970d710c9cd9de4
+        rationale: 'Build dependency of weld-parent, xmvn.
+
+          '
+      maven-invoker:
+        ref: b971cf1a83340b85576d494c644f2a8eb3606e1d
+        rationale: "Runtime dependency of maven-invoker-plugin,\n     maven-plugin-testing,\
+          \ xmvn.\nBuild dependency of maven-invoker-plugin,\n     maven-plugin-testing,\
+          \ xmvn.\n"
+      maven-invoker-plugin:
+        ref: a6c2b44b9515ff37c9de548ebee14507af6c260c
+        rationale: "Build dependency of maven-dependency-tree,\n     maven-plugin-build-helper,\
+          \ maven-surefire, qdox.\n"
+      maven-jar-plugin:
+        ref: 4e038ac6c2925a8064ef3c663f80b49f7f05cdd2
+        rationale: "Runtime dependency of apache-commons-parent,\n     geronimo-parent-poms,\
+          \ httpcomponents-project,\n     javapackages-tools, maven-resolver, xmvn.\n"
+      maven-parent:
+        ref: 21547ece79561c214adab0f8bd40f54faafe61e2
+        rationale: "Runtime dependency of maven-doxia, maven-enforcer,\n     maven-plugin-testing,\
+          \ maven-plugin-tools,\n     maven-plugins-pom, maven-resolver, maven-shared,\n\
+          \     maven-wagon.\nBuild dependency of apache-resource-bundles, maven,\n\
+          \     maven-doxia, maven-doxia-sitetools, maven-enforcer,\n     maven-plugin-testing,\
+          \ maven-plugin-tools,\n     maven-plugins-pom, maven-resolver, maven-shared,\n\
+          \     maven-surefire, maven-wagon, maven2.\n"
+      maven-plugin-build-helper:
+        ref: 7559cbe758e5d0703406657746f76ed6eecab505
+        rationale: "Runtime dependency of apache-commons-parent,\n     weld-parent.\n\
+          Build dependency of apache-commons-logging,\n     apache-commons-net, apache-commons-parent,\
+          \ cdi-api,\n     easymock, guava20, httpcomponents-client,\n     httpcomponents-core,\
+          \ httpcomponents-project, javamail,\n     maven, maven-surefire, slf4j,\n\
+          \     spec-version-maven-plugin, weld-parent, xmvn.\n"
+      maven-plugin-bundle:
+        ref: c0401b5c14b3f881eb7a5115259af685c2e6de31
+        rationale: "Runtime dependency of apache-commons-parent,\n     geronimo-parent-poms,\
+          \ google-guice.\nBuild dependency of apache-commons-compress,\n     apache-commons-parent,\
+          \ assertj-core, beust-jcommander,\n     cdi-api, cglib, easymock, felix-osgi-compendium,\n\
+          \     felix-osgi-core, geronimo-annotation,\n     geronimo-parent-poms,\
+          \ glassfish-annotation-api,\n     glassfish-el, glassfish-jsp-api, glassfish-servlet-api,\n\
+          \     google-guice, guava20, httpcomponents-client,\n     httpcomponents-core,\
+          \ jansi, jansi-native, javamail,\n     javassist, jaxen, jboss-interceptors-1.2-api,\
+          \ jline,\n     jsoup, junit, jzlib, log4j12, maven-resolver,\n     objectweb-asm,\
+          \ objenesis, osgi-annotation,\n     osgi-compendium, osgi-core, plexus-classworlds,\n\
+          \     plexus-containers, plexus-utils, powermock,\n     spec-version-maven-plugin,\
+          \ testng, xbean.\n"
+      maven-plugin-testing:
+        ref: 9145d165b43a9167d7d709ab4f55e644dd36c84d
+        rationale: "Runtime dependency of maven-enforcer. Build dependency of maven-clean-plugin,\n\
+          \     maven-common-artifact-filters, maven-dependency-tree,\n     maven-enforcer,\
+          \ maven-install-plugin,\n     maven-invoker-plugin, maven-shared-utils,\n\
+          \     maven-source-plugin.\n"
+      maven-plugin-tools:
+        ref: afc62d66ab24163dd4ad2df2792e5038e19d378c
+        rationale: "Runtime dependency of maven-plugins-pom,\n     maven-surefire.\n\
+          Build dependency of aqute-bnd, cal10n,\n     exec-maven-plugin, hawtjni,\
+          \ javacc-maven-plugin,\n     maven-antrun-plugin, maven-assembly-plugin,\n\
+          \     maven-clean-plugin, maven-compiler-plugin,\n     maven-dependency-plugin,\
+          \ maven-enforcer,\n     maven-install-plugin, maven-invoker-plugin,\n  \
+          \   maven-jar-plugin, maven-plugin-build-helper,\n     maven-plugin-bundle,\
+          \ maven-plugin-tools,\n     maven-plugins-pom, maven-remote-resources-plugin,\n\
+          \     maven-reporting-impl, maven-resources-plugin,\n     maven-shade-plugin,\
+          \ maven-source-plugin,\n     maven-surefire, modello, munge-maven-plugin,\n\
+          \     os-maven-plugin, plexus-component-api,\n     plexus-containers, sisu-mojos,\n\
+          \     spec-version-maven-plugin, xmvn.\n"
+      maven-plugins-pom:
+        ref: 157c26ee2d09e5c53c285e8bf5a57e275b6a022d
+        rationale: "Build dependency of maven-antrun-plugin,\n     maven-assembly-plugin,\
+          \ maven-clean-plugin,\n     maven-compiler-plugin, maven-dependency-plugin,\n\
+          \     maven-install-plugin, maven-invoker-plugin,\n     maven-jar-plugin,\
+          \ maven-remote-resources-plugin,\n     maven-resources-plugin, maven-shade-plugin,\n\
+          \     maven-source-plugin.\n"
+      maven-remote-resources-plugin:
+        ref: dfbe545df1f32052a0c1a94268e29490d31b1e99
+        rationale: "Runtime dependency of apache-parent, google-guice. Build dependency\
+          \ of apache-parent,\n     apache-resource-bundles, easymock,\n     glassfish-annotation-api,\
+          \ glassfish-el,\n     glassfish-legal, google-guice, objenesis.\n"
+      maven-reporting-api:
+        ref: 2dfca952dce85921825114dd255bf690dfe35e62
+        rationale: "Runtime dependency of javacc-maven-plugin,\n     maven-dependency-plugin,\
+          \ maven-doxia-sitetools,\n     maven-invoker-plugin, maven-plugin-tools,\n\
+          \     maven-reporting-impl, maven-surefire.\nBuild dependency of javacc-maven-plugin,\n\
+          \     maven-dependency-plugin, maven-doxia-sitetools,\n     maven-invoker-plugin,\
+          \ maven-plugin-tools,\n     maven-reporting-impl, maven-surefire.\n"
+      maven-reporting-impl:
+        ref: 6738ddbf25549f5ebc0be089e23b79634a66c42a
+        rationale: "Runtime dependency of javacc-maven-plugin,\n     maven-dependency-plugin,\
+          \ maven-invoker-plugin,\n     maven-plugin-tools, maven-surefire.\nBuild\
+          \ dependency of javacc-maven-plugin,\n     maven-dependency-plugin, maven-invoker-plugin,\n\
+          \     maven-plugin-tools, maven-surefire.\n"
+      maven-resolver:
+        ref: c93fb50f6b791163e6e62a123e0cebc9b372ba59
+        rationale: "Runtime dependency of maven, maven-artifact-transfer,\n     maven-dependency-tree,\
+          \ xmvn.\nBuild dependency of aqute-bnd, maven,\n     maven-artifact-transfer,\
+          \ maven-common-artifact-filters,\n     maven-dependency-tree.\n"
+      maven-resources-plugin:
+        ref: 47eccde440bd255a73263b362aa379bc294ab0b1
+        rationale: 'Runtime dependency of javapackages-tools. Build dependency of
+          plexus-component-api.
+
+          '
+      maven-script-interpreter:
+        ref: 7e111ca7ea829505372917d8bb00989613388b82
+        rationale: 'Runtime dependency of maven-invoker-plugin. Build dependency of
+          maven-invoker-plugin.
+
+          '
+      maven-shade-plugin:
+        ref: 33d6932be8ced9dd6316fcaba5b1afb676a16447
+        rationale: "Build dependency of maven-surefire, maven-wagon,\n     maven2,\
+          \ objectweb-asm, objenesis.\n"
+      maven-shared:
+        ref: 88c8451f5991e0f4a2588e7ef7d373704497573e
+        rationale: "Build dependency of maven-archiver,\n     maven-artifact-resolver,\
+          \ maven-artifact-transfer,\n     maven-common-artifact-filters,\n     maven-dependency-analyzer,\
+          \ maven-dependency-tree,\n     maven-file-management, maven-filtering, maven-invoker,\n\
+          \     maven-reporting-api, maven-reporting-impl,\n     maven-script-interpreter,\
+          \ maven-shared-incremental,\n     maven-shared-io, maven-shared-utils, maven-verifier.\n"
+      maven-shared-incremental:
+        ref: 27d784b3f637d48bf6407d4f8b2fa63b3d4ffeec
+        rationale: 'Runtime dependency of maven-compiler-plugin. Build dependency
+          of maven-compiler-plugin.
+
+          '
+      maven-shared-io:
+        ref: 15177257a462f148d64405acda32b01320b2160b
+        rationale: "Runtime dependency of maven-assembly-plugin,\n     maven-file-management.\n\
+          Build dependency of maven-assembly-plugin,\n     maven-file-management.\n"
+      maven-shared-utils:
+        ref: bc35d6773f6be1e66cfd6bdce85b8af085cd9176
+        rationale: "Runtime dependency of maven, maven-archiver,\n     maven-clean-plugin,\
+          \ maven-common-artifact-filters,\n     maven-compiler-plugin, maven-dependency-plugin,\n\
+          \     maven-file-management, maven-filtering,\n     maven-install-plugin,\
+          \ maven-reporting-impl,\n     maven-shared-incremental, maven-shared-io,\n\
+          \     maven-surefire, maven-verifier.\nBuild dependency of maven, maven-archiver,\n\
+          \     maven-clean-plugin, maven-common-artifact-filters,\n     maven-compiler-plugin,\
+          \ maven-file-management,\n     maven-filtering, maven-install-plugin,\n\
+          \     maven-reporting-impl, maven-shared-incremental,\n     maven-shared-io,\
+          \ maven-surefire, maven-verifier.\n"
+      maven-source-plugin:
+        ref: 83358ccd276c1925c6d3cfbd401e2d6d78bc300c
+        rationale: "Runtime dependency of google-guice, jboss-parent,\n     weld-parent.\n\
+          Build dependency of aqute-bnd, cal10n,\n     glassfish-annotation-api, glassfish-jsp-api,\n\
+          \     glassfish-servlet-api, google-guice, javamail,\n     javassist, jboss-interceptors-1.2-api,\
+          \ jboss-parent,\n     jline, jsch, maven-plugin-testing, maven-plugin-tools,\n\
+          \     munge-maven-plugin, slf4j, weld-parent, xbean.\n"
+      maven-surefire:
+        ref: d7ca3cfef87c3389eb70d08c7fc6e175db7097a9
+        rationale: "Runtime dependency of apache-commons-parent,\n     javapackages-tools,\
+          \ maven-plugin-tools.\nBuild dependency of apache-commons-lang,\n     apache-commons-logging,\
+          \ cdi-api, easymock,\n     glassfish-el, maven-plugin-tools, maven-surefire,\n\
+          \     plexus-languages.\n"
+      maven-verifier:
+        ref: 12c19ccc002a224200fdabca995978b4d03a6e87
+        rationale: 'Runtime dependency of maven-surefire. Build dependency of maven-surefire.
+
+          '
+      maven-wagon:
+        ref: be1e6baba5b6efb58c3e56b0b3d4f6deb3a5d8c9
+        rationale: "Runtime dependency of maven, maven-resolver,\n     maven-shared-io,\
+          \ maven2, xmvn.\nBuild dependency of maven, maven-dependency-plugin,\n \
+          \    maven-plugin-testing, maven-resolver, maven-shared-io,\n     maven2.\n"
+      maven2:
+        ref: 6712aa89c3388dcbbb7d99a55f73e3cec82c120d
+        rationale: "Runtime dependency of cal10n, exec-maven-plugin,\n     hawtjni,\
+          \ javacc-maven-plugin, maven-antrun-plugin,\n     maven-dependency-analyzer,\
+          \ maven-doxia-sitetools,\n     maven-install-plugin, maven-invoker-plugin,\n\
+          \     maven-plugin-build-helper, maven-plugin-tools,\n     maven-remote-resources-plugin,\
+          \ plexus-containers.\nBuild dependency of cal10n, exec-maven-plugin, hawtjni,\n\
+          \     javacc-maven-plugin, maven-antrun-plugin,\n     maven-artifact-resolver,\
+          \ maven-dependency-analyzer,\n     maven-doxia-sitetools, maven-install-plugin,\n\
+          \     maven-invoker-plugin, maven-plugin-build-helper,\n     maven-plugin-tools,\
+          \ maven-remote-resources-plugin,\n     plexus-containers.\n"
+      mockito:
+        ref: 769ad088e5337d08d9368190aa378727d020218b
+        rationale: "Runtime dependency of assertj-core, felix-parent,\n     powermock.\n\
+          Build dependency of assertj-core,\n     felix-osgi-foundation, felix-parent,\n\
+          \     httpcomponents-client, httpcomponents-core, maven,\n     powermock.\n"
+      modello:
+        ref: 40e06f7f6849107e6c396bd2a8a9e43efeddbcca
+        rationale: "Build dependency of maven, maven-assembly-plugin,\n     maven-doxia,\
+          \ maven-doxia-sitetools,\n     maven-file-management, maven-invoker-plugin,\n\
+          \     maven-plugin-tools, maven-remote-resources-plugin,\n     maven2, plexus-sec-dispatcher,\
+          \ xmvn.\n"
+      mojo-parent:
+        ref: fa9a4d4442d7588413aab56f405a8b66106070fd
+        rationale: "Build dependency of exec-maven-plugin,\n     javacc-maven-plugin,\
+          \ maven-plugin-build-helper.\n"
+      munge-maven-plugin:
+        ref: 11dd1e0a0be2144a12a4030e8ca78ceebb684b40
+        rationale: 'Build dependency of google-guice.
+
+          '
+      objectweb-asm:
+        ref: a94f57d9fb525031e76cbd196ae608aad44f03fa
+        rationale: "Runtime dependency of cglib, easymock, hawtjni,\n     jdependency,\
+          \ maven-dependency-analyzer,\n     maven-plugin-tools, maven-shade-plugin,\n\
+          \     plexus-containers, plexus-languages, xbean, xmvn.\nBuild dependency\
+          \ of cglib, easymock, google-guice,\n     hawtjni, jdependency, maven-dependency-analyzer,\n\
+          \     maven-plugin-tools, maven-shade-plugin,\n     plexus-containers, plexus-languages,\
+          \ xbean, xmvn.\n"
+      objectweb-pom:
+        ref: 58fe35fbbef05c85e8150557c997abe88a52f649
+        rationale: 'Build dependency of objectweb-asm.
+
+          '
+      objenesis:
+        ref: b3b9656201b90e728c05841f01387931f30e084f
+        rationale: 'Runtime dependency of easymock, mockito, powermock. Build dependency
+          of easymock, mockito, powermock.
+
+          '
+      os-maven-plugin:
+        ref: 4a36c1fb500769e705f3552d1d95a066d88b85af
+        rationale: 'Module API.
+
+          '
+      osgi-annotation:
+        ref: 9afdec440773ed2c370ac26d750b596d27597c5a
+        rationale: "Runtime dependency of aqute-bnd. Build dependency of aqute-bnd,\
+          \ osgi-compendium,\n     osgi-core.\n"
+      osgi-compendium:
+        ref: 71e258374db9ecc22b3c5a293e88aac4d56dcda2
+        rationale: 'Runtime dependency of aqute-bnd. Build dependency of aqute-bnd.
+
+          '
+      osgi-core:
+        ref: 2c47dab5c16fdd9d4c5dac483ed4ccde6f7f33b5
+        rationale: "Runtime dependency of aqute-bnd, maven-plugin-bundle. Build dependency\
+          \ of aqute-bnd, maven-plugin-bundle,\n     osgi-compendium, sisu.\n"
+      plexus-ant-factory:
+        ref: a9724aceb2d0b341ab7c0989d6acea299a81b52f
+        rationale: 'Runtime dependency of maven-plugin-tools. Build dependency of
+          maven-plugin-tools.
+
+          '
+      plexus-archiver:
+        ref: f1d863da5408d734a6c217f3543059cd527f32a1
+        rationale: "Runtime dependency of hawtjni, maven-archiver,\n     maven-assembly-plugin,\
+          \ maven-dependency-plugin,\n     maven-jar-plugin, maven-plugin-testing,\n\
+          \     maven-plugin-tools, maven-source-plugin.\nBuild dependency of hawtjni,\
+          \ maven-archiver,\n     maven-assembly-plugin, maven-dependency-plugin,\n\
+          \     maven-jar-plugin, maven-plugin-testing,\n     maven-plugin-tools,\
+          \ maven-source-plugin.\n"
+      plexus-bsh-factory:
+        ref: d0d4386cb0fc5bd95e984e16515e91fb446906dc
+        rationale: 'Runtime dependency of maven-plugin-tools. Build dependency of
+          maven-plugin-tools.
+
+          '
+      plexus-build-api:
+        ref: 0c17f823c457bd1aeb5ccbb41030f11cba3ed8e8
+        rationale: "Runtime dependency of aqute-bnd, maven-filtering,\n     maven-plugin-bundle,\
+          \ modello.\nBuild dependency of aqute-bnd, maven-filtering,\n     maven-plugin-bundle,\
+          \ modello.\n"
+      plexus-cipher:
+        ref: 79603b489e9703e9d20c04632d1dca01a8b3fb5d
+        rationale: "Runtime dependency of maven, plexus-sec-dispatcher,\n     xmvn.\n\
+          Build dependency of maven, plexus-sec-dispatcher.\n"
+      plexus-classworlds:
+        ref: 8aac0f4168953280f898f7b73f299ee7494dd392
+        rationale: "Runtime dependency of maven, maven-dependency-plugin,\n     plexus-bsh-factory,\
+          \ plexus-component-api,\n     plexus-containers, sisu, xmvn.\nBuild dependency\
+          \ of maven, maven-dependency-plugin,\n     maven-resolver, plexus-ant-factory,\
+          \ plexus-bsh-factory,\n     plexus-component-api, plexus-containers, sisu.\n"
+      plexus-cli:
+        ref: f32ae907e27b54e02085c36218f430d53a59a157
+        rationale: 'Runtime dependency of plexus-containers. Build dependency of plexus-containers.
+
+          '
+      plexus-compiler:
+        ref: 77b3348ab7a04557cb19fbdc23aa0f9294fc6414
+        rationale: 'Runtime dependency of maven-compiler-plugin, modello. Build dependency
+          of maven-compiler-plugin, modello.
+
+          '
+      plexus-component-api:
+        ref: bc01fcf64a8810a7ca858e12df92e827af5321ac
+        rationale: "Runtime dependency of plexus-interactivity. Build dependency of\
+          \ maven-shared-incremental,\n     plexus-interactivity.\n"
+      plexus-component-factories-pom:
+        ref: f2cc0047fc3c25b0cbc68cbce34655d11d9b96d5
+        rationale: 'Build dependency of plexus-ant-factory.
+
+          '
+      plexus-components-pom:
+        ref: 08b8919553f3a47143cf4162630cd8a1e6ece848
+        rationale: "Runtime dependency of plexus-compiler,\n     plexus-interactivity.\n\
+          Build dependency of plexus-cli, plexus-compiler,\n     plexus-i18n, plexus-interactivity,\n\
+          \     plexus-interpolation, plexus-resources,\n     plexus-velocity.\n"
+      plexus-containers:
+        ref: 778b76bd6d864ef5d730d8ba0ca05cdcf2ffda46
+        rationale: "Runtime dependency of maven, maven-artifact-transfer,\n     maven-dependency-analyzer,\
+          \ maven-dependency-tree,\n     maven-doxia, maven-doxia-sitetools, maven-enforcer,\n\
+          \     maven-invoker, maven-plugin-tools,\n     maven-script-interpreter,\
+          \ maven-shared-incremental,\n     maven-wagon, maven2, modello, plexus-ant-factory,\n\
+          \     plexus-bsh-factory, plexus-cli, plexus-compiler,\n     plexus-component-factories-pom,\
+          \ plexus-components-pom,\n     plexus-i18n, plexus-resources, plexus-velocity,\
+          \ sisu,\n     xmvn.\nBuild dependency of exec-maven-plugin, maven,\n   \
+          \  maven-artifact-resolver, maven-artifact-transfer,\n     maven-assembly-plugin,\
+          \ maven-compiler-plugin,\n     maven-dependency-analyzer, maven-dependency-tree,\n\
+          \     maven-doxia, maven-doxia-sitetools, maven-enforcer,\n     maven-filtering,\
+          \ maven-invoker, maven-plugin-testing,\n     maven-plugin-tools, maven-resolver,\n\
+          \     maven-script-interpreter, maven-shade-plugin,\n     maven-shared-incremental,\
+          \ maven-shared-utils,\n     maven-wagon, maven2, modello, os-maven-plugin,\n\
+          \     plexus-ant-factory, plexus-archiver,\n     plexus-bsh-factory, plexus-build-api,\
+          \ plexus-cli,\n     plexus-compiler, plexus-component-api,\n     plexus-component-factories-pom,\
+          \ plexus-components-pom,\n     plexus-containers, plexus-i18n, plexus-io,\n\
+          \     plexus-languages, plexus-resources,\n     plexus-sec-dispatcher, plexus-velocity,\
+          \ sisu, xmvn.\n"
+      plexus-i18n:
+        ref: 6cb155503d13a1797f912e525c4704606327d8ad
+        rationale: "Runtime dependency of maven-doxia-sitetools,\n     maven-enforcer,\
+          \ maven-invoker-plugin.\nBuild dependency of maven-doxia-sitetools,\n  \
+          \   maven-enforcer, maven-invoker-plugin.\n"
+      plexus-interactivity:
+        ref: c2824e186c0230b0c14d7340c0908114c2b502a2
+        rationale: 'Build dependency of maven-wagon.
+
+          '
+      plexus-interpolation:
+        ref: 21b7618d2c039130f9263f2f68d3026c15e59ff3
+        rationale: "Runtime dependency of hawtjni, maven, maven-archiver,\n     maven-assembly-plugin,\
+          \ maven-doxia-sitetools,\n     maven-filtering, maven-invoker-plugin,\n\
+          \     maven-remote-resources-plugin, maven-resources-plugin,\n     maven2,\
+          \ xmvn.\nBuild dependency of hawtjni, maven, maven-archiver,\n     maven-assembly-plugin,\
+          \ maven-doxia-sitetools,\n     maven-filtering, maven-invoker-plugin,\n\
+          \     maven-remote-resources-plugin, maven-resources-plugin,\n     maven2.\n"
+      plexus-io:
+        ref: ae3b61a3e4ee6c8c7627564a411a0d5d560c4df1
+        rationale: "Runtime dependency of hawtjni, maven-assembly-plugin,\n     maven-dependency-plugin,\
+          \ plexus-archiver.\nBuild dependency of hawtjni, maven-assembly-plugin,\n\
+          \     maven-dependency-plugin, plexus-archiver.\n"
+      plexus-languages:
+        ref: 3f37aa19365606303fbe7f6ba07c42bb24b100e4
+        rationale: "Runtime dependency of maven-compiler-plugin,\n     maven-surefire.\n\
+          Build dependency of maven-compiler-plugin,\n     maven-surefire.\n"
+      plexus-pom:
+        ref: 767006f12c03e90b432192e5deca88ad0a7b8031
+        rationale: "Runtime dependency of plexus-component-factories-pom,\n     plexus-components-pom,\
+          \ plexus-containers.\nBuild dependency of plexus-archiver,\n     plexus-classworlds,\
+          \ plexus-component-factories-pom,\n     plexus-components-pom, plexus-containers,\
+          \ plexus-io,\n     plexus-languages, plexus-utils.\n"
+      plexus-resources:
+        ref: eba169d308e877145ecaeb32063a768e34132565
+        rationale: "Runtime dependency of maven-remote-resources-plugin,\n     spec-version-maven-plugin.\n\
+          Build dependency of maven-remote-resources-plugin,\n     spec-version-maven-plugin.\n"
+      plexus-sec-dispatcher:
+        ref: 2e319ba27e0d8bb3fd20acf1fa26970be377fa64
+        rationale: 'Runtime dependency of maven, xmvn. Build dependency of maven.
+
+          '
+      plexus-utils:
+        ref: 57e5f3bbded542a2c9c9a517a721e429c7683d41
+        rationale: "Runtime dependency of exec-maven-plugin, hawtjni,\n     javacc-maven-plugin,\
+          \ maven, maven-antrun-plugin,\n     maven-archiver, maven-artifact-transfer,\n\
+          \     maven-assembly-plugin, maven-dependency-analyzer,\n     maven-dependency-plugin,\
+          \ maven-doxia,\n     maven-doxia-sitetools, maven-enforcer,\n     maven-file-management,\
+          \ maven-filtering,\n     maven-install-plugin, maven-invoker,\n     maven-invoker-plugin,\
+          \ maven-jar-plugin,\n     maven-plugin-build-helper, maven-plugin-bundle,\n\
+          \     maven-plugin-tools, maven-remote-resources-plugin,\n     maven-reporting-impl,\
+          \ maven-resources-plugin,\n     maven-script-interpreter, maven-shade-plugin,\n\
+          \     maven-shared-io, maven-source-plugin, maven-surefire,\n     maven-wagon,\
+          \ maven2, modello, os-maven-plugin,\n     plexus-ant-factory, plexus-archiver,\n\
+          \     plexus-bsh-factory, plexus-build-api, plexus-cli,\n     plexus-compiler,\
+          \ plexus-containers, plexus-i18n,\n     plexus-interactivity, plexus-io,\
+          \ plexus-resources,\n     plexus-sec-dispatcher, sisu, sisu-mojos, xmvn.\n\
+          Build dependency of exec-maven-plugin, hawtjni,\n     javacc-maven-plugin,\
+          \ maven, maven-antrun-plugin,\n     maven-archiver, maven-artifact-transfer,\n\
+          \     maven-assembly-plugin, maven-dependency-analyzer,\n     maven-dependency-plugin,\
+          \ maven-doxia,\n     maven-doxia-sitetools, maven-enforcer,\n     maven-file-management,\
+          \ maven-filtering,\n     maven-install-plugin, maven-invoker,\n     maven-invoker-plugin,\
+          \ maven-jar-plugin,\n     maven-plugin-build-helper, maven-plugin-bundle,\n\
+          \     maven-plugin-testing, maven-plugin-tools,\n     maven-remote-resources-plugin,\
+          \ maven-reporting-impl,\n     maven-resolver, maven-resources-plugin,\n\
+          \     maven-script-interpreter, maven-shade-plugin,\n     maven-shared-io,\
+          \ maven-source-plugin, maven-surefire,\n     maven-wagon, maven2, modello,\
+          \ os-maven-plugin,\n     plexus-ant-factory, plexus-archiver,\n     plexus-bsh-factory,\
+          \ plexus-build-api, plexus-cli,\n     plexus-compiler, plexus-containers,\
+          \ plexus-i18n,\n     plexus-interactivity, plexus-io, plexus-resources,\n\
+          \     plexus-sec-dispatcher, sisu, sisu-mojos.\n"
+      plexus-velocity:
+        ref: bb13c4f119c64085fbfeed61d705e29e73392796
+        rationale: "Runtime dependency of maven-doxia-sitetools,\n     maven-plugin-tools.\n\
+          Build dependency of maven-doxia-sitetools,\n     maven-plugin-tools.\n"
+      powermock:
+        ref: f7391223978dd6c988e7f873ddbbdba6be029ff7
+        rationale: 'Build dependency of apache-commons-compress, jline.
+
+          '
+      qdox:
+        ref: 09c8ffb274f31536639376be5d6d9ab139aa4807
+        rationale: "Runtime dependency of hamcrest, maven-plugin-tools,\n     plexus-containers,\
+          \ plexus-languages.\nBuild dependency of hamcrest, maven-plugin-tools,\n\
+          \     plexus-containers, plexus-languages.\n"
+      regexp:
+        ref: 44523ef3198698909400d9f8eca26fe103360ebb
+        rationale: 'Runtime dependency of ant, xalan-j2. Build dependency of ant,
+          xalan-j2.
+
+          '
+      sisu:
+        ref: 9f23969130e572ba2130f7a8c31db7b765b4fb15
+        rationale: 'Runtime dependency of maven, sisu-mojos, xmvn. Build dependency
+          of maven, maven-resolver, sisu-mojos.
+
+          '
+      sisu-mojos:
+        ref: 731600eefa65af252c3f4e29d71a05ef23ea3e9a
+        rationale: "Build dependency of maven, maven-resolver,\n     plexus-cipher.\n"
+      slf4j:
+        ref: f1b90f98a2ef64a2c7c9e97b6c8631ad56b1bdff
+        rationale: "Runtime dependency of aqute-bnd, maven,\n     maven-artifact-transfer,\
+          \ maven-resolver, maven-wagon,\n     sisu-mojos, xbean, xmvn.\nBuild dependency\
+          \ of aqute-bnd, google-guice, maven,\n     maven-artifact-transfer, maven-resolver,\
+          \ maven-wagon,\n     sisu, sisu-mojos, xbean.\n"
+      sonatype-oss-parent:
+        ref: a820f24935c4e9b5a1577d0feafc8113d4c3a284
+        rationale: "Build dependency of apache-ivy, beust-jcommander,\n     cglib,\
+          \ guava20, jaxen, jflex, jline, jsch,\n     os-maven-plugin, powermock,\
+          \ qdox, sisu-mojos, testng.\n"
+      sonatype-plugins-parent:
+        ref: 35b6a7bb5a086995ab73be05de2fe60b3e99b223
+        rationale: 'Build dependency of munge-maven-plugin.
+
+          '
+      spec-version-maven-plugin:
+        ref: 1dd5c581769f1195105ca4e24f4332eb961d2a23
+        rationale: 'Build dependency of glassfish-annotation-api.
+
+          '
+      spice-parent:
+        ref: 39e77261da8e5654cc976d52fede5f95f364e471
+        rationale: "Build dependency of plexus-build-api, plexus-cipher,\n     plexus-sec-dispatcher.\n"
+      testng:
+        ref: 10a9599120b8594a7b800c72b9f9bb8a79f16607
+        rationale: "Runtime dependency of hamcrest, powermock. Build dependency of\
+          \ beust-jcommander, cdi-api,\n     easymock, hamcrest, maven-surefire, powermock,\
+          \ sisu.\n"
+      velocity:
+        ref: 83e6f13719a61bdb95dba9a17f562f34e9a2d0d9
+        rationale: "Runtime dependency of maven-doxia-sitetools,\n     maven-plugin-tools,\
+          \ maven-remote-resources-plugin,\n     plexus-velocity.\nBuild dependency\
+          \ of maven-doxia-sitetools,\n     maven-plugin-tools, maven-remote-resources-plugin,\n\
+          \     plexus-velocity.\n"
+      weld-parent:
+        ref: 2c52be550fd8c3cc2c673664af2c8ddf70824303
+        rationale: 'Build dependency of cdi-api.
+
+          '
+      xalan-j2:
+        ref: fe97c5f18bc5d28b0ba7bbd88c81fcbfb9524039
+        rationale: "Runtime dependency of ant, maven-doxia-sitetools,\n     xerces-j2,\
+          \ xmlunit.\nBuild dependency of ant, bsf, jdom2,\n     maven-doxia-sitetools,\
+          \ xerces-j2, xmlunit.\n"
+      xbean:
+        ref: d51f8478416cc4384045bc9cf43b834b8fdb9993
+        rationale: 'Runtime dependency of hawtjni, plexus-containers. Build dependency
+          of hawtjni, plexus-containers.
+
+          '
+      xerces-j2:
+        ref: 0b5ca6b024a3ce537d196987a721643a17045f0b
+        rationale: "Runtime dependency of ant-contrib, xalan-j2. Build dependency\
+          \ of ant-contrib, apache-commons-jxpath,\n     jaxen, jdom, jdom2, xalan-j2,\
+          \ xmlunit.\n"
+      xml-commons-apis:
+        ref: 030c5248e1cfe70e945d3a67ca6359f90ac8ef5c
+        rationale: "Runtime dependency of jtidy, maven-doxia-sitetools,\n     xalan-j2,\
+          \ xerces-j2, xmlunit.\nBuild dependency of apache-commons-jxpath, jaxen,\n\
+          \     jdom2, jtidy, maven-doxia-sitetools,\n     plexus-classworlds, xalan-j2,\
+          \ xerces-j2, xmlunit.\n"
+      xml-commons-resolver:
+        ref: f1a8175ab88c8460d704a7506ab40e9f74a39bff
+        rationale: 'Runtime dependency of ant, xerces-j2. Build dependency of ant,
+          xerces-j2.
+
+          '
+      xmlunit:
+        ref: a79b9a51ea9aef6819c14e2ffa77cce1cb906c70
+        rationale: 'Runtime dependency of maven-doxia. Build dependency of maven,
+          maven-doxia, xmvn.
+
+          '
+      xmvn:
+        ref: d6a86f6b786c4b2a078caa18ece46395c2475de7
+        rationale: 'Runtime dependency of javapackages-tools.
+
+          '
+      xz-java:
+        ref: b11bf2247fe02b26bf1bcb5c838b52ed4a242ee5
+        rationale: "Runtime dependency of ant, plexus-archiver. Build dependency of\
+          \ ant, apache-commons-compress,\n     plexus-archiver.\n"
+  name: javapackages-tools
+  stream: '201801'
+...

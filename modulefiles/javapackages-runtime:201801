@@ -1,0 +1,46 @@
+document: modulemd
+version: 2
+data:
+  summary: Basic runtime utilities to support Java applications
+  description: This module contains basic filesystem layout and runtime utilities
+    used to support system applications written in JVM languages.
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      platform:
+      - el8.0.0
+    requires:
+      platform: []
+  profiles:
+    common:
+      rpms:
+      - javapackages-filesystem
+      - javapackages-tools
+  api:
+    rpms:
+    - javapackages-filesystem
+    - javapackages-tools
+  filter:
+    rpms:
+    - ivy-local
+    - javapackages-local
+    - maven-local
+    - python3-javapackages
+  buildopts:
+    rpms:
+      macros: '%_without_asciidoc 1
+
+        %_without_gradle 1
+
+        '
+  components:
+    rpms:
+      javapackages-tools:
+        ref: 7e149139d2c378297abd097718cc244c39088298
+        rationale: 'Module API.
+
+          '
+  name: javapackages-runtime
+  stream: '201801'
