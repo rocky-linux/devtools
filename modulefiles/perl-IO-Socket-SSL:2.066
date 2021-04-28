@@ -1,0 +1,90 @@
+document: modulemd
+version: 2
+data:
+    name: perl-IO-Socket-SSL
+    stream: "2.066"
+    summary: Perl library for transparent TLS
+    description: >
+        IO::Socket::SSL is a drop-in replacement for IO::Socket::IP that
+        uses TLS to encrypt data before it is transferred to a remote server
+        or client. IO::Socket::SSL supports all the extra features that one
+        needs to write a full-featured TLS client or server application like
+        multiple TLS contexts, cipher selection, certificate verification, and
+        TLS version selection.
+        Net::SSLeay offers some high level convenience functions for accessing
+        web pages on TLS servers, a sslcat() function for writing your own
+        clients, and finally access to the API of OpenSSL library so you can
+        write servers or clients for more complicated applications.
+    license:
+        module: [ MIT ]
+    dependencies:
+        - buildrequires:
+              platform: [el8.3.0]
+              perl: []
+          requires:
+              platform: [el8]
+              perl: []
+    references:
+        community: https://metacpan.org/release/IO-Socket-SSL
+    profiles:
+        common:
+            description: IO::Socket::SSL and Net::SSLeay
+            rpms:
+                - perl-IO-Socket-SSL
+                - perl-Net-SSLeay
+    api:
+        rpms:
+            - perl-IO-Socket-SSL
+            - perl-Net-SSLeay
+    filter:
+        rpms:
+            - perl-Devel-StackTrace
+            - perl-IO-Socket-INET6
+            - perl-IO-Tty
+            - perl-IPC-Run
+            - perl-Net-IDN-Encode
+            - perl-Net-LibIDN
+            - perl-Socket6
+            - perl-Test-NoWarnings
+    components:
+        rpms:
+            perl-Devel-StackTrace:
+                rationale: A build dependency.
+                ref: 96efdcd5d1c2ed8a3d86a0a62c4a80a009fa03de
+                buildorder: 0
+            perl-IO-Tty:
+                rationale: A build dependency.
+                ref: 45881777e08f740d0fa693e8fdaba94cf3c34840
+                buildorder: 0
+            perl-Net-LibIDN:
+                rationale: A build dependency.
+                ref: 2b082f9db24e80f9f34ef47abffba8f9a6f3a395
+                buildorder: 0
+            perl-Net-SSLeay:
+                rationale: The API.
+                ref: 6edbc4f6b5a8a961c9d08518de4720a8bc02c697
+                buildorder: 0
+            perl-Socket6:
+                rationale: A build dependency.
+                ref: bed8537b8005e988d6f50781e2374ece7f54e112
+                buildorder: 0
+            perl-IO-Socket-INET6:
+                rationale: A build dependency.
+                ref: 468bba3f4a26f522e3f7666575ff940a7d333720
+                buildorder: 1
+            perl-IPC-Run:
+                rationale: A build dependency.
+                ref: 6a03807c84ed7142e301aa43c6dd2fc4543740df
+                buildorder: 1
+            perl-Test-NoWarnings:
+                rationale: A build dependency.
+                ref: 7ab4a745bffefc821d69bc831a4be6a91118c15e
+                buildorder: 1
+            perl-Net-IDN-Encode:
+                rationale: A build dependency.
+                ref: e6287ef850d79a4be69a55ffd28bfaf057346e1f
+                buildorder: 2
+            perl-IO-Socket-SSL:
+                rationale: The API.
+                ref: 21b1f5897e10f8d38a0f5bdea6752b182459f23e
+                buildorder: 3

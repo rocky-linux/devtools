@@ -1,0 +1,353 @@
+---
+document: modulemd
+version: 2
+data:
+    name: python38
+    stream: 3.8
+    summary: Python programming language, version 3.8
+    description: |-
+        This module gives users access to the internal Python 3.8 in RHEL8, as
+        well as provides some additional Python packages the users might need.
+        In addition to these you can install any python3-* package available
+        in RHEL and use it with Python from this module.
+    license:
+        module:
+            - MIT
+    dependencies:
+        - buildrequires:
+              platform: [el8]
+              # Depending on our selves for bootstrapping
+              python38: [3.8-bootstrap]
+              # sicpy needs package swig
+              swig: [3.0]
+              # mod_wsgi needs several packages from httpd
+              httpd: [2.4]
+          requires:
+              platform: [el8]
+    references:
+        community: https://www.python.org/
+        documentation: https://docs.python.org/3.8/
+    profiles:
+        common:
+            rpms:
+                - python38
+        build:
+            rpms:
+                - python38
+                - python38-devel
+                - python38-rpm-macros
+    filter:
+        rpms:
+            - python38-pyparsing
+            - python38-atomicwrites
+            - python38-attrs
+            - python38-packaging
+            - python38-py
+            - python38-pytest
+            - python38-more-itertools
+            - python38-pluggy
+            - python38-wcwidth
+    api:
+        rpms:
+            - python38
+            - python38-Cython
+            - python38-PyMySQL
+            - python38-asn1crypto
+            - python38-babel
+            - python38-cffi
+            - python38-chardet
+            - python38-cryptography
+            - python38-devel
+            - python38-idle
+            - python38-idna
+            - python38-jinja2
+            - python38-libs
+            - python38-lxml
+            - python38-markupsafe
+            - python38-mod_wsgi
+            - python38-numpy
+            - python38-numpy-f2py
+            - python38-pip
+            - python38-pip-wheel
+            - python38-ply
+            - python38-psutil
+            - python38-psycopg2
+            - python38-pycparser
+            - python38-pysocks
+            - python38-pytz
+            - python38-pyyaml
+            - python38-requests
+            - python38-rpm-macros
+            - python38-scipy
+            - python38-setuptools
+            - python38-setuptools-wheel
+            - python38-six
+            - python38-test
+            - python38-tkinter
+            - python38-urllib3
+            - python38-wheel
+            - python38-wheel-wheel
+    buildopts:
+        rpms:
+                # === Bootstrap phase 1 ===
+                #
+                # %python3_pkgversion 38
+                # %_without_python2 1
+                # # python38, setuptools, wheel
+                # %_with_bootstrap 1
+                # # python38
+                # %_without_rpmwheels 1
+                # # python38, setuptools, pip
+                # %_without_tests 1
+                # # pip
+                # %_without_doc 1
+                # %python3_pkgversion 38
+
+                # === Bootstrap phase 2 ===
+                #
+                # %python3_pkgversion 38
+                # %_without_python2 1
+                # # python38, setuptools, six, py, chardet, attrs, pluggy, pysocks,
+                # # atomicwrites, wcwidth, packaging
+                # %_without_tests 1
+                # # py, pyparsing, atomicwrites, packaging, pytest
+                # %_without_docs 1
+                # # pytest
+                # %_without_timeout 1
+                # %_without_optional_tests 1
+
+            macros: |
+                # === Bootstrap phase 3/4 ===
+                #
+                %python3_pkgversion 38
+                %_without_python2 1
+                # py, pyparsing, atomicwrites, packaging, pytest
+                %_without_docs 1
+    components:
+        rpms:
+            # === Bootstrap phase 1 ===
+            #
+            # python38:
+            #     rationale: The main Python interpreter
+            #     ref: stream-3.8-rhel-8.2.0
+            #     buildorder: 10
+            # python3x-setuptools:
+            #     rationale: Packaging tool
+            #     ref: stream-41.6.0-rhel-8.2.0
+            #     buildorder: 20
+            # python-wheel:
+            #     rationale: Packaging tool
+            #     ref: stream-0.33.6-rhel-8.2.0
+            #     buildorder: 30
+            # python3x-pip:
+            #     rationale: Packaging tool
+            #     ref: stream-19.3.1-rhel-8.2.0
+            #     buildorder: 40
+
+
+            # === Bootstrap phase 2 ===
+            #
+            # python3x-setuptools:
+            #     rationale: Packaging tool
+            #     ref: stream-41.6.0-rhel-8.2.0
+            #     buildorder: 10
+            # python38:
+            #     rationale: The main Python interpreter
+            #     ref: stream-3.8-rhel-8.2.0
+            #     buildorder: 20
+            # python-wheel:
+            #     rationale: Packaging tool
+            #     ref: stream-0.33.6-rhel-8.2.0
+            #     buildorder: 30
+            # python3x-pip:
+            #     rationale: Packaging tool
+            #     ref: stream-19.3.1-rhel-8.2.0
+            #     buildorder: 30
+            #
+            # python-six:
+            #     rationale: Python component
+            #     ref: stream-1.12.0-rhel-8.2.0
+            #     buildorder: 30
+            # python-py:
+            #     rationale: Python component
+            #     ref: stream-1.8.0-rhel-8.2.0
+            #     buildorder: 30
+            # python-chardet:
+            #     rationale: Python component
+            #     ref: stream-3.0.4-python38-rhel-8.2.0
+            #     buildorder: 30
+            # python-attrs:
+            #     rationale: Python component
+            #     ref: stream-19.3.0-rhel-8.2.0
+            #     buildorder: 30
+            # python-pluggy:
+            #     rationale: Python component
+            #     ref: stream-0.13.0-rhel-8.2.0
+            #     buildorder: 30
+            # python-markupsafe:
+            #     rationale: Python component
+            #     ref: stream-1.1.1-rhel-8.2.0
+            #     buildorder: 30
+            # python-pysocks:
+            #     rationale: Python component
+            #     ref: stream-1.7.1-rhel-8.2.0
+            #     buildorder: 30
+            # python3x-pyparsing:
+            #     rationale: Python component
+            #     ref: stream-2.4.5-rhel-8.2.0
+            #     buildorder: 30
+            # python-atomicwrites:
+            #     rationale: Python component
+            #     ref: stream-1.3.0-rhel-8.2.0
+            #     buildorder: 30
+            # python-wcwidth:
+            #     rationale: Python component
+            #     ref: stream-0.1.7-rhel-8.2.0
+            #     buildorder: 30
+            # python-more-itertools:
+            #     rationale: Python component
+            #     ref: stream-7.2.0-rhel-8.2.0
+            #     buildorder: 40
+            # python-packaging:
+            #     rationale: Python component
+            #     ref: stream-19.2-rhel-8.2.0
+            #     buildorder: 40
+            # pytest:
+            #     rationale: Python component
+            #     ref: stream-4.6.6-rhel-8.2.0
+            #     buildorder: 50
+
+
+            # === Bootstrap phase 3/4 ===
+            # For bootstrap phase 3 uncomment all `buildorder:` lines below,
+            # for bootstrap phase 4 comment them out.
+            #
+            python38:
+                rationale: The main Python interpreter
+                ref: stream-3.8-rhel-8.2.0
+            python3x-setuptools:
+                rationale: Packaging tool
+                ref: stream-41.6.0-rhel-8.2.0
+            python-wheel:
+                rationale: Packaging tool
+                ref: stream-0.33.6-rhel-8.2.0
+            python3x-pip:
+                rationale: Packaging tool
+                ref: stream-19.3.1-rhel-8.2.0
+
+            python-six:
+                rationale: Python component
+                ref: stream-1.12.0-rhel-8.2.0
+            python-py:
+                rationale: Python component
+                ref: stream-1.8.0-rhel-8.2.0
+            python-chardet:
+                rationale: Python component
+                ref: stream-3.0.4-python38-rhel-8.2.0
+            python-attrs:
+                rationale: Python component
+                ref: stream-19.3.0-rhel-8.2.0
+            python-pluggy:
+                rationale: Python component
+                ref: stream-0.13.0-rhel-8.2.0
+            python-markupsafe:
+                rationale: Python component
+                ref: stream-1.1.1-rhel-8.2.0
+            python-pysocks:
+                rationale: Python component
+                ref: stream-1.7.1-rhel-8.2.0
+            python3x-pyparsing:
+                rationale: Python component
+                ref: stream-2.4.5-rhel-8.2.0
+            python-atomicwrites:
+                rationale: Python component
+                ref: stream-1.3.0-rhel-8.2.0
+            python-wcwidth:
+                rationale: Python component
+                ref: stream-0.1.7-rhel-8.2.0
+            python-more-itertools:
+                rationale: Python component
+                ref: stream-7.2.0-rhel-8.2.0
+            python-packaging:
+                rationale: Python component
+                ref: stream-19.2-rhel-8.2.0
+            pytest:
+                rationale: Python component
+                ref: stream-4.6.6-rhel-8.2.0
+            pytz:
+                rationale: Python component
+                ref: stream-2019.3-rhel-8.2.0
+            babel:
+                rationale: Python component
+                ref: stream-2.7.0-rhel-8.2.0
+            python-idna:
+                rationale: Python component
+                ref: stream-2.8-rhel-8.2.0
+            python-urllib3:
+                rationale: Python component
+                ref: stream-1.25.7-rhel-8.2.0
+            Cython:
+                rationale: Python component
+                ref: stream-0.29.14-rhel-8.2.0
+            python-asn1crypto:
+                rationale: Python component
+                ref: stream-1.2.0-rhel-8.2.0
+            python-ply:
+                rationale: Python component
+                ref: stream-3.11-rhel-8.2.0
+            python-psutil:
+                rationale: Python component
+                ref: stream-5.6.4-rhel-8.2.0
+            python-psycopg2:
+                rationale: Python component
+                ref: stream-2.8.4-rhel-8.2.0
+            mod_wsgi:
+                rationale: Python component
+                ref: stream-4.6.8-rhel-8.2.0
+
+            python-requests:
+                rationale: Python component
+                ref: stream-2.22.0-rhel-8.2.0
+                # buildorder: 10
+            python-jinja2:
+                rationale: Python component
+                ref: stream-2.10.3-rhel-8.2.0
+                # buildorder: 10
+            numpy:
+                rationale: Python component
+                ref: stream-1.17.3-rhel-8.2.0
+                # buildorder: 10
+            PyYAML:
+                rationale: Python component
+                ref: stream-5.1.2-rhel-8.2.0
+                # buildorder: 10
+            python-pycparser:
+                rationale: Python component
+                ref: stream-2.19-rhel-8.2.0
+                # buildorder: 10
+            python-lxml:
+                rationale: Python component
+                ref: stream-4.4.1-rhel-8.2.0
+                # buildorder: 10
+
+            python-cffi:
+                rationale: Python component
+                ref: stream-1.13.2-rhel-8.2.0
+                # buildorder: 20
+            scipy:
+                rationale: Python component
+                ref: stream-1.3.1-rhel-8.2.0
+                # buildorder: 20
+
+            python-cryptography:
+                rationale: Python component
+                ref: stream-2.8-rhel-8.2.0
+                # needs cffi
+                # buildorder: 30
+
+            python-PyMySQL:
+                rationale: Python component
+                ref: stream-0.9.3-rhel-8.2.0
+                # needs cryptography
+                # buildorder: 40
+...

@@ -1,0 +1,133 @@
+---
+document: modulemd
+version: 2
+data:
+  name: python36
+  stream: 3.6
+  summary: Python programming language, version 3.6
+  description: >-
+    This module gives users access to the internal Python 3.6 in RHEL8, as
+
+    well as provides some additional Python packages the users might need.
+
+    In addition to these you can install any python3-* package available
+
+    in RHEL and use it with Python from this module.
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      mongodb: [3.6]
+      platform: [el8.3.0]
+    requires:
+      platform: [el8]
+  references:
+    community: https://www.python.org/
+    documentation: https://docs.python.org/3.6/
+  profiles:
+    build:
+      rpms:
+      - python36
+      - python36-devel
+      - python36-rpm-macros
+    common:
+      rpms:
+      - python36
+  api:
+    rpms:
+    - python-sqlalchemy-doc
+    - python-virtualenv-doc
+    - python3-PyMySQL
+    - python3-bson
+    - python3-distro
+    - python3-docs
+    - python3-docutils
+    - python3-nose
+    - python3-pygments
+    - python3-pymongo
+    - python3-pymongo-gridfs
+    - python3-scipy
+    - python3-sqlalchemy
+    - python3-virtualenv
+    - python3-wheel
+    - python36
+    - python36-debug
+    - python36-devel
+    - python36-rpm-macros
+  filter:
+    rpms:
+    - python2-PyMySQL
+    - python2-docutils
+    - python2-nose
+    - python2-pygments
+    - python2-scipy
+    - python2-sqlalchemy
+    - python2-virtualenv
+  buildopts:
+    rpms:
+      macros: |
+        %_without_python2 1
+
+        # For packages depending on python36, so that they
+        # BuildRequire python36-devel/debug/rpm-macros instead of python3-*
+        #
+        # This won't be necessary for python37 and later. There we can
+        # set %{python3_pkgversion}, because all packages will need to
+        # have the pythonXY prefix. Whereas for Python 3.6 the packages
+        # are split between non-modular RHEL and the python36 module,
+        # and so it was easier and less confusing to keep the prefix at
+        # python3- except for the devel/debug/rpm/macros packages.
+        %_with_python36_module 1
+  components:
+    rpms:
+      python-PyMySQL:
+        rationale: Python adapter for the MySQL/MariaDB databases
+        ref: fa30f3aac48883391bacc0774ddbef5e724dfe79
+        buildorder: 20
+      python-distro:
+        rationale: Linux Distribution - a Linux OS platform information API
+        ref: 63623f372cf98cf3028cf75da5ddd244b68d5243
+        buildorder: 20
+      python-docs:
+        rationale: Documentation for Python
+        ref: f375eb7989b9ee6d40d54f11a6cda5db291791cb
+        buildorder: 20
+      python-docutils:
+        rationale: System for processing plaintext documentation
+        ref: a44e1e78ba92abcf8647fabedd5b15ced40bf75a
+        buildorder: 20
+      python-nose:
+        rationale: Discovery-based unit test extension for Python
+        ref: 3e7325d0ec51a72d8e3a2df01bc8c16f3d1db749
+        buildorder: 20
+      python-pygments:
+        rationale: Syntax highlighting engine written in Python
+        ref: 1f11ed1fcf566ba34383a444948c2be240f5b61f
+        buildorder: 20
+      python-pymongo:
+        rationale: Python driver for MongoDB
+        ref: 4532be50a099d1fceeccfcddd0cf30868bb1626a
+        buildorder: 20
+      python-sqlalchemy:
+        rationale: Modular and flexible ORM library for python
+        ref: 8ee07229bdc057fd007cb042ba2641cd26f54419
+        buildorder: 20
+      python-virtualenv:
+        rationale: Tool to create isolated Python environments
+        ref: 1148d32218b7ef6802aa6c86dc59bac230cfda48
+        buildorder: 30
+      python-wheel:
+        rationale: Built-package format for Python
+        ref: 8a5740af8dc291b9cb7985d333844e7453ef01fd
+        buildorder: 20
+      python36:
+        rationale: Contains the symlink to the platform-python interpreter. Also contains
+          python36-rpm-macros needed to build the remaining packages.
+        ref: 3b8b351fe95472cfc420552689f991d7a30c4641
+        buildorder: 10
+      scipy:
+        rationale: Scientific Tools for Python
+        ref: 83e614bcad765a900c94c440a07a7645ddceb750
+        buildorder: 20
+...

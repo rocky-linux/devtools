@@ -1,0 +1,66 @@
+---
+document: modulemd
+version: 2
+data:
+    name: nodejs
+    stream: "14"
+    summary: Javascript runtime
+    description: >-
+        Node.js is a platform built on Chrome's JavaScript runtime
+        for easily building fast, scalable network applications.
+        Node.js uses an event-driven, non-blocking I/O model that
+        makes it lightweight and efficient, perfect for data-intensive
+        real-time applications that run across distributed devices.
+    license:
+        module:
+            - MIT
+    dependencies:
+        - buildrequires:
+            platform: [el8.3.0]
+          requires:
+            platform: [el8]
+    references:
+        community: http://nodejs.org
+        documentation: http://nodejs.org/en/docs
+        tracker: https://github.com/nodejs/node/issues
+    profiles:
+        common:
+            rpms:
+                - nodejs
+                - npm
+        development:
+            rpms:
+                - nodejs
+                - nodejs-devel
+                - npm
+        minimal:
+            rpms:
+                - nodejs
+        s2i:
+            rpms:
+                - nodejs
+                - npm
+                - nodejs-nodemon
+    api:
+        rpms:
+            - nodejs
+            - nodejs-devel
+            - npm
+    buildopts:
+        rpms:
+            macros: |
+                %_with_bootstrap 1
+    components:
+        rpms:
+            nodejs-packaging:
+                rationale: RPM Macros and Utilities for Node.js Packaging
+                buildorder: 10
+                ref: 46338d64663c2294e9c969d3e54eab4d3063f5f4
+            nodejs:
+                rationale: Javascript runtime and npm package manager.
+                buildorder: 100
+                ref: 004fdf1e35b710ebbd1ed37032136e7e6c891c63
+            nodejs-nodemon:
+                rationale: Simple monitor script for use during development of a node.js app
+                buildorder: 200
+                ref: 1b3bb333e259c22884a0cd8b5bd2a3ce39bc0c25

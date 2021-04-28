@@ -1,0 +1,104 @@
+---
+document: modulemd
+version: 2
+data:
+  name: rhn-tools
+  stream: 1.0
+  summary: Red Hat Satellite 5 tools for RHEL
+  description: >-
+    Red Hat Satellite 5 tools packages providing additional functionality like e.g.
+    provisioning or configuration management.
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      platform: [el8.1.0]
+      satellite-5-client: [1.0]
+    requires:
+      platform: [el8]
+  references:
+    community: https://github.com/spacewalkproject/spacewalk/
+    documentation: https://access.redhat.com/documentation/en-us/red_hat_satellite/5.8/
+    tracker: https://bugzilla.redhat.com/
+  profiles:
+    common:
+      rpms:
+      - koan
+      - osad
+      - python3-spacewalk-backend-libs
+      - rhn-custom-info
+      - rhn-virtualization-host
+      - rhncfg
+      - rhncfg-actions
+      - rhncfg-client
+      - rhncfg-management
+      - rhnpush
+      - spacewalk-abrt
+      - spacewalk-client-cert
+      - spacewalk-koan
+      - spacewalk-oscap
+      - spacewalk-remote-utils
+      - spacewalk-usix
+  components:
+    rpms:
+      cobbler:
+        rationale: Cobbler tool that performs cobbler orders on remote machines.
+        ref: 1070a0eb031f4e89e4eb742a48dde02d971beb4a
+        buildorder: 10
+      osad:
+        rationale: Daemon for enabling push notifications for Red Hat Satellite 5
+          clients.
+        ref: 77be9020cefb1d4abe818b7ce2192bd65d0e8db2
+        buildorder: 10
+      rhn-custom-info:
+        rationale: Allows for the setting and listing of custom key/value pairs for
+          Red Hat Satellite 5 clients.
+        ref: 2e804b6d87c32a7bf77857e97179d9425845fd33
+        buildorder: 10
+      rhn-virtualization:
+        rationale: Various Red Hat Satellite 5 actions for manipulation with virtual
+          machine guest images.
+        ref: 6dc1fcf3b797b4d737fec643768b056b7599b6b1
+        buildorder: 10
+      rhncfg:
+        rationale: Enables configuration management extension for Red Hat Satllite
+          5 clients.
+        ref: 2badc46c86a1619b2c7db3842dfd4fdbff91ba19
+        buildorder: 10
+      rhnpush:
+        rationale: Package uploader for Red Hat Satellite 5.
+        ref: 2c51f62120bc5c554e50b303c44bad75647ab652
+        buildorder: 10
+      spacewalk-abrt:
+        rationale: rhn-check plug-in for collecting information about crashes handled
+          by ABRT.
+        ref: aa5a665e6944f1ce61474174564542cb4fae77ef
+        buildorder: 10
+      spacewalk-backend:
+        rationale: Support libraries for RHN Toools.
+        ref: e9137cde5ef352c471136057b19f2c9f23309ec8
+        buildorder: 5
+      spacewalk-client-cert:
+        rationale: Client side functionality allowing manipulation with Red Hat Satellite
+          5 client certificates (/etc/sysconfig/rhn/systemid).
+        ref: 5e7c0ac523681255a929862f71fe30a57d4f97d3
+        buildorder: 10
+      spacewalk-koan:
+        rationale: Support package for koan interaction.
+        ref: d102431b26035e5095d35d82b1d807c5502dc2f5
+        buildorder: 20
+      spacewalk-oscap:
+        rationale: OpenSCAP plug-in for rhn-check.
+        ref: 2b23a1a1fa76f027ff41ceb561aa965df9cf5ab8
+        buildorder: 10
+      spacewalk-remote-utils:
+        rationale: Utilities to interact with a Red Hat Satellite 5 remotely.
+        ref: ee554768039a1c40c5249358b69b788d16cf3bb2
+        buildorder: 10
+      spacewalk-usix:
+        rationale: Support libraries for handilng different Python versions.
+        ref: 4252c9ceaf149ef5e9277fbf72b11cd8028056ac
+        buildorder: 2
+...
+

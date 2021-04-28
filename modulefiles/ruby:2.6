@@ -1,0 +1,87 @@
+---
+document: modulemd
+version: 2
+data:
+  name: ruby
+  stream: 2.6
+  summary: An interpreter of object-oriented scripting language
+  description: >-
+    Ruby is the interpreted scripting language for quick and easy object-oriented
+    programming.  It has many features to process text files and to do system management
+    tasks (as in Perl).  It is simple, straight-forward, and extensible.
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      platform: [el8.1.0]
+    requires:
+      platform: [el8]
+  references:
+    community: http://ruby-lang.org/
+    documentation: https://www.ruby-lang.org/en/documentation/
+    tracker: https://bugs.ruby-lang.org/
+  profiles:
+    common:
+      rpms:
+      - ruby
+  api:
+    rpms:
+    - ruby
+    - ruby-devel
+    - ruby-libs
+    - rubygem-abrt
+    - rubygem-bigdecimal
+    - rubygem-bson
+    - rubygem-bundler
+    - rubygem-did_you_mean
+    - rubygem-io-console
+    - rubygem-irb
+    - rubygem-json
+    - rubygem-minitest
+    - rubygem-mongo
+    - rubygem-mysql2
+    - rubygem-net-telnet
+    - rubygem-openssl
+    - rubygem-pg
+    - rubygem-power_assert
+    - rubygem-psych
+    - rubygem-rake
+    - rubygem-rdoc
+    - rubygem-test-unit
+    - rubygem-xmlrpc
+    - rubygems
+    - rubygems-devel
+  buildopts:
+    rpms:
+      macros: >
+        %_without_rubypick 1
+  components:
+    rpms:
+      ruby:
+        rationale: An interpreter of object-oriented scripting language
+        ref: 0fce6c69723532cd446a3fc3c3c678e63b8033ed
+        buildorder: 101
+        multilib: [x86_64]
+      rubygem-abrt:
+        rationale: ABRT support for Ruby
+        ref: 79828b06cb877282963ef531eef2e9fc685d2a55
+        buildorder: 102
+      rubygem-bson:
+        rationale: Ruby Implementation of the BSON specification
+        ref: 680f3e389ae07c6748d6736628f29a802f39603c
+        buildorder: 102
+      rubygem-mongo:
+        rationale: Ruby driver for MongoDB
+        ref: 2da314a06f29d7c4079c5a59cbf51d90831af3ee
+        buildorder: 103
+      rubygem-mysql2:
+        rationale: A simple, fast Mysql library for Ruby, binding to libmysql
+        ref: c0692f8bdd7df946e8a4bacf9faa15a2985f2399
+        buildorder: 102
+      rubygem-pg:
+        rationale: A Ruby interface to the PostgreSQL RDBMS
+        ref: e486a1d7d6fdb9d9dca75533fcf8d2d013da6949
+        buildorder: 102
+...
+

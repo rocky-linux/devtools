@@ -1,0 +1,41 @@
+---
+document: modulemd
+version: 2
+data:
+  name: redis
+  stream: 5
+  summary: Redis persistent key-value database
+  description: >-
+    redis 5 module
+  license:
+    module:
+    - GPLv2+
+    content:
+    - BSD
+  dependencies:
+  - buildrequires:
+      platform: [el8.2.0]
+    requires:
+      platform: [el8]
+  references:
+    documentation: https://redis.io/documentation
+    tracker: https://github.com/antirez/redis/issues
+  profiles:
+    common:
+      rpms:
+      - redis
+  api:
+    rpms:
+    - redis
+  buildopts:
+    rpms:
+      macros: >
+        %_without_redistrib 1
+  components:
+    rpms:
+      redis:
+        rationale: Module API.
+        ref: 35eea663c960c26d6621e2853db923c7c878d261
+        buildorder: 1
+...
+

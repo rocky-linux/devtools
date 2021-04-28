@@ -1,0 +1,152 @@
+document: modulemd
+version: 2
+data:
+    name: perl-libwww-perl
+    stream: '6.34'
+    summary: A Perl interface to the World-Wide Web
+    description: >
+        The libwww-perl collection is a set of Perl modules which provide
+        a simple and consistent application programming interface to the
+        World-Wide Web. The main focus of the library is to provide classes
+        and functions that enable you to write WWW clients. The library also
+        contains modules that are of more general use and even classes that
+        help you implement simple HTTP servers. LWP::Protocol::https adds
+        a support for an HTTPS protocol.
+    license:
+        module: [ MIT ]
+    dependencies:
+        - buildrequires:
+              platform: [el8.3.0]
+              perl: []
+              perl-IO-Socket-SSL: []
+          requires:
+              platform: [el8]
+              perl: []
+              perl-IO-Socket-SSL: []
+    references:
+        community: https://metacpan.org/release/libwww-perl
+    profiles:
+        common:
+            description: LWP with HTTPS support
+            rpms:
+                - perl-libwww-perl
+                - perl-LWP-Protocol-https
+    api:
+        rpms:
+            - perl-libwww-perl
+            - perl-LWP-Protocol-https
+    buildopts:
+        rpms:
+            macros: |
+                %_without_perl_HTML_Tagset_enables_optional_test 1
+                %_without_perl_Test_Fatal_enables_extra_test 1
+                %_without_perl_Test_Fatal_enables_optional_test 1
+    filter:
+        rpms:
+            - perl-Digest-SHA1
+            - perl-HTTP-Daemon
+            - perl-Test-Fatal
+            - perl-Test-Pod
+            - perl-Test-RequiresInternet
+    components:
+        rpms:
+            perl-Data-Dump:
+                rationale: A run-time depenedency.
+                ref: bf0c7f8f51acb32fdc524b76c6078b508ad7bfd5
+                buildorder: 0
+            perl-Digest-SHA1:
+                rationale: A build dependency.
+                ref: b68cd6d810e8a866576c7b0196bb885ec59b5a7a
+                buildorder: 0
+            perl-Encode-Locale:
+                rationale: A run-time dependency.
+                ref: c056c7407b77caa6d57babafc5c343389c11fa16
+                buildorder: 0
+            perl-HTML-Tagset:
+                rationale: A run-time dependency.
+                ref: 071a5b31ca388524b34853321a0a731e30f341b4
+                buildorder: 0
+            perl-HTTP-Date:
+                rationale: A run-time dependency.
+                ref: 5595663b854725a53e4374917bb2078074391552
+                buildorder: 0
+            perl-IO-HTML:
+                rationale: A run-time dependency.
+                ref: dc6e6c5eb4259fc63ac9b61099016f9f9176ea70
+                buildorder: 0
+            perl-LWP-MediaTypes:
+                rationale: A run-time dependency.
+                ref: 54d031b1b5e5bc043eb1489d04203ba5e9269923
+                buildorder: 0
+            perl-Mozilla-CA:
+                rationale: A run-time dependency.
+                ref: 4f4d12cbd8b77e32745f7810844cfec76fe84e16
+                buildorder: 0
+            perl-Net-HTTP:
+                rationale: A run-time dependency.
+                ref: 97df1bed807b14ac4727fca1d2854a6eb25a64ec
+                buildorder: 0
+            perl-Test-Pod:
+                rationale: A build dependency.
+                ref: f90cd604ab18485a1e20ce3a0052435c1f10845c
+                buildorder: 0
+            perl-Test-RequiresInternet:
+                rationale: A build dependency.
+                ref: 90a82978358f494a079f413bc7b3a46827b653b5
+                buildorder: 0
+            perl-TimeDate:
+                rationale: A run-time dependency.
+                ref: e1a334942c04d081858749781b1cbccf82ff41c5
+                buildorder: 0
+            perl-Try-Tiny:
+                rationale: A run-time dependency.
+                ref: 337d768ff2b8018fba0a272869565b1f1d3dfd61
+                buildorder: 0
+            perl-WWW-RobotRules:
+                rationale: A run-time dependency.
+                ref: 493d595460e45dd6ccc30145db93790de1c09607
+                buildorder: 0
+            perl-Digest-HMAC:
+                rationale: A run-time dependency.
+                ref: 6b32005eaefb64147630053997f972975361886b
+                buildorder: 1
+            perl-File-Listing:
+                rationale: A run-time dependency.
+                ref: 3a5e488564063017ba14e9cb6dfe6400dfc044b6
+                buildorder: 1
+            perl-HTTP-Message:
+                rationale: A run-time dependency.
+                ref: b6597f6400861cf9440713b2d8bf3c3f2825fae6
+                buildorder: 1
+            perl-Test-Fatal:
+                rationale: A build dependency.
+                ref: 65fe759bc84f6615e08ecb75ca2d8fb6ca4062f3
+                buildorder: 1
+            perl-HTML-Parser:
+                rationale: A run-time dependency.
+                ref: e3610b98a6b30b96019f53e1f4e6d8671acb48bd
+                buildorder: 2
+            perl-HTTP-Cookies:
+                rationale: A run-time dependency.
+                ref: 97ef576ec4a2a27265be429d248a573bfca43156
+                buildorder: 2
+            perl-HTTP-Daemon:
+                rationale: A build dependency.
+                ref: 570096e5fc15e65be75bba7681557cdc44a7c076
+                buildorder: 2
+            perl-HTTP-Negotiate:
+                rationale: A run-time dependency.
+                ref: 7ea05dd3b1d2db9aa72f1dd811ac1028c6ccc2a2
+                buildorder: 2
+            perl-NTLM:
+                rationale: A run-time dependency.
+                ref: 968d3fb6c5f834f3e597bb813d9f96fa04732481
+                buildorder: 2
+            perl-libwww-perl:
+                rationale: The API.
+                ref: cf93b41ee1e5aa583b67264a92fceecd3f255633
+                buildorder: 3
+            perl-LWP-Protocol-https:
+                rationale: The API.
+                ref: ebdd3e6b99c15806d8549892b5d122625b238b4e
+                buildorder: 4

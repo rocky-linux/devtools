@@ -1,0 +1,62 @@
+document: modulemd
+version: 2
+data:
+  summary: gimp module
+  description: 'GIMP (GNU Image Manipulation Program) is a powerful image composition
+    and
+
+    editing program, which can be extremely useful for creating logos and other
+
+    graphics for webpages. '
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      platform:
+      - el8.0.0
+      python27:
+      - 2.7
+    requires:
+      platform:
+      - el8
+      python27:
+      - 2.7
+  references:
+    community: https://www.gimp.org/develop/
+    documentation: https://www.gimp.org/docs/
+    tracker: https://www.gimp.org/bugs/
+  api:
+    rpms:
+    - gimp
+    - gimp-libs
+    - gimp-devel
+    - gimp-devel-tools
+  profiles:
+    common:
+      rpms:
+      - gimp
+    devel:
+      rpms:
+      - gimp-devel
+      - gimp-devel-tools
+  components:
+    rpms:
+      pygobject2:
+        rationale: GIMP Module dependency
+        ref: 9f812b56e5c844bac7d1b1157e5be4a2ec3e9938
+        buildorder: 1
+      python2-pycairo:
+        rationale: Python2 binding required by pygtk2
+        ref: 33be420e72aa31f980e6be891af0c248ce43e835
+        buildorder: 3
+      pygtk2:
+        rationale: GIMP Module dependency
+        ref: 6f95a814300e0ee99690603b5aec87b4ce3664fc
+        buildorder: 5
+      gimp:
+        rationale: GIMP Module.
+        ref: 9ddcacfbf75bdb17f97f6ecba5dc66c8413cab1c
+        buildorder: 10
+  name: gimp
+  stream: '2.8'

@@ -1,0 +1,287 @@
+---
+document: modulemd
+version: 2
+data:
+  name: python27
+  stream: 2.7
+  summary: Python programming language, version 2.7
+  description: >-
+    This module provides the Python 2.7 interpreter and additional Python
+
+    packages the users might need.
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      platform: [el8.3.0]
+      python27: [2.7]
+    requires:
+      platform: [el8]
+  references:
+    community: https://www.python.org/
+    documentation: https://docs.python.org/2.7/
+  profiles:
+    common:
+      rpms:
+      - python2
+      - python2-libs
+      - python2-pip
+      - python2-setuptools
+  api:
+    rpms:
+    - babel
+    - python-sqlalchemy-doc
+    - python2
+    - python2-Cython
+    - python2-PyMySQL
+    - python2-attrs
+    - python2-babel
+    - python2-backports
+    - python2-backports-ssl_match_hostname
+    - python2-bson
+    - python2-chardet
+    - python2-coverage
+    - python2-debug
+    - python2-devel
+    - python2-dns
+    - python2-docs
+    - python2-docs-info
+    - python2-docutils
+    - python2-funcsigs
+    - python2-idna
+    - python2-ipaddress
+    - python2-jinja2
+    - python2-libs
+    - python2-lxml
+    - python2-markupsafe
+    - python2-mock
+    - python2-nose
+    - python2-numpy
+    - python2-numpy-doc
+    - python2-numpy-f2py
+    - python2-pip
+    - python2-pluggy
+    - python2-psycopg2
+    - python2-psycopg2-debug
+    - python2-psycopg2-tests
+    - python2-py
+    - python2-pygments
+    - python2-pymongo
+    - python2-pymongo-gridfs
+    - python2-pysocks
+    - python2-pytest
+    - python2-pytest-mock
+    - python2-pytz
+    - python2-pyyaml
+    - python2-requests
+    - python2-rpm-macros
+    - python2-scipy
+    - python2-setuptools
+    - python2-setuptools_scm
+    - python2-six
+    - python2-sqlalchemy
+    - python2-test
+    - python2-tkinter
+    - python2-tools
+    - python2-urllib3
+    - python2-virtualenv
+    - python2-wheel
+  filter:
+    rpms:
+    - python3-Cython
+    - python3-PyMySQL
+    - python3-PyYAML
+    - python3-attrs
+    - python3-babel
+    - python3-bson
+    - python3-chardet
+    - python3-coverage
+    - python3-docutils
+    - python3-idna
+    - python3-jinja2
+    - python3-markupsafe
+    - python3-mock
+    - python3-nose
+    - python3-numpy
+    - python3-numpy-doc
+    - python3-numpy-f2py
+    - python3-pluggy
+    - python3-psycopg2
+    - python3-psycopg2-debug
+    - python3-psycopg2-tests
+    - python3-py
+    - python3-pygments
+    - python3-pymongo
+    - python3-pymongo-gridfs
+    - python3-pysocks
+    - python3-pytest
+    - python3-pytest-mock
+    - python3-pytz
+    - python3-requests
+    - python3-scipy
+    - python3-setuptools_scm
+    - python3-six
+    - python3-sqlalchemy
+    - python3-urllib3
+    - python3-virtualenv
+  buildopts:
+    rpms:
+      macros: |
+        # Note that we cannot disable building of all Python 3 subpackages,
+        # because python2-devel (needed to build all Python 2 packages)
+        # has a runtime dependency on python3-rpm-generators, and that
+        # package requires python3-setuptools at runtime. By rebuilding
+        # python-setuptools SRPM with only python2, we overshadow the
+        # already built python3 subpackage and it is no longer
+        # available for python3-rpm-generators when building python-pip
+        # (or any other Python package).
+        # We can disable Python 3 in all packages but ...
+        %_without_python3 1
+        # ... we have to have a way to enable some of them as described
+        # above. With this macro, we can add some module-specific
+        # conditions for python3-* subpackages and other special cases.
+        # %_with_python27_module 1
+
+        # for: python-jinja2
+        %_with_python2 1
+
+        # to solve circular dependency between pytest and [attrs, pluggy]
+        # %_without_tests 1
+  components:
+    rpms:
+      Cython:
+        rationale: Language for writing Python extension modules. Build dependency
+          of numpy and PyYAML
+        ref: 1a2e8d49788c389313af6b4ead4e2deddd2a3d3d
+      PyYAML:
+        rationale: YAML parser and emitter for Python
+        ref: 5a825ac8b7dcf5e8f8e654275c6d96e9d4a07c4f
+      babel:
+        rationale: Tools for internationalizing Python applications
+        ref: 8e5509d36a879bce4cf887ea6e62e19c68259478
+      numpy:
+        rationale: A fast multidimensional array facility for Python
+        ref: b09f0528b7a6b6ddec4ec6e76b9053ead997b4d0
+      pytest:
+        rationale: Simple powerful testing with Python
+        ref: bf537c83f44041bceb9dcfb8526a84204a935646
+      python-PyMySQL:
+        rationale: Python adapter for the MySQL/MariaDB databases
+        ref: fa30f3aac48883391bacc0774ddbef5e724dfe79
+      python-attrs:
+        rationale: Python attributes without boilerplate
+        ref: fe428e3002127fbbc3d12619403e09f7e4db43a0
+      python-backports:
+        rationale: Namespace for backported Python features
+        ref: cf94c30f7edfe5aa282b5d0e5c11ffed6f3c1a78
+      python-backports-ssl_match_hostname:
+        rationale: The ssl.match_hostname() function from Python 3. Dependency of
+          urllib3/requests.
+        ref: 56706bd0f4d76fb5261a41558f0b9c250c3a2baf
+      python-chardet:
+        rationale: Character encoding auto-detection in Python. Dependency of requests.
+        ref: 4ff99dd114e6f977adede4fd2c929eaae8342e38
+      python-coverage:
+        rationale: Code coverage testing module for Python
+        ref: 098e47a2585229d9f66635126efc9b296218e256
+      python-dns:
+        rationale: DNS toolkit for Python. Useful package for IPA and mailman.
+        ref: 734697446fbaa2e83a6fba824fcf9accff0cfddf
+      python-docs:
+        rationale: Documentation for Python
+        ref: fb09efaa91410b9389b2dfa9e9ce8a7f5d5c0b34
+      python-docutils:
+        rationale: System for processing plaintext documentation
+        ref: a44e1e78ba92abcf8647fabedd5b15ced40bf75a
+      python-funcsigs:
+        rationale: Python function signatures from PEP362 for Python 2.6, 2.7 and
+          3.2+. Dependency of Pytest and mock.
+        ref: f81788e874d9f30743954be7e5aaec5887604d49
+      python-idna:
+        rationale: Internationalized Domain Names in Applications (IDNA). Dependency
+          of requests.
+        ref: 011aaa788b2ceee083685acf232b6f9d4b1ca3b3
+      python-ipaddress:
+        rationale: Port of the python 3.3+ ipaddress module to 2.6+. Dependency of
+          urllib3/requests.
+        ref: e14629e44a7d5c9e36205206cac085a6bf6928b8
+      python-jinja2:
+        rationale: General purpose template engine
+        ref: 52d1355b12175a2b57211cc20ecb9942f4b787cb
+      python-lxml:
+        rationale: XML processing library
+        ref: d3711441d7bdd64a72af6f3a6b80efcf966c8a34
+      python-markupsafe:
+        rationale: Implements a XML/HTML/XHTML Markup safe string for Python
+        ref: 51f05e812b3cf175be7517098e358bbf802abb25
+      python-mock:
+        rationale: A Python Mocking and Patching Library for Testing
+        ref: 4a9b6303e87235291aa1633e0d857b68ee127ef4
+      python-nose:
+        rationale: Discovery-based unit test extension for Python
+        ref: 3e7325d0ec51a72d8e3a2df01bc8c16f3d1db749
+      python-pluggy:
+        rationale: The plugin manager stripped of pytest specific details
+        ref: cdab894d615e058f719b4717c9d553d4d5527c57
+      python-psycopg2:
+        rationale: Python adapter for the PostgreSQL database
+        ref: df457fda4af5ca60cdb2fc9b568c8451ea18ea73
+      python-py:
+        rationale: Library with cross-python path, ini-parsing, io, code, log facilities
+        ref: 3d1d3822ae5c76d11c645b8c8da44d6e293953b5
+      python-pygments:
+        rationale: Syntax highlighting engine written in Python
+        ref: 1f11ed1fcf566ba34383a444948c2be240f5b61f
+      python-pymongo:
+        rationale: Python driver for MongoDB
+        ref: 4532be50a099d1fceeccfcddd0cf30868bb1626a
+      python-pysocks:
+        rationale: A Python SOCKS client module. Dependency of urllib3/requests.
+        ref: 4798bdc0cf6466b65f9194edf6135d2e3c834b24
+      python-pytest-mock:
+        rationale: Thin-wrapper around the mock package for easier use with py.test.
+          Build dependency of requests.
+        ref: 88b2fc11a4ef51ba7762beabd7a905c4692d6fa3
+      python-requests:
+        rationale: HTTP library, written in Python, for human beings
+        ref: b9c088e4f22fd18f90682d593d9e5b0be48ed66f
+      python-setuptools_scm:
+        rationale: Blessed package to manage your versions by scm tags. Build dependency
+          of pytest and pytest-mock.
+        ref: 613aec49c31ebdfae7f4bb52da82cef2383b986e
+      python-six:
+        rationale: Python 2 and 3 compatibility utilities
+        ref: 30fd6d8dbd1b59994fefe2dba3ae896699c18735
+      python-sqlalchemy:
+        rationale: Modular and flexible ORM library for python
+        ref: 8ee07229bdc057fd007cb042ba2641cd26f54419
+      python-urllib3:
+        rationale: Python HTTP library with thread-safe connection pooling and file
+          post. Dependency of requests.
+        ref: a7f48fae269682d695bbb7ef3c58ebc2810eec7d
+      python-virtualenv:
+        rationale: Tool to create isolated Python environments
+        ref: 1148d32218b7ef6802aa6c86dc59bac230cfda48
+      python-wheel:
+        rationale: Used for unbundling of pip and setuptools
+        ref: 8a5740af8dc291b9cb7985d333844e7453ef01fd
+      python2:
+        rationale: Main Python language interpreter
+        ref: 98d66e452d6f038df8141e2fe5159893fcd87627
+      python2-pip:
+        rationale: Python Packaging ecosystem
+        ref: ed50e1522ff778b9f787d09b1c84059a603e9c81
+      python2-rpm-macros:
+        rationale: Python 2 RPM macros - dependency of python2-devel
+        ref: 33b77f25cae19ef6532e40df5927e95112df7a0d
+      python2-setuptools:
+        rationale: Python Packaging ecosystem
+        ref: 92c3489a909a45b2caf5d4482cfe69ba948b11c1
+      pytz:
+        rationale: Runtime requires of babel, and python2-babel
+        ref: ddba47469a779aa14b7089542a7d7e259b9d5967
+      scipy:
+        rationale: Scientific Tools for Python
+        ref: 83e614bcad765a900c94c440a07a7645ddceb750
+...

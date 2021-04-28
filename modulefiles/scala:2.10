@@ -1,0 +1,107 @@
+---
+document: modulemd
+version: 2
+data:
+    summary: A hybrid functional/object-oriented language for the JVM
+    name: scala
+    stream: 2.10
+    description: >-
+        Scala is a general purpose programming language designed to express
+        common programming patterns in a concise, elegant, and type-safe way.
+        It smoothly integrates features of object-oriented and functional
+        languages. It is also fully interoperable with Java.
+    license:
+        module:
+            - MIT
+    dependencies:
+        - buildrequires:
+              javapackages-tools: [201801]
+              scala: [2.10]
+              platform: [el8.0.0]
+          requires:
+              platform: []
+    profiles:
+        common:
+            rpms:
+                - scala
+    api:
+        rpms:
+            - scala
+            - scala-apidoc
+            - scala-swing
+    filter:
+        rpms:
+            - ant-scala
+            - hawtjni
+            - hawtjni-javadoc
+            - jansi-javadoc
+            - jansi-native-javadoc
+            - jline-javadoc
+            - maven-hawtjni-plugin
+    buildopts:
+        rpms:
+            macros: |
+                %_with_xmvn_javadoc 1
+                %_without_asciidoc 1
+                %_without_avalon 1
+                %_without_bouncycastle 1
+                %_without_cython 1
+                %_without_dafsa 1
+                %_without_desktop 1
+                %_without_doxygen 1
+                %_without_dtd 1
+                %_without_eclipse 1
+                %_without_ehcache 1
+                %_without_emacs 1
+                %_without_equinox 1
+                %_without_fop 1
+                %_without_ftp 1
+                %_without_gradle 1
+                %_without_groovy 1
+                %_without_hadoop 1
+                %_without_hsqldb 1
+                %_without_itext 1
+                %_without_jackson 1
+                %_without_jmh 1
+                %_without_jna 1
+                %_without_jpa 1
+                %_without_junit5 1
+                %_without_logback 1
+                %_without_markdown 1
+                %_without_memcached 1
+                %_without_memoryfilesystem 1
+                %_without_obr 1
+                %_without_python 1
+                %_without_reporting 1
+                %_without_scm 1
+                %_without_snappy 1
+                %_without_spring 1
+                %_without_ssh 1
+                %_without_testlib 1
+    components:
+        rpms:
+            hawtjni:
+                buildorder: 10
+                ref: f1dabafeab3dc111671be068126e8e35de9c9ac7
+                rationale: >
+                    Runtime dependency of jansi, jansi-native.
+            jansi:
+                buildorder: 30
+                ref: 66f6045392146ad429a1d736e283157e72d31858
+                rationale: >
+                    Runtime dependency of jline, scala.
+            jansi-native:
+                buildorder: 20
+                ref: 7aead18ff4bcf18737a3ae9e8b619f02f6d8dc65
+                rationale: >
+                    Runtime dependency of jansi.
+            jline:
+                buildorder: 40
+                ref: d3567196dd3f71b30fb506a9313557aa9da3a98d
+                rationale: >
+                    Runtime dependency of scala.
+            scala:
+                buildorder: 50
+                ref: 67ca63b5f7a41b8ecc23d8a83001970536821592
+                rationale: >
+                    Module API.

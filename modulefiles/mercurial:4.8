@@ -1,0 +1,39 @@
+document: modulemd
+version: 2
+data:
+  summary: Mercurial -- a distributed SCM
+  description: Mercurial is a fast, lightweight source control management system designed
+    for efficient handling of very large distributed projects.
+  license:
+    module:
+    - MIT
+  references:
+    community: https://www.mercurial-scm.org/
+    documentation: https://www.mercurial-scm.org/guide
+    tracker: https://www.mercurial-scm.org/wiki/BugTracker
+  dependencies:
+  - buildrequires:
+      platform:
+      - el8.0.0
+      python27:
+      - 2.7
+    requires:
+      platform:
+      - el8
+      python27:
+      - 2.7
+  components:
+    rpms:
+      mercurial:
+        rationale: Mercurial -- a distributed SCM
+        ref: 00ee5e0c80608ed2eda5ac329c007c10121df1b1
+  api:
+    rpms:
+    - mercurial
+    - mercurial-hgk
+  profiles:
+    common:
+      rpms:
+      - mercurial
+  name: mercurial
+  stream: '4.8'

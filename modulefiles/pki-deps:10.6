@@ -1,0 +1,258 @@
+---
+document: modulemd
+version: 2
+data:
+  name: pki-deps
+  stream: 10.6
+  summary: PKI Dependencies module for PKI 10.6 or later
+  description: >-
+    A module to contain dependencies for PKI version 10.6 or later.
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      platform: [el8.3.0]
+    requires:
+      platform: [el8]
+  references:
+    community: http://www.dogtagpki.org
+    documentation: http://www.dogtagpki.org
+    tracker: https://pagure.io/dogtagpki/issues
+  filter:
+    rpms:
+    - apache-commons-collections-javadoc
+    - apache-commons-collections-testframework
+    - apache-commons-lang-javadoc
+    - apache-commons-net-javadoc
+    - bea-stax
+    - bea-stax-javadoc
+    - fasterxml-oss-parent
+    - glassfish-fastinfoset-javadoc
+    - glassfish-jax-rs-api
+    - glassfish-jax-rs-api-javadoc
+    - glassfish-jaxb
+    - glassfish-jaxb-api-javadoc
+    - glassfish-jaxb-bom
+    - glassfish-jaxb-bom-ext
+    - glassfish-jaxb-codemodel
+    - glassfish-jaxb-codemodel-annotation-compiler
+    - glassfish-jaxb-codemodel-parent
+    - glassfish-jaxb-external-parent
+    - glassfish-jaxb-parent
+    - glassfish-jaxb-rngom
+    - glassfish-jaxb-runtime-parent
+    - glassfish-jaxb-txw-parent
+    - jackson-annotations-javadoc
+    - jackson-bom
+    - jackson-core-javadoc
+    - jackson-databind-javadoc
+    - jackson-jaxrs-providers-datatypes
+    - jackson-jaxrs-providers-javadoc
+    - jackson-jaxrs-providers-parent
+    - jackson-module-jaxb-annotations-javadoc
+    - jackson-parent
+    - jakarta-commons-httpclient-demo
+    - jakarta-commons-httpclient-javadoc
+    - jakarta-commons-httpclient-manual
+    - jcl-over-slf4j
+    - jul-to-slf4j
+    - log4j-over-slf4j
+    - msv-demo
+    - msv-javadoc
+    - msv-manual
+    - msv-msv
+    - msv-rngconv
+    - msv-xmlgen
+    - msv-xsdlib
+    - relaxngDatatype-javadoc
+    - relaxngcc
+    - relaxngcc-javadoc
+    - resteasy-javadoc
+    - slf4j-ext
+    - slf4j-javadoc
+    - slf4j-jcl
+    - slf4j-log4j12
+    - slf4j-manual
+    - slf4j-sources
+    - stax-ex-javadoc
+    - velocity-demo
+    - velocity-javadoc
+    - velocity-manual
+    - xalan-j2-demo
+    - xalan-j2-javadoc
+    - xalan-j2-manual
+    - xalan-j2-xsltc
+    - xerces-j2-demo
+    - xerces-j2-javadoc
+    - xml-commons-apis-javadoc
+    - xml-commons-apis-manual
+    - xml-commons-resolver-javadoc
+    - xml-stylebook
+    - xml-stylebook-demo
+    - xml-stylebook-javadoc
+    - xmlstreambuffer-javadoc
+    - xsom-javadoc
+  buildopts:
+    rpms:
+      macros: |
+        %_with_xmvn_javadoc 1
+        %_without_asciidoc 1
+        %_without_avalon 1
+        %_without_bouncycastle 1
+        %_without_cython 1
+        %_without_dafsa 1
+        %_without_desktop 1
+        %_without_doxygen 1
+        %_without_dtd 1
+        %_without_eclipse 1
+        %_without_ehcache 1
+        %_without_emacs 1
+        %_without_equinox 1
+        %_without_fop 1
+        %_without_ftp 1
+        %_without_gradle 1
+        %_without_groovy 1
+        %_without_hadoop 1
+        %_without_hsqldb 1
+        %_without_itext 1
+        %_without_jackson 1
+        %_without_jmh 1
+        %_without_jna 1
+        %_without_jpa 1
+        %_without_junit5 1
+        %_without_logback 1
+        %_without_markdown 1
+        %_without_memcached 1
+        %_without_memoryfilesystem 1
+        %_without_obr 1
+        %_without_python 1
+        %_without_reporting 1
+        %_without_scm 1
+        %_without_snappy 1
+        %_without_spring 1
+        %_without_ssh 1
+        %_without_testlib 1
+  components:
+    rpms:
+      apache-commons-collections:
+        rationale: Apache Commons Collections packages
+        ref: 7a85885179cc992557ac1ba31a1ca84ad34e275a
+      apache-commons-lang:
+        rationale: Apache Commons Lang packages
+        ref: 9809b34ec72b76cdf036f588eef47c63804a95be
+      apache-commons-net:
+        rationale: Apache Commons Net packages
+        ref: 61d40e44c456c357065e9d6253fee89a82288530
+      bea-stax:
+        rationale: BEA StAX packages
+        ref: bc6a274bc0505176ad0c4031b651eeab53d9b3d9
+      fasterxml-oss-parent:
+        rationale: FasterXML parent pom BuildRequired by jackson-parent.
+        ref: 8eb207af161eaee02e3231b3dd73e47ffd4e121d
+      glassfish-fastinfoset:
+        rationale: Fast XML Information Set package Requires xmlstreambuffer, xsom.
+        ref: 992e9e3b269cfb60d305ac8018f682afa7ac255f
+        buildorder: 4
+      glassfish-jax-rs-api:
+        rationale: GlassFish JAX-RS API packages
+        ref: 08bb64b9da7595e4b162f01f9e2391a85c0f71ec
+      glassfish-jaxb:
+        rationale: JAXB Reference Implementation BuildRequires istack-commons. Requires
+          glassfish-fastinfoset, glassfish-jaxb-api.
+        ref: 081e5f6557eacaf566b4d4c513b62b9ee0c7b80e
+        buildorder: 5
+      glassfish-jaxb-api:
+        rationale: GlassFish JAXB API packages
+        ref: 9788ec919d0465cc5bbb6ffe2afec03aa349bbf9
+      jackson-annotations:
+        rationale: Jackson Annotations packages
+        ref: a6491decca97e0d453e6d4563dd8e4e4cee732cb
+        buildorder: 13
+      jackson-bom:
+        rationale: Jackson Bill-of-Materials POM packages
+        ref: ad8304bce5bc508452fd1eee56fbc31213a2ed5a
+        buildorder: 11
+      jackson-core:
+        rationale: Jackson Core packages
+        ref: dafec84ce580c4ef69c1973942b00b464ed2f1aa
+        buildorder: 12
+      jackson-databind:
+        rationale: Jackson Data-binding packages
+        ref: 08755528ca0dedb09e158eb19d4c36b95d60aabd
+        buildorder: 14
+      jackson-jaxrs-providers:
+        rationale: Jackson JAX-RS Providers packages
+        ref: efbb5231cf3059a073d3b4355d3b760fb1d35bd2
+        buildorder: 16
+      jackson-module-jaxb-annotations:
+        rationale: Jackson JAXB Annotations packages
+        ref: 6b71bba8019c4b96e32962613d3fb8d9e2a05bb4
+        buildorder: 15
+      jackson-parent:
+        rationale: Jackson Parent POM packages BuildRequires fasterxml-oss-parent.
+        ref: 21e431c84efd945cb3a778f1c0685fca9b9589f9
+        buildorder: 10
+      jakarta-commons-httpclient:
+        rationale: Jakarta Commons HTTPClient packages
+        ref: b03f6aef04ad2211c22ef962de72b785edf00d67
+      javassist:
+        rationale: Javassist packages
+        ref: 4c821f16ff2e25463b6ff3b34f56385df57e8260
+      msv:
+        rationale: Multi-Schema Validator Requires relaxngDatatype.
+        ref: 7e4b00d2028cc4e8fb9ed5777adcf5a7922b981c
+        buildorder: 1
+      pki-servlet-engine:
+        rationale: PKI Servlet Engine packages
+        ref: d625b15d0488cb32f032a6263b353e2a186df937
+      python-nss:
+        rationale: Python binding for NSS Provides python-nss for pki-base-java.
+        ref: dde0861263ed6e758c96e01464f3a27baef1f870
+      relaxngDatatype:
+        rationale: RELAX NG packages
+        ref: 53ce735953551625d79e2d78b22f5f380d72f17b
+      relaxngcc:
+        rationale: RELAX NG Compiler Compiler Requires msv.
+        ref: 189393d0d18f0259470751440c13e35c45d736c5
+        buildorder: 2
+      resteasy:
+        rationale: RESTEasy packages
+        ref: 28eca4763df6408b1012c29bdef204ccd32274e1
+        buildorder: 17
+      slf4j:
+        rationale: Simple Logging Facade for Java Provides slf4j and slf4j-jdk14 for
+          pki-base-java.
+        ref: 30acaf5ccfac594f3a85e8d78fd5e8c8113cac56
+      stax-ex:
+        rationale: StAX API extensions Requires bea-stax.
+        ref: e77bbf51ec38c0aaa6e7b9d2d4404dd70e575f66
+        buildorder: 2
+      velocity:
+        rationale: Velocity packages
+        ref: fb02f1bfea926caefb9f8b9ecc3bdb2f23360192
+      xalan-j2:
+        rationale: Xalan packages Provides xalan-j2 for pki-base-java.
+        ref: e2634f8fb286e389de4ff214a2c0ef0fd23cc2fe
+        buildorder: 1
+      xerces-j2:
+        rationale: Xerces packages
+        ref: 591f173be5112093c66f2d10ff88468a8f0c9a2a
+      xml-commons-apis:
+        rationale: XML Commons APIs packages
+        ref: c39584827e8ee224ed89e081cbbea6b889c9ae46
+      xml-commons-resolver:
+        rationale: XML Commons Resolver packages
+        ref: bfe058d9ed48174cfb73fc6046a3a3b0a11e8b04
+      xml-stylebook:
+        rationale: XML Stylebook packages
+        ref: 9505d2260a682775f91333fec6a8aa0bbaa5f0c0
+      xmlstreambuffer:
+        rationale: XML Stream Buffer package Requires stax-ex.
+        ref: ab678a7fcf631b76a2f5527351b49e4ebd8bda56
+        buildorder: 3
+      xsom:
+        rationale: XML Schema Object Model (XSOM) Requires relaxngcc.
+        ref: a3496c21bc44efed821ce4259abd0b0d4df85c2b
+        buildorder: 3
+...

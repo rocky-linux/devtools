@@ -1,0 +1,79 @@
+---
+document: modulemd
+version: 2
+data:
+  name: parfait
+  stream: 0.5
+  summary: Parfait Module
+  description: >-
+    Parfait is a Java performance monitoring library that exposes and collects metrics
+    through a variety of outputs.  It provides APIs for extracting performance metrics
+    from the JVM and other sources. It interfaces to Performance Co-Pilot (PCP) using
+    the Memory Mapped Value (MMV) machinery for extremely lightweight instrumentation.
+  license:
+    module:
+    - ASL 2.0
+  dependencies:
+  - buildrequires:
+      javapackages-tools: [201801]
+      pki-deps: [10.6]
+      platform: [el8.2.0]
+    requires:
+      javapackages-runtime: [201801]
+      pki-deps: [10.6]
+      platform: [el8]
+  profiles:
+    common:
+      rpms:
+      - parfait
+      - parfait-examples
+      - pcp-parfait-agent
+  api:
+    rpms:
+    - parfait
+    - parfait-examples
+    - pcp-parfait-agent
+  components:
+    rpms:
+      log4j12:
+        rationale: Needed as a runtime dep for parfait.
+        ref: 54804ac6aada53e375acede69b7c6e27fad54c71
+        buildorder: 80
+      parfait:
+        rationale: Main Parfait Package
+        ref: 5603f2c7c7faf6040c3f1d64adb880d0e71d76d1
+        buildorder: 70
+      si-units:
+        rationale: A library of SI quantities and unit types (JSR 363).
+        ref: 71302b27fe9a357aa90bd4a05cd509671e494417
+        buildorder: 50
+      unit-api:
+        rationale: "The Unit of Measurement library provides a set of Java language
+          programming interfaces for handling units and quantities. The interfaces
+          provide a layer which separates client code, which would call the API, from
+          library code, which implements the API.\nThe specification contains Interfaces
+          and abstract classes with methods for unit operations:\n\n  * Checking of
+          unit compatibility\n  * Expression of a quantity in various units\n  * Arithmetic
+          operations on units"
+        ref: 1dc498c6e1eb3ca74396d15245abc524dfdb1273
+        buildorder: 10
+      uom-lib:
+        rationale: Units of Measurement Libraries - extending and complementing JSR
+          363.
+        ref: 9285853061ca39010d35e2527ebec94c7fc9c122
+        buildorder: 30
+      uom-parent:
+        rationale: Main parent POM for all Units of Measurement Maven projects.
+        ref: fcb3e0bf156c3e4182f49341b6a4eec1d3040006
+        buildorder: 20
+      uom-se:
+        rationale: This package contains documentation for the Units Standard (JSR
+          363) Java SE 8 Implementation.
+        ref: e58661e2757db9de12d4259a445cdda31d4e456f
+        buildorder: 40
+      uom-systems:
+        rationale: Units of Measurement Systems - modules for JSR 363.
+        ref: 14be75c9788904bd967b11b29d86273628e83c55
+        buildorder: 60
+...
+

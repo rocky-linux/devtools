@@ -1,0 +1,30 @@
+document: modulemd
+version: 2
+data:
+    summary: FastCGI Perl bindings
+    description: >
+        This allows you to write a FastCGI client in the Perl language.
+    license:
+        module: [ MIT ]
+    dependencies:
+        - buildrequires:
+              platform: [el8]
+              perl: []
+          requires:
+              platform: [el8]
+              perl: []
+    references:
+        community: https://metacpan.org/release/FCGI
+    profiles:
+        common:
+            description: FCGI distribution
+            rpms:
+                - perl-FCGI
+    api:
+        rpms:
+            - perl-FCGI
+    components:
+        rpms:
+            perl-FCGI:
+                rationale: The API.
+                ref: stream-0.78

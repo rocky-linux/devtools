@@ -1,0 +1,34 @@
+---
+document: modulemd
+version: 2
+data:
+  name: mod_auth_openidc
+  stream: 2.3
+  summary: Apache module suporting OpenID Connect authentication
+  description: >-
+    This module enables an Apache 2.x web server to operate as an OpenID Connect Relying
+    Party and/or OAuth 2.0 Resource Server.
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      platform: [el8.2.0]
+    requires:
+      platform: [el8]
+  references:
+    community: https://github.com/zmartzone/mod_auth_openidc
+    documentation: https://github.com/zmartzone/mod_auth_openidc/wiki
+    tracker: https://github.com/zmartzone/mod_auth_openidc/issues
+  components:
+    rpms:
+      cjose:
+        rationale: Provides JOSE support
+        ref: 96ae33cc2db332dfb12b555faa11f57a01529578
+        buildorder: 1
+      mod_auth_openidc:
+        rationale: Provides the core functionality.
+        ref: d21d4de060707b362618c3256f2fed1fe24dce17
+        buildorder: 2
+...
+

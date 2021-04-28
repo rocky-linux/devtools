@@ -1,0 +1,47 @@
+---
+document: modulemd
+version: 2
+data:
+  name: nginx
+  stream: "1.18"
+  summary: nginx webserver
+  description: >-
+    nginx 1.18 webserver module
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      platform: [el8.3.0]
+    requires:
+      platform: [el8]
+  references:
+    documentation: http://nginx.org/en/docs/
+    tracker: https://trac.nginx.org/nginx/
+  profiles:
+    common:
+      rpms:
+      - nginx
+      - nginx-all-modules
+      - nginx-filesystem
+      - nginx-mod-http-image-filter
+      - nginx-mod-http-perl
+      - nginx-mod-http-xslt-filter
+      - nginx-mod-mail
+      - nginx-mod-stream
+  api:
+    rpms:
+    - nginx
+    - nginx-all-modules
+    - nginx-filesystem
+    - nginx-mod-http-image-filter
+    - nginx-mod-http-perl
+    - nginx-mod-http-xslt-filter
+    - nginx-mod-mail
+    - nginx-mod-stream
+  components:
+    rpms:
+      nginx:
+        rationale: Module API.
+        ref: d641399b323be9574f0a5afe0dad92858b709904
+...

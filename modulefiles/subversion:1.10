@@ -1,0 +1,69 @@
+---
+document: modulemd
+version: 2
+data:
+  name: subversion
+  stream: "1.10"
+  summary: Apache Subversion
+  description: >-
+    Apache Subversion, a Modern Version Control System
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      httpd: [2.4]
+      platform: [el8.3.0]
+      swig: [3.0]
+    requires:
+      platform: [el8]
+  references:
+    documentation: http://subversion.apache.org/docs/
+    tracker: https://issues.apache.org/jira/projects/SVN
+  profiles:
+    common:
+      rpms:
+      - subversion
+      - subversion-libs
+      - subversion-tools
+    server:
+      rpms:
+      - mod_dav_svn
+      - subversion
+      - subversion-libs
+      - subversion-tools
+  api:
+    rpms:
+    - mod_dav_svn
+    - subversion
+    - subversion-devel
+    - subversion-libs
+  filter:
+    rpms:
+    - libserf-devel
+    - python3-subversion
+    - subversion-ruby
+    - utf8proc-devel
+  buildopts:
+    rpms:
+      macros: |
+        %_without_kwallet 1
+        %_without_python2 1
+        %_with_python3 1
+        %_without_bdb 1
+        %_without_pyswig 1
+  components:
+    rpms:
+      libserf:
+        rationale: Build dependency.
+        ref: 58bab685ad402a5dfd8fae4ef559359864a984b5
+        buildorder: 10
+      subversion:
+        rationale: Module API.
+        ref: 62cf805a761eb40bf33725960c5dd3aba25426e7
+        buildorder: 20
+      utf8proc:
+        rationale: Build dependency.
+        ref: a790f0b5e43d78c5beb720c76cd706b6600acc46
+        buildorder: 10
+...

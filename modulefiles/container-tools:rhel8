@@ -1,0 +1,124 @@
+---
+document: modulemd
+version: 2
+data:
+  name: container-tools
+  stream: rhel8
+  summary: >-
+    Most recent (rolling) versions of podman, buildah, skopeo, runc, conmon, runc,
+    conmon, CRIU, Udica, etc as well as dependencies such as container-selinux
+    built and tested together, and updated as frequently as every 12 weeks.
+  description: >-
+    Latest versions of podman, buildah, skopeo, runc, conmon, CRIU, Udica, etc as
+    well as dependencies such as container-selinux built and tested together, and
+    updated as frequently as every 12 weeks. Only very limited back ports are
+    provided to this stream, and most patches come from providing new versions.
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      go-toolset: [rhel8]
+      golang-ecosystem: [1.0]
+      platform: [el8.3.0]
+    requires:
+      platform: [el8]
+  references:
+    community: https://github.com/projectatomic
+    documentation: https://projectatomic.io
+    tracker: https://github.com/projectatomic
+  profiles:
+    common:
+      rpms:
+      - buildah
+      - cockpit-podman
+      - conmon
+      - container-selinux
+      - containernetworking-plugins
+      - criu
+      - crun
+      - fuse-overlayfs
+      - libslirp
+      - podman
+      - python-podman-api
+      - runc
+      - skopeo
+      - slirp4netns
+      - toolbox
+      - udica
+  api:
+    rpms:
+    - buildah
+    - conmon
+    - container-selinux
+    - containernetworking-plugins
+    - containers-common
+    - fuse-overlayfs
+    - libslirp
+    - podman
+    - podman-docker
+    - podman-manpages
+    - podman-remote
+    - python-podman-api
+    - runc
+    - skopeo
+    - slirp4netns
+  buildopts:
+    rpms:
+      macros: |
+        %_with_ignore_tests 1
+  components:
+    rpms:
+      buildah:
+        rationale: Primary component of this module
+        ref: c937dae5d42397752538a917593dd5b440e348c0
+      cockpit-podman:
+        rationale: Primary component of this module
+        ref: b777bb76eb0ccd54ede2346f33013c397bb8fdb3
+      conmon:
+        rationale: Primary component of this module
+        ref: a125cdefa31d3a9a680bad999163ee6feed1aebb
+      container-selinux:
+        rationale: Primary component of this module
+        ref: b0856be64535d15af04bbf901375b8631986418d
+      containernetworking-plugins:
+        rationale: Primary component of this module
+        ref: 5bc927effc6d614a22bb0fdc0d02bde01bdd658b
+      criu:
+        rationale: Primary component of this module
+        ref: 13335dc395b9f62a22e3e218b083471a4213a1c3
+      crun:
+        rationale: Primary component of this module
+        ref: e1b5cf900264b38d54abfb98bb49daf2c705b29b
+      fuse-overlayfs:
+        rationale: Primary component of this module
+        ref: 9fd7b133946c0afb57cbfe25f53e4ede737a318b
+      libslirp:
+        rationale: Primary component of this module
+        ref: 4cbaabca93711fd52d99a34142eb43d2fe6bcf08
+        buildorder: -1
+      oci-seccomp-bpf-hook:
+        rationale: Primary component of this module
+        ref: 0c22e2e0d632f8f060e74d109e430c67feb11a7c
+      podman:
+        rationale: Primary component of this module
+        ref: e55a9453049bbfcf19e2d562fa60e0b4d7823f91
+      python-podman-api:
+        rationale: Primary component of this module
+        ref: 1cd9eb4c85378ff671967ab5d2acaf596c3f0765
+      runc:
+        rationale: Primary component of this module
+        ref: e44bd2fb726d948499294700f1a47080a62c770e
+      skopeo:
+        rationale: Primary component of this module
+        ref: a460b1be7c4ee6fb283910f1cd9bb1536d43c56b
+      slirp4netns:
+        rationale: Primary component of this module
+        ref: a9e0224a50450e43fabd34d2ec0b30bf03a5bdc3
+      toolbox:
+        rationale: Primary component of this module
+        ref: c380bab89cb0d429591e06976392c0484227cbb6
+      udica:
+        rationale: Primary component of this module
+        ref: fd52829b49626e6d5ba535c282a1e32f0ef0f93f
+...

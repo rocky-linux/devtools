@@ -1,0 +1,119 @@
+---
+document: modulemd
+version: 2
+data:
+  name: idm
+  stream: client
+  summary: RHEL IdM long term support client module
+  description: >-
+    RHEL IdM is an integrated solution to provide centrally managed Identity (users,
+    hosts, services), Authentication (SSO, 2FA), and Authorization (host access control,
+    SELinux user roles, services). The solution provides features for further integration
+    with Linux based clients (SUDO, automount) and integration with Active Directory
+    based infrastructures (Trusts).
+
+    This module stream supports only client side of RHEL IdM solution
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      389-ds: [1.4]
+      httpd: [2.4]
+      pki-core: [10.6]
+      platform: [el8.3.0]
+    requires:
+      platform: [el8]
+  references:
+    community: https://www.freeipa.org/
+    documentation: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/linux_domain_identity_authentication_and_policy_guide/index
+    tracker: https://pagure.io/freeipa/issues
+  profiles:
+    common:
+      description: A default profile for RHEL IdM client
+      rpms:
+      - ipa-client
+  api:
+    rpms:
+    - ipa-client
+    - ipa-client-common
+    - ipa-client-debuginfo
+    - ipa-common
+    - ipa-debuginfo
+    - ipa-debugsource
+    - ipa-python-compat
+    - ipa-healthcheck-core
+    - python3-ipaclient
+    - python3-ipalib
+    - python3-jwcrypto
+    - python3-pyusb
+    - python3-qrcode
+    - python3-qrcode-core
+    - python3-yubico
+  filter:
+    rpms:
+    - bind-dyndb-ldap
+    - bind-dyndb-ldap-debuginfo
+    - bind-dyndb-ldap-debugsource
+    - custodia
+    - ipa-server
+    - ipa-server-common
+    - ipa-server-debuginfo
+    - ipa-server-dns
+    - ipa-server-trust-ad
+    - ipa-server-trust-ad-debuginfo
+    - ipa-healthcheck
+    - opendnssec
+    - opendnssec-debuginfo
+    - opendnssec-debugsource
+    - python3-custodia
+    - python3-ipaserver
+    - slapi-nis
+    - slapi-nis-debuginfo
+    - slapi-nis-debugsource
+    - softhsm
+    - softhsm-debuginfo
+    - softhsm-debugsource
+    - softhsm-devel
+  components:
+    rpms:
+      bind-dyndb-ldap:
+        rationale: Driver for BIND to store DNS information in LDAP
+        ref: 30a4b96c815c2e127d43fff31457541e78a8b34c
+      custodia:
+        rationale: Remote access to secrets and credentials in IdM topology
+        ref: 3e36f334a88b7492234af55861dcc6a6b8c26ffc
+        buildorder: 2
+      ipa:
+        rationale: Module API
+        ref: f662c87af035330b946aac6d24bdeb75986cfc71
+      ipa-healthcheck:
+        rationale: A tool to detect issues in IdM clusters
+        ref: ef63c653251cc4eddbc5781f0b3f101b1b2514fc
+        buildorder: 3
+      opendnssec:
+        rationale: An implementation of DNSSEC support for IdM integrated DNS server
+        ref: edec7de1b5f7fc7727da85f844ba75cbbb0c834b
+      python-jwcrypto:
+        rationale: JSON Web Cryptographic Tokens used by Custodia
+        ref: 9d27e51a5724e549f2d33602bb75539e70b05b95
+        buildorder: 1
+      python-qrcode:
+        rationale: QR code generator for IdM two-factor authentication
+        ref: ee64e46fa4051fda939a71abaf15b540e3fcb520
+      python-yubico:
+        rationale: Support for Yubikey-based tokens for IdM two-factor authentication
+        ref: 980a54f66ef94a455fdd9d8d758e8bb0aff8a7e4
+        buildorder: 2
+      pyusb:
+        rationale: Python USB support to access USB tokens for IdM two-factor authentication
+        ref: ad586f2d793e73d20bed53df94ec24ccef550adb
+        buildorder: 1
+      slapi-nis:
+        rationale: Compatibility plugin to serve legacy clients
+        ref: 8025fab9eda007e14da9cff5813f7915673dbf70
+        arches: [aarch64, ppc64le, s390x, x86_64]
+      softhsm:
+        rationale: Software version of a PKCS#11 Hardware Security Module
+        ref: 3041c77316124b3ad35cd2c06f77ef4d38dce3cb
+...

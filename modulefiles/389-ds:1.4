@@ -1,0 +1,27 @@
+document: modulemd
+version: 2
+data:
+  name: 389-ds
+  stream: "1.4"
+  summary: 389 Directory Server (base)
+  description: >-
+    389 Directory Server is an LDAPv3 compliant server.  The base package includes
+    the LDAP server and command line utilities for server administration.
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      nodejs: [10]
+      platform: [el8.3.0]
+    requires:
+      platform: [el8]
+  filter:
+    rpms:
+    - cockpit-389-ds
+  components:
+    rpms:
+      389-ds-base:
+        rationale: Package in api
+        ref: ef1f48c133b1e2f4f6204aac8d27f7909b02bdb9
+        arches: [aarch64, ppc64le, s390x, x86_64]

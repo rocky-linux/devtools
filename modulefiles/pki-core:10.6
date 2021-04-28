@@ -1,0 +1,43 @@
+---
+document: modulemd
+version: 2
+data:
+  name: pki-core
+  stream: 10.6
+  summary: PKI Core module for PKI 10.6 or later
+  description: >-
+    A module for PKI Core packages for PKI version 10.6 or later.
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      golang-ecosystem: [1.0]
+      pki-deps: [10.6]
+      platform: [el8.3.0]
+    requires:
+      pki-deps: [10.6]
+      platform: [el8]
+  references:
+    community: http://www.dogtagpki.org
+    documentation: http://www.dogtagpki.org
+    tracker: https://pagure.io/dogtagpki/issues
+  components:
+    rpms:
+      jss:
+        rationale: JSS packages
+        ref: 1928f4bdc06c1b9dd441bf3e3c57e213efb45f15
+      ldapjdk:
+        rationale: LDAP JDK packages
+        ref: 1b103369e53db9ed993af4593396362086e5d9e7
+        buildorder: 1
+      pki-core:
+        rationale: PKI Core packages
+        ref: 7e02d13633017914b5ab0d77469d3612bd9d04e8
+        buildorder: 2
+      tomcatjss:
+        rationale: TomcatJSS packages
+        ref: 672fefb15b7f764bc1cee014a3713e1e623ec696
+        buildorder: 1
+...
+

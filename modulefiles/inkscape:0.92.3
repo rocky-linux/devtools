@@ -1,0 +1,63 @@
+---
+document: modulemd
+version: 2
+data:
+  name: inkscape
+  stream: 0.92.3
+  summary: Vector-based drawing program using SVG
+  description: >-
+    Inkscape is a vector graphics editor, with capabilities similar to
+
+    Illustrator, CorelDraw, or Xara X, using the W3C standard Scalable Vector
+
+    Graphics (SVG) file format.  It is therefore a very useful tool for web
+
+    designers and as an interchange format for desktop publishing.
+
+
+    Inkscape supports many advanced SVG features (markers, clones, alpha
+
+    blending, etc.) and great care is taken in designing a streamlined
+
+    interface. It is very easy to edit nodes, perform complex path operations,
+
+    trace bitmaps and much more.
+  license:
+    module:
+    - GPL-2.0
+  dependencies:
+  - buildrequires:
+      platform: [el8.1.0]
+      python27: [2.7]
+    requires:
+      platform: [el8]
+      python27: [2.7]
+  references:
+    documentation: https://inkscape.org/en/learn/
+    tracker: https://bugs.launchpad.net/inkscape
+  profiles:
+    common:
+      rpms:
+      - inkscape
+  api:
+    rpms:
+    - inkscape
+  filter:
+    rpms:
+    - python3-*
+    - python3-dns
+    - python3-scour
+  buildopts:
+    rpms:
+      macros: >
+        %_with_python2 1
+  components:
+    rpms:
+      inkscape:
+        rationale: Module API.
+        ref: c8f2cd968efa0f43dd097c0b3ba4c3f6088d5125
+      python-scour:
+        rationale: Runtime requirement of inkscape, should not be in API.
+        ref: d1ed3459c6c7929dd3e37ce68425550d3f8c0bc6
+...
+

@@ -1,0 +1,67 @@
+---
+document: modulemd
+version: 2
+data:
+    name: nodejs
+    stream: "12"
+    summary: Javascript runtime
+    description: >-
+        Node.js is a platform built on Chrome's JavaScript runtime
+        for easily building fast, scalable network applications.
+        Node.js uses an event-driven, non-blocking I/O model that
+        makes it lightweight and efficient, perfect for data-intensive
+        real-time applications that run across distributed devices.
+    license:
+        module:
+            - MIT
+    dependencies:
+        - buildrequires:
+            platform: [el8.3.0]
+          requires:
+            platform: [el8]
+    references:
+        community: http://nodejs.org
+        documentation: http://nodejs.org/en/docs
+        tracker: https://github.com/nodejs/node/issues
+    profiles:
+        common:
+            rpms:
+                - nodejs
+                - npm
+        development:
+            rpms:
+                - nodejs
+                - nodejs-devel
+                - npm
+        minimal:
+            rpms:
+                - nodejs
+        s2i:
+            rpms:
+                - nodejs
+                - npm
+                - nodejs-nodemon
+    api:
+        rpms:
+            - nodejs
+            - nodejs-devel
+            - npm
+    buildopts:
+        rpms:
+            macros: |
+                %_with_bootstrap 1
+                %_with_shared_brotli 1
+    components:
+        rpms:
+            nodejs-packaging:
+                rationale: RPM Macros and Utilities for Node.js Packaging
+                buildorder: 10
+                ref: 072c286fc5ce5539a266627ee0199304d0dc83be
+            nodejs:
+                rationale: Javascript runtime and npm package manager.
+                buildorder: 100
+                ref: 78b57f3e79bece58552e68d4655dd721e375d8cc
+            nodejs-nodemon:
+                rationale: Simple monitor script for use during development of a node.js app
+                buildorder: 200
+                ref: 1b3bb333e259c22884a0cd8b5bd2a3ce39bc0c25

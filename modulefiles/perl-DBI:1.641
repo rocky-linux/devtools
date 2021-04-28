@@ -1,0 +1,43 @@
+document: modulemd
+version: 2
+data:
+    stream: '1.641'
+    summary: A database access API for Perl
+    description: >
+        DBI is a database access Application Programming Interface (API) for
+        the Perl language. The DBI API specification defines a set of
+        functions, variables and conventions that provide a consistent
+        database interface independent of the actual database being used.
+    license:
+        module: [ MIT ]
+    dependencies:
+        - buildrequires:
+              platform: [el8]
+              perl: []
+          requires:
+              platform: [el8]
+              perl: []
+    references:
+        community: http://dbi.perl.org/
+    profiles:
+        common:
+            description: DBI distribution
+            rpms:
+                - perl-DBI
+    api:
+        rpms:
+            - perl-DBI
+    buildopts:
+        rpms:
+            macros: |
+                %_without_perl_DBI_enables_Clone 1
+                %_without_perl_DBI_enables_coro 1
+                %_without_perl_DBI_enables_DB_File 1
+                %_without_perl_DBI_enables_MLDBM 1
+                %_without_perl_DBI_enables_optional_test 1
+                %_without_perl_DBI_enables_SQL_Statement 1
+    components:
+        rpms:
+            perl-DBI:
+                rationale: The API.
+                ref: stream-1.641-rhel-8.1.0

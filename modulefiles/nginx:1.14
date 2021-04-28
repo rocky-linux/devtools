@@ -1,0 +1,43 @@
+document: modulemd
+version: 2
+data:
+    name: nginx
+    stream: 1.14
+    summary: nginx webserver
+    description: nginx 1.14 webserver module
+    license:
+        module: [ MIT ]
+    dependencies:
+      - buildrequires:
+                platform: [el8.0.0]
+        requires:
+                platform: [el8]
+    references:
+        documentation: http://nginx.org/en/docs/
+        tracker: https://trac.nginx.org/nginx/
+    profiles:
+        common:
+            rpms:
+                - nginx
+                - nginx-mod-http-image-filter
+                - nginx-mod-http-perl
+                - nginx-mod-http-xslt-filter
+                - nginx-mod-mail
+                - nginx-mod-stream
+                - nginx-filesystem
+                - nginx-all-modules
+    api:
+        rpms:
+            - nginx
+            - nginx-mod-http-image-filter
+            - nginx-mod-http-perl
+            - nginx-mod-http-xslt-filter
+            - nginx-mod-mail
+            - nginx-mod-stream
+            - nginx-filesystem
+            - nginx-all-modules
+    components:
+        rpms:
+            nginx:
+                rationale: Module API.
+                ref: d22de4a2b954375cc1bf6728c46615cb042a78c2

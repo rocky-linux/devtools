@@ -1,0 +1,67 @@
+---
+document: modulemd
+version: 2
+data:
+  name: mariadb
+  stream: 10.3
+  summary: MariaDB Module
+  description: >-
+    MariaDB is a community developed branch of MySQL. MariaDB is a multi-user, multi-threaded
+    SQL database server. It is a client/server implementation consisting of a server
+    daemon (mysqld) and many different client programs and libraries. The base package
+    contains the standard MariaDB/MySQL client programs and generic MySQL files.
+  license:
+    module:
+    - MIT
+  dependencies:
+  - buildrequires:
+      platform: [el8]
+    requires:
+      platform: [el8]
+  references:
+    community: http://mariadb.org
+    documentation: https://mariadb.com/kb/en/library/documentation/
+    tracker: http://bugzilla.redhat.com
+  profiles:
+    client:
+      rpms:
+      - mariadb
+    galera:
+      rpms:
+      - mariadb-server
+      - mariadb-server-galera
+    server:
+      rpms:
+      - mariadb-server
+  api:
+    rpms:
+    - mariadb
+    - mariadb-server
+  filter:
+    rpms:
+    - Judy-devel
+    - asio-devel
+  buildopts:
+    rpms:
+      macros: |
+        %runselftest 1
+        %ignore_testsuite_result 0
+  components:
+    rpms:
+      Judy:
+        rationale: MariaDB dependency for OQgraph computation engine
+        ref: stream-mariadb-10.3-rhel-8.3.0
+        buildorder: 4
+      asio:
+        rationale: Galera dependency for asynchronous I/O operation
+        ref: stream-mariadb-10.3-rhel-8.3.0
+        buildorder: 12
+      galera:
+        rationale: Galera package for MariaDB server replication
+        ref: stream-10.3-rhel-8.3.0
+        buildorder: 16
+      mariadb:
+        rationale: MariaDB package
+        ref: stream-10.3-rhel-8.3.0
+        buildorder: 8
+...
