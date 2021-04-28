@@ -72,10 +72,10 @@ func main() {
         }
     }
 
-    fmt.Printf("\nconfig_opts['module_setup_commands'] = [\n")
-//    for _, mod := range mods {
+    if len(mods) > 0 {
+        fmt.Printf("\nconfig_opts['module_setup_commands'] = [\n")
         fmt.Printf("    ('enable', '%s'),\n", strings.Join(mods, ", "))
-//    }
-    fmt.Printf("]\n\n")
+        fmt.Printf("]\n\n")
+    }
 
 }
