@@ -9,6 +9,9 @@ if [ -z "${NAME}" ]; then
     exit 1
 fi
 
+if [[ "${NAME}" =~ ^rocky- ]]; then
+    AARGS='--import-branch-prefix=r --rpm-prefix=https://git.rockylinux.org/original/rpms'
+fi
 
 if [ -d "${HOME}/rocky/patch/${NAME}.git" ]; then
     echo "NOTICE: Will merge local configs into pulled package"
@@ -19,6 +22,6 @@ test -d "$HOME/rocky/rpms/${NAME}" && rm -rf "$HOME/rocky/rpms/${NAME}"
 test -d /tmp/srpmproc-cache || mkdir /tmp/srpmproc-cache
 mkdir -p "$HOME/rocky/rpms/${NAME}"
 
-srpmproc --version 8 --upstream-prefix "file://$HOME/rocky" --storage-addr file:///tmp/srpmproc-cache --source-rpm "$NAME" --tmpfs-mode "$HOME/rocky/rpms/${NAME}"
+srpmproc --version 8 --upstream-prefix "file://$HOME/rocky" --storage-addr file:///tmp/srpmproc-cache --source-rpm "$NAME" --tmpfs-mode "$HOME/rocky/rpms/${NAME}" ${AARGS}
 
 echo "Package has been pulled to: $HOME/rocky/rpms/${NAME}"
