@@ -22,3 +22,6 @@ mkdir -p "$HOME/rocky/rpms/${NAME}"
 srpmproc --version 8 --upstream-prefix "file://$HOME/rocky" --storage-addr file:///tmp/srpmproc-cache --source-rpm "$NAME" --tmpfs-mode "$HOME/rocky/rpms/${NAME}"
 
 echo "Package has been pulled to: $HOME/rocky/rpms/${NAME}"
+echo
+echo "The following branches are available:"
+( cd $HOME/rocky/rpms/${NAME}; ls -1 )

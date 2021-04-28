@@ -2,6 +2,7 @@
 document: modulemd
 version: 2
 data:
+  name: virt-devel
   stream: rhel
   summary: Virtualization module
   description: A virtualization module
