@@ -28,7 +28,7 @@ srpmproc/srpmproc: srpmproc
 
 
 src/rockymockgen:
-	go build -o src/rockymockgen src/macro-parser.go
+	go build -o src/rockymockgen src/rockymockgen.go
 
 modulelist:
 	for i in modulefiles/*; do echo "Building list of modular packages: $$i"; go run src/rockyrpmmodules.go < $$i >> modulelist; done
