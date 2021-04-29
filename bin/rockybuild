@@ -2,15 +2,15 @@
 
 NAME="$1"
 BRANCH="$2"
-MODULE="$3"
 ARCH=`uname -m`
 MOCKCFG="/etc/mock/rocky-$ARCH.cfg"
 
+shift
+shift
+
 if [ -z "$NAME" ]; then
-    echo "USAGE: $0 [PACKAGE NAME] [BRANCH]"
+    echo "USAGE: $0 [PACKAGE NAME] [BRANCH] <MODULE NAME>..."
     exit 1
-else
-    shift
 fi
 
 
@@ -39,29 +39,30 @@ fi
 TMPCFG=`mktemp /tmp/rockybuild-mock-XXXXXXX.cfg`
 cat "$MOCKCFG" > "$TMPCFG"
 
-if [ -n "$MODULE" ]; then
-    if [ -f "/etc/rocky/devtools/modulefiles/$MODULE" ]; then
-        echo "Found module configuration for: $MODULE"
-        rockymockgen < "/etc/rocky/devtools/modulefiles/$MODULE" >> "$TMPCFG"
-    else
-        echo "WARNING: Could not find module config for: $MODULE"
-        sleep 5
-    fi
-fi
-
-
-STREAM=`echo $BRANCH | sed -e 's/r8-stream-//'`
-grep "^$NAME " /etc/rocky/devtools/modulelist | while read name module stream; do
-    if [ "$STREAM" == "$stream" ]; then
-        if [ -f "/etc/rocky/devtools/modulefiles/$module:$stream" ]; then
-            echo "Found module configuration for: $module:$stream"
-            rockymockgen < "/etc/rocky/devtools/modulefiles/$module:$stream" >> "$TMPCFG"
+if [ -n "$1" ]; then
+    for MODULE in $@; do
+        if [ -f "/etc/rocky/devtools/modulefiles/$MODULE" ]; then
+            echo "Found module configuration for: $MODULE"
+            rockymockgen < "/etc/rocky/devtools/modulefiles/$MODULE" >> "$TMPCFG"
         else
-            echo "WARNING: Could not find module config for: $module:$stream"
+            echo "WARNING: Could not find module config for: $MODULE"
             sleep 5
         fi
-    fi
-done
+    done
+else
+    STREAM=`echo $BRANCH | sed -e 's/r8-stream-//'`
+    grep "^$NAME " /etc/rocky/devtools/modulelist | while read name module stream; do
+        if [ "$STREAM" == "$stream" ]; then
+            if [ -f "/etc/rocky/devtools/modulefiles/$module:$stream" ]; then
+                echo "Found module configuration for: $module:$stream"
+                rockymockgen < "/etc/rocky/devtools/modulefiles/$module:$stream" >> "$TMPCFG"
+            else
+                echo "WARNING: Could not find module config for: $module:$stream"
+                sleep 5
+            fi
+        fi
+    done
+fi
 
 echo "MOCKCFG=$TMPCFG"
 
