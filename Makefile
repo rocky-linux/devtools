@@ -1,6 +1,6 @@
 .PHONY: all
 
-all: srpmproc/srpmproc .go-setup
+all: .go-setup src/rockymockgen srpmproc/srpmproc modulelist
 
 .dnf:
 	sudo dnf -y install epel-release
@@ -20,24 +20,33 @@ all: srpmproc/srpmproc .go-setup
 	
 
 srpmproc:
-	git clone https://git.rockylinux.org/release-engineering/public/srpmproc.git
+	git clone https://github.com/rocky-linux/srpmproc.git
 
 
 srpmproc/srpmproc: srpmproc
 	cd srpmproc; CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build ./cmd/srpmproc
 
 
-install: srpmproc/srpmproc .dnf .system
+src/rockymockgen:
+	go build -o src/rockymockgen src/macro-parser.go
+
+modulelist:
+	for i in modulefiles/*; do echo "Building list of modular packages: $$i"; go run src/rockyrpmmodules.go < $$i >> modulelist; done
+
+install: srpmproc/srpmproc src/rockymockgen modulelist .dnf .system
+	mkdir -p /etc/rocky/devtools
 	cp -r etc_mock/rocky* /etc/mock/
-	cp -r etc_mock/templates/* /etc/mock/templates/
+	cp -r modulefiles /etc/rocky/devtools/
+	install -m 755 src/rockymockgen /usr/local/bin/
 	install -m 755 srpmproc/srpmproc /usr/local/bin/
 	install -m 755 bin/* /usr/local/bin/
+	install -m 644 modulelist /etc/rocky/devtools/
 	test -d /usr/share/nginx/html/repo || mkdir /usr/share/nginx/html/repo
 	chmod 777 /usr/share/nginx/html/repo
 
 
 clean:
-	rm -rf srpmproc  $(HOME)/rocky 
+	rm -rf srpmproc modulelist
 
 # enable makefile to accept argument after command
 #https://stackoverflow.com/questions/6273608/how-to-pass-argument-to-makefile-from-command-line
