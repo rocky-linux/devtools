@@ -40,28 +40,33 @@ TMPCFG=`mktemp /tmp/rockybuild-mock-XXXXXXX.cfg`
 cat "$MOCKCFG" > "$TMPCFG"
 
 if [ -n "$1" ]; then
-    for MODULE in $@; do
+    FILES=`for MODULE in $@; do
         if [ -f "/etc/rocky/devtools/modulefiles/$MODULE" ]; then
-            echo "Found module configuration for: $MODULE"
-            rockymockgen < "/etc/rocky/devtools/modulefiles/$MODULE" >> "$TMPCFG"
+            echo -n "/etc/rocky/devtools/modulefiles/$MODULE "
+            echo "Including Module: $MODULE" >&2
         else
-            echo "WARNING: Could not find module config for: $MODULE"
-            sleep 5
+            echo "WARNING: Could not find module config for: $MODULE" >&2
         fi
-    done
+    done`
+
+    rockymockgen $FILES >> "$TMPCFG"
+    sleep 3
 else
     STREAM=`echo $BRANCH | sed -e 's/r8-stream-//'`
-    grep "^$NAME " /etc/rocky/devtools/modulelist | while read name module stream; do
+    FILES=`grep "^$NAME " /etc/rocky/devtools/modulelist | while read name module stream; do
         if [ "$STREAM" == "$stream" ]; then
             if [ -f "/etc/rocky/devtools/modulefiles/$module:$stream" ]; then
-                echo "Found module configuration for: $module:$stream"
-                rockymockgen < "/etc/rocky/devtools/modulefiles/$module:$stream" >> "$TMPCFG"
+                echo -n "/etc/rocky/devtools/modulefiles/$module:$stream "
+                echo "Including Module: $module:$stream" >&2
             else
-                echo "WARNING: Could not find module config for: $module:$stream"
-                sleep 5
+                echo "WARNING: Could not find module config for: $module:$stream" >&2
             fi
         fi
-    done
+    done`
+
+    rockymockgen $FILES >> "$TMPCFG"
+
+    sleep 3
 fi
 
 echo "MOCKCFG=$TMPCFG"
