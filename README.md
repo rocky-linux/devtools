@@ -27,7 +27,7 @@ Once these tools are installed, you will be able to do the following:
 
 This will create a directory structure at `~/rocky/` and you will be able
 to find the RPM sources as well as the build directory, logs, and
-artificats there.
+arifiacts there.
 
 ## Debugging and patching packages
 When build errors happen, and you need to create a patch for a package,
@@ -52,3 +52,29 @@ you can use the following example to get you going:
     rockybuild sed
 
 ```
+
+## Container use
+
+
+Build a container and tag it. Mock cannot run in an unprivileged container with
+simple isolation due to userns issues, so any calls to mock must be performed
+outside the build step.
+
+```
+podman build -t localhost/build-bash --build-arg PACKAGE=bash .
+```
+
+Tag it any way you want, then run it. By default it will run '/entrypoint.sh
+build' which reads $BRANCH and $PACKAGE from the environment, set by previous
+build stages. 
+
+```
+podman run -v "$PWD/artifacts:/artifacts:z,rw" --privileged localhost/build-bash:latest prep build
+```
+
+Without any other intervention, this will pull sources from git.centos.org and process them using srpmproc to apply patches, if available, from git.rockylinux.org/staging/patch/. If no patch repo exists upstream, one will be created. Alternatively, volume mount a local patch repo (with the latest patches from git.r.o if applicable) to /root/rocky/patch/<package>.git.
+
+Builds artifacts are copied to /artifacts, which you should mount read write and with any selinux flags where necessary. The default example above mounts $PWD/artifacts to /artifacts with selinux (z) and read-write (rw) flags.
+
+
+The commands `rockyget`, `rockyprep`, and `rockybuild`, as well as `srpmproc` are available in the PATH, and will read the PACKAGE and BRANCH environment variables by default, unless overriden by different args. Additionally, aliases `get`, `prep`, and `build` are set in /root/.bashrc for ease of use in interactive sessions.
