@@ -13,9 +13,15 @@ if [[ "${NAME}" =~ ^rocky- ]]; then
     AARGS='--import-branch-prefix=r --rpm-prefix=https://git.rockylinux.org/original/rpms'
 fi
 
-if [ -d "${HOME}/rocky/patch/${NAME}.git" ]; then
-    echo "NOTICE: Will merge local configs into pulled package"
-    ( cd "${HOME}/rocky/patch/${NAME}.git"; git add .; git commit -m "update" ) ||:
+if [ ! -d "${HOME}/rocky/patch/${NAME}.git" ]; then
+    echo "Trying to clone existing patch repo"
+    if curl -sI https://git.rockylinux.org/staging/patch/${NAME} | grep "HTTP/1.1 200 OK" >/dev/null 2>&1; then # if it's a real repo
+	echo "Found existing patch repo. Cloning to ${HOME}/rocky/patch/${NAME}.git"
+    	git clone --single-branch --branch r8 https://git.rockylinux.org/staging/patch/${NAME}.git "${HOME}/rocky/patch/${NAME}.git" ||:
+    else
+	echo "No patch repo exists. Initing empty"
+	(git init --initial-branch r8 ${HOME}/rocky/patch/${NAME}.git && git -C ${HOME}/rocky/patch/${NAME}.git commit --allow-empty -m 'Initial commit') 
+    fi
 fi
 
 test -d "$HOME/rocky/rpms/${NAME}" && rm -rf "$HOME/rocky/rpms/${NAME}"

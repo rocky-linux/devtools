@@ -1,11 +1,9 @@
 #!/bin/sh
 
 NAME="$1"
-BRANCH="$2"
+BRANCH="${2:-r8}"
 ARCH=`uname -m`
-MOCKCFG="/etc/mock/rocky-$ARCH.cfg"
 
-shift
 shift
 
 if [ -z "$NAME" ]; then
@@ -14,62 +12,8 @@ if [ -z "$NAME" ]; then
 fi
 
 
-# SANITY
-if [ ! -d "${HOME}/rocky/rpms/${NAME}" ]; then
-    echo "ERROR: package name is not imported"
-    exit 1
-fi
-if [ -z "$BRANCH" ]; then
-    BRANCHES=`ls -1 ${HOME}/rocky/rpms/${NAME} | wc -l`
-    if [ "$BRANCHES" -eq 1 ]; then
-        BRANCH=`( cd ${HOME}/rocky/rpms/${NAME}/ ; ls -d *)`
-    else
-        echo "ERROR: What branch do you want to build:"
-        ( cd $HOME/rocky/rpms/${NAME}; ls -1 )
-        exit 1
-    fi
-fi
-if [ ! -d "${HOME}/rocky/rpms/${NAME}/${BRANCH}" ]; then
-    echo "This package branch does not exist."
-    exit 255
-fi
-
-
-# MODULARITY
-TMPCFG=`mktemp /tmp/rockybuild-mock-XXXXXXX.cfg`
-cat "$MOCKCFG" > "$TMPCFG"
-
-if [ -n "$1" ]; then
-    FILES=`for MODULE in $@; do
-        if [ -f "/etc/rocky/devtools/modulefiles/$MODULE" ]; then
-            echo -n "/etc/rocky/devtools/modulefiles/$MODULE "
-            echo "Including Module: $MODULE" >&2
-        else
-            echo "WARNING: Could not find module config for: $MODULE" >&2
-        fi
-    done`
-
-    rockymockgen $FILES >> "$TMPCFG"
-    sleep 3
-else
-    STREAM=`echo $BRANCH | sed -e 's/r8-stream-//'`
-    FILES=`grep "^$NAME " /etc/rocky/devtools/modulelist | while read name module stream; do
-        if [ "$STREAM" == "$stream" ]; then
-            if [ -f "/etc/rocky/devtools/modulefiles/$module:$stream" ]; then
-                echo -n "/etc/rocky/devtools/modulefiles/$module:$stream "
-                echo "Including Module: $module:$stream" >&2
-            else
-                echo "WARNING: Could not find module config for: $module:$stream" >&2
-            fi
-        fi
-    done`
-
-    rockymockgen $FILES >> "$TMPCFG"
-
-    sleep 3
-fi
-
-echo "MOCKCFG=$TMPCFG"
+# No module support directly
+MOCKCONFIG="/etc/mock/rocky-8-${ARCH}.cfg"
 
 test -d "${HOME}/rocky/builds/${NAME}/${BRANCH}" || mkdir -p "${HOME}/rocky/builds/${NAME}/${BRANCH}"
 
@@ -79,7 +23,7 @@ createrepo /usr/share/nginx/html/repo
 
 rpmbuild -bs --nodeps --define "%_topdir ${HOME}/rocky/rpms/${NAME}/${BRANCH}" --define "dist .el8" ${HOME}/rocky/rpms/${NAME}/${BRANCH}/SPECS/*.spec
 
-mock -r "$TMPCFG" --resultdir="${HOME}/rocky/builds/${NAME}/${BRANCH}" ${HOME}/rocky/rpms/${NAME}/${BRANCH}/SRPMS/*.src.rpm --isolation=simple --cleanup-after ${MOCKARGS:-}
+mock -r "$MOCKCONFIG" --resultdir="${HOME}/rocky/builds/${NAME}/${BRANCH}" ${HOME}/rocky/rpms/${NAME}/${BRANCH}/SRPMS/*.src.rpm --isolation=simple --cleanup-after ${MOCKARGS:-}
 
 cp ${HOME}/rocky/builds/${NAME}/${BRANCH}/*.rpm ${HOME}/rocky/rpms/${NAME}/${BRANCH}/SRPMS/*.src.rpm /usr/share/nginx/html/repo/
 
