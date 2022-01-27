@@ -13,20 +13,30 @@ if [[ "${NAME}" =~ ^rocky- ]]; then
     AARGS='--import-branch-prefix=r --rpm-prefix=https://git.rockylinux.org/original/rpms'
 fi
 
-if [ ! -d "${HOME}/rocky/patch/${NAME}.git" ]; then
+PATCHPATH=${HOME}/rocky/patch/${NAME}.git
+if [ ! -d "${PATCHPATH}" ]; then
+    git config --global user.name 'devtool importer' 
+    git config --global user.email 'releng@rockylinux.org' 
     echo "Trying to clone existing patch repo"
     if curl -sI https://git.rockylinux.org/staging/patch/${NAME} | grep "HTTP/1.1 200 OK" >/dev/null 2>&1; then # if it's a real repo
-	echo "Found existing patch repo. Cloning to ${HOME}/rocky/patch/${NAME}.git"
-    	git clone --single-branch --branch r8 https://git.rockylinux.org/staging/patch/${NAME}.git "${HOME}/rocky/patch/${NAME}.git" ||:
+	echo "Found existing patch repo. Cloning to ${PATCHPATH}"
+    	git clone --single-branch --branch r8 https://git.rockylinux.org/staging/patch/${NAME}.git "${PATCHPATH}" ||:
     else
 	echo "No patch repo exists. Initing empty"
-	(git init --initial-branch r8 ${HOME}/rocky/patch/${NAME}.git && git -C ${HOME}/rocky/patch/${NAME}.git commit --allow-empty -m 'Initial commit') 
+	git init ${PATCHPATH}
+        git -C ${PATCHPATH} checkout -b r8 
+        git -C ${PATCHPATH} commit --allow-empty -m 'Initial commit' 
+        git -C ${PATCHPATH} remote add origin https://git.rockylinux.org/staging/patch/${NAME}.git
     fi
 fi
 
 test -d "$HOME/rocky/rpms/${NAME}" && rm -rf "$HOME/rocky/rpms/${NAME}"
 test -d /tmp/srpmproc-cache || mkdir /tmp/srpmproc-cache
 mkdir -p "$HOME/rocky/rpms/${NAME}"
+
+if [[ ! -f $HOME/.ssh/id_rsa ]]; then
+  ssh-keygen -t rsa -q -f "$HOME/.ssh/id_rsa" -N ""
+fi
 
 srpmproc --version 8 --upstream-prefix "file://$HOME/rocky" --storage-addr file:///tmp/srpmproc-cache --source-rpm "$NAME" --tmpfs-mode "$HOME/rocky/rpms/${NAME}" ${AARGS}
 
