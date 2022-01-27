@@ -1,9 +1,10 @@
 #!/bin/sh
 
 NAME="${1:-$PACKAGE}"
+BRANCH="${2:-${BRANCH:-r8}}"
 
 if [ -z "$NAME" ]; then
-    echo "USAGE: $0 [PACKAGE NAME]"
+    echo "USAGE: $0 PACKAGE [BRANCH]"
     exit 1
 fi
 
