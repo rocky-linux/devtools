@@ -1,8 +1,8 @@
 #!/bin/sh
 
-NAME="$1"
-BRANCH="${2:-r8}"
-ARCH=`uname -m`
+NAME="${1:-$PACKAGE}"
+BRANCH="${2:-${BRANCH:-r8}}"
+ARCH=${ARCH:-$(uname -m)}
 
 shift
 

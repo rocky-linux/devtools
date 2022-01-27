@@ -26,8 +26,19 @@ RUN usermod -a -G mock $user
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
-FROM base as builder
-ARG package
+FROM base as prep
+ARG PACKAGE
+ENV PACKAGE=$PACKAGE
 ARG branch=r8
-ENV PACKAGE=$package
-CMD [ "/entrypoint.sh" ]
+ENV BRANCH=$branch
+
+#RUN env
+RUN /entrypoint.sh get
+
+
+FROM prep
+WORKDIR /root/rocky/
+RUN for a in get prep build; do echo "alias $a=rocky$a" >> /root/.bashrc; done
+
+ENTRYPOINT [ "/entrypoint.sh" ]
+CMD ["prep", "build"]

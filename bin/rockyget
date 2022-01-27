@@ -1,6 +1,6 @@
 #!/bin/sh
 
-NAME="$1"
+NAME="${1:-$PACKAGE}"
 
 set -e
 
@@ -14,9 +14,9 @@ if [[ "${NAME}" =~ ^rocky- ]]; then
 fi
 
 PATCHPATH=${HOME}/rocky/patch/${NAME}.git
+git config --global user.name "${GIT_USER:-devtool importer}"
+git config --global user.email "${GIT_EMAIL:-releng+importer@rockylinux.org}" 
 if [ ! -d "${PATCHPATH}" ]; then
-    git config --global user.name 'devtool importer' 
-    git config --global user.email 'releng@rockylinux.org' 
     echo "Trying to clone existing patch repo"
     if curl -sI https://git.rockylinux.org/staging/patch/${NAME} | grep "HTTP/1.1 200 OK" >/dev/null 2>&1; then # if it's a real repo
 	echo "Found existing patch repo. Cloning to ${PATCHPATH}"
