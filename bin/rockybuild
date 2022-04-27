@@ -3,6 +3,7 @@
 NAME="${1:-$PACKAGE}"
 BRANCH="${2:-${BRANCH:-r8}}"
 ARCH=${ARCH:-$(uname -m)}
+VERSION="${BRANCH:1:1}"
 
 shift
 
@@ -13,7 +14,7 @@ fi
 
 
 # No module support directly
-MOCKCONFIG="/etc/mock/rocky-8-${ARCH}.cfg"
+MOCKCONFIG="/etc/mock/rocky-${VERSION}-${ARCH}.cfg"
 
 test -d "${HOME}/rocky/builds/${NAME}/${BRANCH}" || mkdir -p "${HOME}/rocky/builds/${NAME}/${BRANCH}"
 
@@ -21,7 +22,7 @@ set -e
 
 #createrepo /usr/share/nginx/html/repo
 
-rpmbuild -bs --nodeps --define "%_topdir ${HOME}/rocky/rpms/${NAME}/${BRANCH}" --define "dist .el8" ${HOME}/rocky/rpms/${NAME}/${BRANCH}/SPECS/*.spec
+rpmbuild -bs --nodeps --define "%_topdir ${HOME}/rocky/rpms/${NAME}/${BRANCH}" --define "dist .el${VERSION}" ${HOME}/rocky/rpms/${NAME}/${BRANCH}/SPECS/*.spec
 
 mock -r "$MOCKCONFIG" --resultdir="${HOME}/rocky/builds/${NAME}/${BRANCH}" ${HOME}/rocky/rpms/${NAME}/${BRANCH}/SRPMS/*.src.rpm --isolation=simple --cleanup-after ${MOCKARGS:-}
 

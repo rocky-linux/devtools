@@ -26,11 +26,14 @@ srpmproc:
 srpmproc/srpmproc: srpmproc
 	cd srpmproc; GO111MODULE=auto CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build ./cmd/srpmproc
 
-install: srpmproc/srpmproc .dnf .system
+
+scriptinstall: 
+	install -m 755 bin/* /usr/local/bin/
+
+install: srpmproc/srpmproc .dnf .system scriptinstall
 	cp -r etc_mock/rocky* /etc/mock/
 	cp -r etc_mock/templates/* /etc/mock/templates/ || true
 	install -m 755 srpmproc/srpmproc /usr/local/bin/
-	install -m 755 bin/* /usr/local/bin/
 	test -d /usr/share/nginx/html/repo || mkdir /usr/share/nginx/html/repo
 	chmod 777 /usr/share/nginx/html/repo
 
