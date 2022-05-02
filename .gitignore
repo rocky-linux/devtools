@@ -1,2 +1,4 @@
 .dnf
 .system
+.go-setup
+srpmproc/
