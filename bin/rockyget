@@ -1,13 +1,17 @@
 #!/bin/sh
 
 NAME="${1:-$PACKAGE}"
-BRANCH="${2:-r8}"
+BRANCH="${2:-${BRANCH:-r8}}"
 
 set -e
 
-if [ -z "${NAME}" ]; then
-    echo "usage: rockyget NAME [BRANCH]"
+usage() {
+    echo "usage: rockyget PACKAGE [BRANCH]"
     echo "BRANCH (r8, r9) implies VERSION (8,9)"
+}
+
+if [ -z "${NAME}" ]; then
+    usage
     exit 1
 fi
 
@@ -15,13 +19,19 @@ if [[ "${NAME}" =~ ^rocky- ]]; then
     AARGS='--import-branch-prefix=r --rpm-prefix=https://git.rockylinux.org/original/rpms'
 fi
 
-CDN_URL="https://rocky-linux-sources-staging.a1.rockylinux.org"
 
-if [[ $BRANCH =~ 9 ]]; then
-	CDN_URL="https://sources.build.resf.org"
-fi
+case $BRANCH in
+  r8*) 
+    CDN_URL="https://rocky-linux-sources-staging.a1.rockylinux.org" ;;
+  r9*)
+    CDN_URL="https://sources.build.resf.org" ;;
+  *)
+    usage; exit 1;;
+esac
 
 PATCHPATH=${HOME}/rocky/patch/${NAME}.git
+git config --global user.name "${GIT_USER:-devtool importer}"
+git config --global user.email "${GIT_EMAIL:-releng+importer@rockylinux.org}" 
 if [ ! -d "${PATCHPATH}" ]; then
     echo "Trying to clone existing patch repo"
     if curl -sI https://git.rockylinux.org/staging/patch/${NAME} | grep "HTTP/1.1 200 OK" >/dev/null 2>&1; then # if it's a real repo
