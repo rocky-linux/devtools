@@ -1,11 +1,13 @@
 #!/bin/sh
 
-NAME="$1"
+NAME="${1:-$PACKAGE}"
+BRANCH="${2:-r8}"
 
 set -e
 
 if [ -z "${NAME}" ]; then
-    echo "usage: rockyget NAME"
+    echo "usage: rockyget NAME [BRANCH]"
+    echo "BRANCH (r8, r9) implies VERSION (8,9)"
     exit 1
 fi
 
@@ -13,16 +15,38 @@ if [[ "${NAME}" =~ ^rocky- ]]; then
     AARGS='--import-branch-prefix=r --rpm-prefix=https://git.rockylinux.org/original/rpms'
 fi
 
-if [ -d "${HOME}/rocky/patch/${NAME}.git" ]; then
-    echo "NOTICE: Will merge local configs into pulled package"
-    ( cd "${HOME}/rocky/patch/${NAME}.git"; git add .; git commit -m "update" ) ||:
+CDN_URL="https://rocky-linux-sources-staging.a1.rockylinux.org"
+
+if [[ $BRANCH =~ 9 ]]; then
+	CDN_URL="https://sources.build.resf.org"
+fi
+
+PATCHPATH=${HOME}/rocky/patch/${NAME}.git
+if [ ! -d "${PATCHPATH}" ]; then
+    echo "Trying to clone existing patch repo"
+    if curl -sI https://git.rockylinux.org/staging/patch/${NAME} | grep "HTTP/1.1 200 OK" >/dev/null 2>&1; then # if it's a real repo
+        echo "Found existing patch repo. Cloning to ${PATCHPATH}"
+    	git clone --branch ${BRANCH} https://git.rockylinux.org/staging/patch/${NAME}.git "${PATCHPATH}" ||:
+    else
+        echo "No patch repo exists. Initing empty"
+        git init ${PATCHPATH}
+        git -C ${PATCHPATH} checkout -b ${BRANCH} 
+        git -C ${PATCHPATH} commit --allow-empty -m 'Initial commit' 
+        git -C ${PATCHPATH} remote add origin https://git.rockylinux.org/staging/patch/${NAME}.git
+    fi
 fi
 
 test -d "$HOME/rocky/rpms/${NAME}" && rm -rf "$HOME/rocky/rpms/${NAME}"
 test -d /tmp/srpmproc-cache || mkdir /tmp/srpmproc-cache
 mkdir -p "$HOME/rocky/rpms/${NAME}"
 
-srpmproc --version 8 --upstream-prefix "file://$HOME/rocky" --storage-addr file:///tmp/srpmproc-cache --source-rpm "$NAME" --tmpfs-mode "$HOME/rocky/rpms/${NAME}" ${AARGS}
+if [[ ! -f $HOME/.ssh/id_rsa ]]; then
+  ssh-keygen -t rsa -q -f "$HOME/.ssh/id_rsa" -N ""
+fi
+
+pushd $HOME/rocky/rpms/ >/dev/null
+srpmproc --cdn-url $CDN_URL  --version ${BRANCH:1:1} --upstream-prefix "file://$HOME/rocky" --storage-addr file:///tmp/srpmproc-cache --source-rpm "$NAME" --tmpfs-mode "${NAME}" ${AARGS}
+popd >/dev/null
 
 echo "Package has been pulled to: $HOME/rocky/rpms/${NAME}"
 echo

@@ -2,7 +2,7 @@
 
 set -e
 
-ARCH=`uname -m`
+ARCH=${ARCH:-$(uname -m)}
 
 NAME=`pwd | sed -e "s@^$HOME/rocky/_work/@@" | awk -F '/' '{print $1}'`
 BRANCH=`pwd | sed -e "s@^$HOME/rocky/_work/@@" | awk -F '/' '{print $2}'`

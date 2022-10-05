@@ -1,6 +1,6 @@
 #!/bin/sh
 
-NAME="$1"
+NAME="${1:-$PACKAGE}"
 
 if [ -z "$NAME" ]; then
     echo "USAGE: $0 [PACKAGE NAME]"
@@ -18,7 +18,7 @@ mkdir -p "$HOME/rocky/patch/${NAME}.git/ROCKY/CFG"
 mkdir -p "$HOME/rocky/patch/${NAME}.git/ROCKY/_supporting"
 cd "$HOME/rocky/patch/${NAME}.git"
 git init
-git checkout -b main
+git checkout -b ${BRANCH}
 
 echo "Rocky patch directory created for package '${NAME}' and can be found in:"
 echo "   $HOME/rocky/patch/${NAME}.git"
