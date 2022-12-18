@@ -173,6 +173,44 @@ function _pull_srpmproc_patch() {
   fi
 }
 
+function _import_lazy_fedora() {
+  peridot_cli_exists=1
+  if which peridot-cli >/dev/null 2>&1; then
+    echo "Warning: peridot-cli not found, we won't import the artifact"
+    peridot_cli_exists=0
+  fi
+
+  RPM_NEVRA="${NEVRA}"
+  BRANCH="${BRANCH}"
+
+  # Splitting the rpm nevra
+  RPM_NAME="$(echo $RPM_NEVRA | sed 's/^\(.*\)-\([^-]\{1,\}\)-\([^-]\{1,\}\)$/\1/')"
+  RPM_VER="$(echo $RPM_NEVRA | sed 's/^\(.*\)-\([^-]\{1,\}\)-\([^-]\{1,\}\)$/\2/')"
+  RPM_REL="$(echo $RPM_NEVRA | sed 's/^\(.*\)-\([^-]\{1,\}\)-\([^-]\{1,\}\)$/\3/')"
+  RPM_URL="https://kojipkgs.fedoraproject.org//packages/${RPM_NAME}/${RPM_VER}/${RPM_REL}/src/${RPM_NEVRA}.src.rpm"
+  curl -L -q -H Pragma: -o "/tmp/${RPM_NEVRA}.src.rpm" -R -S --fail --retry 5 "${RPM_URL}" && break
+
+  rpm -i "/tmp/${RPM_NEVRA}.src.rpm" --define "%_topdir /tmp/${RPM_NAME}"
+  pushd "/tmp/${RPM_NAME}" || { echo "Cannot switch directories"; exit 1; }
+  touch ".${RPM_NAME}.metadata"
+  sha256sum SOURCES/*{tar,zip,tgz,tar.gz,bz2,xz}* >> .${RPM_NAME}.metadata
+  if [[ "$peridot_cli_exists" == "1" ]]; then
+    peridot-cli lookaside upload SOURCES/*{tar,zip,tgz,tar.gz,bz2,xz}*
+  fi
+
+  git init
+  git checkout -b "${BRANCH}"
+  git add -A
+  git commit -m "init"
+  git remote add origin "${GIT_SSH_PREFIX}/${NAME}.git"
+
+  if [[ "$peridot_cli_exists" == "1" ]]; then
+    git push origin "${BRANCH}"
+  fi
+
+  popd || { echo "Cannot switch directories"; exit 1; }
+}
+
 export -f _determine_clone_method_rl
 export -f _determine_clone_method_c
 export -f _mode_srpmproc_rl
@@ -183,3 +221,4 @@ export -f _mode_srpmproc_fetch
 export -f _mode_curl_fetch
 export -f _build_srpmproc_patch
 export -f _pull_srpmproc_patch
+export -f _import_lazy_fedora

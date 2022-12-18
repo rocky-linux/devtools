@@ -47,5 +47,23 @@ function _determine_prefix() {
   fi
 }
 
+function _set_ssh_prefix() {
+  GIT_SSH_PREFIX="ssh://git@git.rockylinux.org:22220/staging/rpms"
+  GIT_SSH_PATH_PREFIX="ssh://git@git.rockylinux.org:22220/staging/patch"
+  if [[ ! -z "${SIG}" ]]; then
+    GIT_SSH_PREFIX="ssh://git@git.rockylinux.org:22220/sig/${SIG}/src"
+  fi
+}
+
+function _set_src_ssh_prefix() {
+  GIT_SSH_PREFIX="ssh://git@git.rockylinux.org:22220/staging/src"
+  GIT_SSH_PATH_PREFIX="ssh://git@git.rockylinux.org:22220/staging/patch"
+  if [[ ! -z "${SIG}" ]]; then
+    GIT_SSH_PREFIX="ssh://git@git.rockylinux.org:22220/sig/${SIG}/src"
+  fi
+}
+
 export -f _determine_lookaside
 export -f _determine_prefix
+export -f _set_ssh_prefix
+export -f _set_src_ssh_prefix
