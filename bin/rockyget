@@ -1,64 +1,77 @@
-#!/bin/sh
+#!/bin/bash
+# rockypkg
+#
+# Use this clone from the CentOS Git Service. You can use this to:
+#   * To clone the latest of a major release for testing
+#   * Download the sources easily
+#   * Rebuild for your own use case
+#   * Make changes and prepare to submit a patch
 
-NAME="${1:-$PACKAGE}"
-BRANCH="${2:-${BRANCH:-r8}}"
+set -o errexit
+set -o pipefail
+#set -o nounset
 
-set -e
+CPATCH="0"
+DEFAULT_VERSION="9"
+DEFAULT_BRANCH="c${DEFAULT_VERSION}"
+CFGLOC="$(dirname $0)"
+ETCCFG="/etc/rockypkg"
 
-usage() {
-    echo "usage: rockyget PACKAGE [BRANCH]"
-    echo "BRANCH (r8, r9) implies VERSION (8,9)"
+[[ -d "${ETCCFG}" ]] && CFGLOC="${ETCCFG}" # Only set /etc/rockypkg as the base if it exists
+RLCFG="${CFGLOC}/rlcfg.funcs"
+LACFG="${CFGLOC}/rl.funcs"
+
+# shellcheck source=/dev/null disable=SC2015
+[[ -f "${RLCFG}" ]] && source "${RLCFG}" || { echo "Could not source ${RLCFG}"; exit 1; }
+[[ -f "${LACFG}" ]] && source "${LACFG}" || { echo "Could not source ${LACFG}"; exit 1; }
+
+OPTS=$(getopt -a -n rockyget -o n:b:c \
+  -l name:,branch:,check -- "$@"
+)
+
+export __usage
+__usage="
+Usage: $0 [OPTIONS]
+
+Options:
+  -n, --name        # Name of the package
+  -b, --branch      # Branch to pull for
+  -c, --check       # Checks for Rocky Linux patch to pull down and use.
+                    # This will fail if a patch repo already exists locally.
+"
+
+function usage() {
+  echo "$__usage"
 }
 
-if [ -z "${NAME}" ]; then
-    usage
-    exit 1
+eval set -- "$OPTS"
+while :; do
+  case "$1" in
+    -n | --name)        NAME="$2"     ; shift 2 ;;
+    -b | --branch)      BRANCH="$2"   ; shift 2 ;;
+    -c | --check)       CPATCH="1"    ; shift   ;;
+    --) shift ;;
+    *) break ;;
+  esac
+done
+
+if [[ -z "$NAME" ]]; then
+  echo "Package name not specified"
+  usage
+  exit 12
 fi
 
-if [[ "${NAME}" =~ ^rocky- ]]; then
-    AARGS='--import-branch-prefix=r --rpm-prefix=https://git.rockylinux.org/original/rpms'
-fi
+# Set some defaults
+BRANCH="${BRANCH:-$DEFAULT_BRANCH}"
+VERSION="${BRANCH//[!0-9]/}"
+SUFFIX="${BRANCH#c${VERSION}}"
 
+function main() {
+  _determine_clone_method_c
+  GIT_PREFIX="https://git.centos.org/rpms"
+  GIT_PATCH_PREFIX="https://git.rockylinux.org/staging/patch"
+  [[ "$CPATCH" == "1" ]] && _pull_srpmproc_patch
+  ${clone_method}
+}
 
-case $BRANCH in
-  r8*) 
-    CDN_URL="https://rocky-linux-sources-staging.a1.rockylinux.org" ;;
-  r9*)
-    CDN_URL="https://sources.build.resf.org" ;;
-  *)
-    usage; exit 1;;
-esac
-
-PATCHPATH=${HOME}/rocky/patch/${NAME}.git
-git config --global user.name "${GIT_USER:-devtool importer}"
-git config --global user.email "${GIT_EMAIL:-releng+importer@rockylinux.org}" 
-if [ ! -d "${PATCHPATH}" ]; then
-    echo "Trying to clone existing patch repo"
-    if curl -sI https://git.rockylinux.org/staging/patch/${NAME} | grep "HTTP/1.1 200 OK" >/dev/null 2>&1; then # if it's a real repo
-        echo "Found existing patch repo. Cloning to ${PATCHPATH}"
-    	git clone --branch ${BRANCH} https://git.rockylinux.org/staging/patch/${NAME}.git "${PATCHPATH}" ||:
-    else
-        echo "No patch repo exists. Initing empty"
-        git init ${PATCHPATH}
-        git -C ${PATCHPATH} checkout -b ${BRANCH} 
-        git -C ${PATCHPATH} commit --allow-empty -m 'Initial commit' 
-        git -C ${PATCHPATH} remote add origin https://git.rockylinux.org/staging/patch/${NAME}.git
-    fi
-fi
-
-test -d "$HOME/rocky/rpms/${NAME}" && rm -rf "$HOME/rocky/rpms/${NAME}"
-test -d /tmp/srpmproc-cache || mkdir /tmp/srpmproc-cache
-mkdir -p "$HOME/rocky/rpms/${NAME}"
-
-if [[ ! -f $HOME/.ssh/id_rsa ]]; then
-  ssh-keygen -t rsa -q -f "$HOME/.ssh/id_rsa" -N ""
-fi
-
-pushd $HOME/rocky/rpms/ >/dev/null
-srpmproc --cdn-url $CDN_URL  --version ${BRANCH:1:1} --upstream-prefix "file://$HOME/rocky" --storage-addr file:///tmp/srpmproc-cache --source-rpm "$NAME" --tmpfs-mode "${NAME}" ${AARGS}
-popd >/dev/null
-
-echo "Package has been pulled to: $HOME/rocky/rpms/${NAME}"
-echo
-echo "The following branches are available:"
-( cd $HOME/rocky/rpms/${NAME}; ls -1 )
+main

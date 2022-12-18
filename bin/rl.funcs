@@ -1,0 +1,185 @@
+# lookaside
+# vim: set syntax=bash:
+function _determine_clone_method_rl() {
+  if which srpmproc >/dev/null 2>&1; then
+    srpmproc_path="$(which srpmproc)"
+    clone_method="_mode_srpmproc_rl"
+  else
+    clone_method="_mode_git_rl"
+  fi
+}
+
+function _determine_clone_method_c() {
+  if which srpmproc; then
+    srpmproc_path="$(which srpmproc)"
+    clone_method="_mode_srpmproc_c"
+  else
+    clone_method="_mode_git_c"
+  fi
+}
+
+# This is for rocky linux only. This does not pull from git.c.o
+function _mode_srpmproc_rl() {
+  TMPCDIR=$(mktemp -d)
+  TMPPDIR="${HOME}/rocky"
+  [[ -d "${TMPPDIR}/${NAME}/${BRANCH}" ]] && rm --recursive --force "${TMPPDIR}/${NAME}/${BRANCH}"
+  [[ -n "${SUFFIX}" ]] && STRICT="--branch-suffix ${SUFFIX}"
+  if curl -sI "${GIT_PATCH_PREFIX}/${NAME}" | grep "HTTP/1.1 200 OK" >/dev/null 2>&1 && [[ -d "${TMPPDIR}/patch/${NAME}.git" ]]; then
+    echo "WARNING: Patch repo exists both in the git service and locally. This"
+    echo "         can lead to bad behavior. Use rockyget instead if you are"
+    echo "         testing changes to a patch repo."
+    exit 50
+  fi
+  #[[ -n "${SIG}" ]] && NOTAG="--taglessmode"
+  mkdir -p "${TMPPDIR}"
+  pushd "${TMPPDIR}" || { echo "Could not switch to ${TMPPDIR}"; exit 1; }
+  ${srpmproc_path} --cdn-url "${SURL}" \
+                   --version ${VERSION} \
+                   --upstream-prefix "file://${TMPPDIR}" \
+                   --storage-addr "file://${TMPCDIR}/" \
+                   --source-rpm "${NAME}" \
+                   --tmpfs-mode "${NAME}" \
+                   --rpm-prefix "${GIT_PREFIX}" \
+                   --strict-branch-mode \
+                   --import-branch-prefix r ${STRICT} ${NOTAG}
+
+  popd || { echo "Could not switch back!"; exit 1; }
+  [[ -d "${TMPCDIR}" ]] && rm -rf "${TMPCDIR}"
+}
+
+function _mode_srpmproc_c() {
+  TMPCDIR=$(mktemp -d)
+  TMPPDIR="${HOME}/rocky"
+  [[ -d "${TMPPDIR}/${NAME}/${BRANCH}" ]] && rm --recursive --force "${TMPPDIR}/${NAME}/${BRANCH}"
+  [[ -n "${SUFFIX}" ]] && STRICT="--branch-suffix ${SUFFIX}"
+  mkdir -p "${TMPPDIR}"
+  pushd "${TMPPDIR}" || { echo "Could not switch to ${TMPPDIR}"; exit 1; }
+  ${srpmproc_path} --cdn-url "${SURL}" \
+                   --version ${VERSION} \
+                   --upstream-prefix "file://${TMPPDIR}" \
+                   --storage-addr "file://${TMPCDIR}/" \
+                   --source-rpm "${NAME}" \
+                   --tmpfs-mode "${NAME}" \
+                   --rpm-prefix "${GIT_PREFIX}" \
+                   --strict-branch-mode \
+                   --import-branch-prefix c ${STRICT} ${NOTAG}
+
+  popd || { echo "Could not switch back!"; exit 1; }
+  [[ -d "${TMPCDIR}" ]] && rm -rf "${TMPCDIR}"
+}
+
+function _mode_git_rl() {
+  TMPPDIR="${HOME}/rocky/rpms/${NAME}"
+  [[ -d "${TMPPDIR}/${BRANCH}" ]] && rm --recursive --force "${TMPPDIR}/${BRANCH}"
+  mkdir -p "${TMPPDIR}"
+  pushd "${TMPPDIR}" || { echo "Could not switch to ${TMPPDIR}"; exit 1; }
+  git clone --branch "${BRANCH}" "${GIT_PREFIX}/${NAME}.git" "${BRANCH}"
+  popd || { echo "Could not switch back!"; exit 1; }
+
+  pushd "${TMPPDIR}/${BRANCH}" || { echo "Could not switch to ${TMPPDIR}/${BRANCH}"; exit 1; }
+  mkdir -p SOURCES
+  for x in $(awk '{print $1}' .${NAME}.metadata); do
+    PATHWAY=$(grep "${x}" .${NAME}.metadata | awk '{print $2}')
+    curl -L -q -H Pragma: -o "${PATHWAY}" -R -S --fail --retry 5 "${SURL}/${x}" && break
+  done
+}
+
+function _mode_git_c() {
+  echo "** WARNING: PATCHES WILL NOT BE APPLIED **"
+  echo "YOU MUST HAVE SRPMPROC AVAILABLE TO PATCH"
+  TMPPDIR="${HOME}/rocky/rpms/${NAME}"
+  [[ -d "${TMPPDIR}/${BRANCH}" ]] && rm --recursive --force "${TMPPDIR}/${BRANCH}"
+  mkdir -p "${TMPPDIR}"
+  pushd "${TMPPDIR}" || { echo "Could not switch to ${TMPPDIR}"; exit 1; }
+  git clone --branch "${BRANCH}" "${GIT_PREFIX}/${NAME}.git" "${BRANCH}"
+  popd || { echo "Could not switch back!"; exit 1; }
+
+  pushd "${TMPPDIR}/${BRANCH}" || { echo "Could not switch to ${TMPPDIR}/${BRANCH}"; exit 1; }
+  mkdir -p SOURCES
+  for x in $(awk '{print $1}' .${NAME}.metadata); do
+    PATHWAY=$(grep "${x}" .${NAME}.metadata | awk '{print $2}')
+    curl -L -q -H Pragma: -o "${PATHWAY}" -R -S --fail --retry 5 "${SURL}/${x}" && break
+  done
+}
+
+function _mode_srpmproc_fetch() {
+  # first determine if we're in a git repo
+  if [[ ! -d .git ]]; then
+    echo "You must run this in a cloned git repo"
+    exit 12
+  fi
+  ${srpmproc_path} --fetch --cdn-url "${SURL}"
+}
+
+function _mode_curl_fetch() {
+  if [[ ! -d .git ]]; then
+    echo "You must run this in a cloned git repo"
+    exit 12
+  fi
+  shopt -s nullglob
+  set -- .*.metadata
+  if (( $# == 0 )); then
+    echo "No metadata found"
+    exit 13
+  elif (( $# > 1 )); then
+    echo "Multiple metadata files found. Only using $1"
+  fi
+  metafile="$1"
+  for x in $(awk '{print $1}' $metafile); do
+    PATHWAY=$(grep "${x}" .*.metadata | awk '{print $2}')
+    curl -L -q -H Pragma: -o "${PATHWAY}" -R -S --fail --retry 5 "${SURL}/${x}" && break
+  done
+}
+
+function _build_srpmproc_patch() {
+  PATCHWAY="${HOME}/rocky/patch/${NAME}.git"
+  RPMWAY="${HOME}/rocky/rpms/${NAME}"
+  if [[ -d "${PATCHWAY}" ]]; then
+    echo "Patch structure already exists: ${PATCHWAY}"
+    exit 20
+  fi
+
+  mkdir -p "${PATCHWAY}/ROCKY/{CFG,_supporting}"
+  pushd "${PATCHWAY}" || { echo "Could not change to ${PATCHWAY}"; exit 1; }
+  git init
+  git checkout -b ${BRANCH}
+  git commit --allow-empty -m "init"
+  git remote add origin "${GIT_PATCH_PREFIX}/${NAME}.git"
+  popd || { echo "Could not change back"; exit 1; }
+
+  cat <<EOF
+Patch directory for the '${NAME}' package has been created:
+
+  ${HOME}/rocky/patch/${NAME}.git
+
+Once you've made your changes, be sure to use 'git' to commit or use rockyget
+to test your changes.
+EOF
+}
+
+function _pull_srpmproc_patch() {
+  PATCHWAY="${HOME}/rocky/patch/${NAME}.git"
+  if [[ -d "${PATCHWAY}" ]]; then
+    echo "Patch structure already exists: ${PATCHWAY}"
+    echo "You should move or delete this patch directory if you are attempting"
+    echo "to pull a patch repo."
+    exit 125
+  fi
+
+  if curl -sI "${GIT_PATCH_PREFIX}/${NAME}" | grep "HTTP/1.1 200 OK" >/dev/null 2>&1; then
+    git clone --branch "${BRANCH//c/r}" "${GIT_PATCH_PREFIX}/${NAME}.git" "${PATCHWAY}" || { echo "We can't clone the patch repo!"; exit 1; }
+  else
+    echo "No patch repo found. Use rockymkcfg if you need one."
+  fi
+}
+
+export -f _determine_clone_method_rl
+export -f _determine_clone_method_c
+export -f _mode_srpmproc_rl
+export -f _mode_srpmproc_c
+export -f _mode_git_rl
+export -f _mode_git_c
+export -f _mode_srpmproc_fetch
+export -f _mode_curl_fetch
+export -f _build_srpmproc_patch
+export -f _pull_srpmproc_patch

@@ -1,0 +1,51 @@
+# rlcfg
+# vim: set syntax=bash:
+
+# Colors
+BLACK=$(tput setaf 0)
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+LIME_YELLOW=$(tput setaf 190)
+YELLOW=$(tput setaf 3)
+POWDER_BLUE=$(tput setaf 153)
+BLUE=$(tput setaf 4)
+MAGENTA=$(tput setaf 5)
+CYAN=$(tput setaf 6)
+WHITE=$(tput setaf 7)
+BRIGHT=$(tput bold)
+NORMAL=$(tput sgr0)
+BLINK=$(tput blink)
+REVERSE=$(tput smso)
+UNDERLINE=$(tput smul)
+RESET="\[\017\]"
+NORMAL="\[\033[0m\]"
+BLUE="\[\033[01;34m\]"
+WHITE="\[\033[01;37m\]"
+
+function _determine_lookaside() {
+  # The default lookaside URL for 8 is different from everything else
+  if [[ -n "$2" ]] || [[ "$1" =~ "r9*" ]]; then
+    lookaside_url="https://sources.build.resf.org"
+  else
+    case $1 in
+      r8*)
+        lookaside_url="https://rocky-linux-sources-staging.a1.rockylinux.org"
+        ;;
+      *)
+        lookaside_url="https://sources.build.resf.org"
+        ;;
+    esac
+  fi
+  echo "$lookaside_url"
+}
+
+function _determine_prefix() {
+  GIT_PREFIX="https://git.rockylinux.org/staging/rpms"
+  GIT_PATCH_PREFIX="https://git.rockylinux.org/staging/patch"
+  if [[ ! -z "${SIG}" ]]; then
+    GIT_PREFIX="https://git.rockylinux.org/sig/${SIG}/rpms"
+  fi
+}
+
+export -f _determine_lookaside
+export -f _determine_prefix
