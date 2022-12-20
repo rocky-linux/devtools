@@ -1,7 +1,12 @@
 #!/bin/bash
-# rockymkcfg
+# lazy-import-fedora
 #
-# Use this to start up a new patch repo and test it.
+# Use this to lazily pull an RPM from Fedora's koji and:
+#   * prepare a build root
+#   * push to a git repo in the rocky linux git repo
+#   * make changes as needed
+#   * test a build with said changes
+#
 
 set -o errexit
 set -o pipefail
@@ -20,8 +25,8 @@ LACFG="${CFGLOC}/rl.funcs"
 [[ -f "${RLCFG}" ]] && source "${RLCFG}" || { echo "Could not source ${RLCFG}"; exit 1; }
 [[ -f "${LACFG}" ]] && source "${LACFG}" || { echo "Could not source ${LACFG}"; exit 1; }
 
-OPTS=$(getopt -a -n rockyget -o n:b: \
-  -l name:,branch: -- "$@"
+OPTS=$(getopt -a -n rockyget -o n:b:u:s: \
+  -l name:,branch:,sig: -- "$@"
 )
 
 export __usage
@@ -29,8 +34,9 @@ __usage="
 Usage: $0 [OPTIONS]
 
 Options:
-  -n, --name        # Name of the package
-  -b, --branch      # Branch to patch for
+  -n, --nevra       # nevra of the fedora package
+  -b, --branch      # Branch to push for
+  -s, --sig         # Sets the SIG if pushing to a SIG repo
 "
 
 function usage() {
@@ -40,24 +46,28 @@ function usage() {
 eval set -- "$OPTS"
 while :; do
   case "$1" in
-    -n | --name)        NAME="$2"     ; shift 2 ;;
+    -n | --nevra)       NEVRA="$2"    ; shift 2 ;;
     -b | --branch)      BRANCH="$2"   ; shift 2 ;;
+    -s | --sig)         SIG="$2"      ; shift 2 ;;
     --) shift ;;
     *) break ;;
   esac
 done
 
-if [[ -z "$NAME" ]]; then
-  echo "Package name not specified"
+if [[ -z "$NEVRA" ]]; then
+  echo "Package NEVRA not specified"
   usage
   exit 12
 fi
 
 # Set some defaults
 BRANCH="${BRANCH:-$DEFAULT_BRANCH}"
+VERSION="${BRANCH//[!0-9]/}"
+SUFFIX="${BRANCH#r${VERSION}}"
 
 function main() {
-  _build_srpmproc_patch
+  _set_src_ssh_prefix
+  _import_lazy_fedora
 }
 
 main

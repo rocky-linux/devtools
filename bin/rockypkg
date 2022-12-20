@@ -1,7 +1,15 @@
 #!/bin/bash
-# rockymkcfg
+# rockypkg
 #
-# Use this to start up a new patch repo and test it.
+# Use this clone from the Rocky Linux Git Service. You can use this to:
+#   * Download the sources easily
+#   * Rebuild for your own use case
+#   * Make changes and prepare to submit a patch
+#   * Make changes and prepare to submit for a SIG
+#
+# Note that this script does *not* perform patching. This is to avoid
+# recursive patching, in the event a package was patched before. Use
+# rockyget if you plan on patching whatever you want to import.
 
 set -o errexit
 set -o pipefail
@@ -20,8 +28,8 @@ LACFG="${CFGLOC}/rl.funcs"
 [[ -f "${RLCFG}" ]] && source "${RLCFG}" || { echo "Could not source ${RLCFG}"; exit 1; }
 [[ -f "${LACFG}" ]] && source "${LACFG}" || { echo "Could not source ${LACFG}"; exit 1; }
 
-OPTS=$(getopt -a -n rockyget -o n:b: \
-  -l name:,branch: -- "$@"
+OPTS=$(getopt -a -n rockyget -o n:b:u:s: \
+  -l name:,branch:,surl:,sig: -- "$@"
 )
 
 export __usage
@@ -30,7 +38,9 @@ Usage: $0 [OPTIONS]
 
 Options:
   -n, --name        # Name of the package
-  -b, --branch      # Branch to patch for
+  -b, --branch      # Branch to pull for
+  -u, --surl        # Changes the source URL from the default
+  -s, --sig         # Sets the SIG if pulling package from there
 "
 
 function usage() {
@@ -42,6 +52,8 @@ while :; do
   case "$1" in
     -n | --name)        NAME="$2"     ; shift 2 ;;
     -b | --branch)      BRANCH="$2"   ; shift 2 ;;
+    -u | --surl)        SURL="$2"     ; shift 2 ;;
+    -s | --sig)         SIG="$2"      ; shift 2 ;;
     --) shift ;;
     *) break ;;
   esac
@@ -55,9 +67,14 @@ fi
 
 # Set some defaults
 BRANCH="${BRANCH:-$DEFAULT_BRANCH}"
+SURL="${SURL:-$(_determine_lookaside $BRANCH $SIG)}"
+VERSION="${BRANCH//[!0-9]/}"
+SUFFIX="${BRANCH#r${VERSION}}"
 
 function main() {
-  _build_srpmproc_patch
+  _determine_clone_method_rl
+  _determine_prefix
+  ${clone_method}
 }
 
 main
