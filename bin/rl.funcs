@@ -195,7 +195,9 @@ function _import_lazy_fedora() {
   touch ".${RPM_NAME}.metadata"
   sha256sum SOURCES/*{tar,zip,tgz,tar.gz,bz2,xz}* >> .${RPM_NAME}.metadata
   if [[ "$peridot_cli_exists" == "1" ]]; then
-    peridot-cli lookaside upload SOURCES/*{tar,zip,tgz,tar.gz,bz2,xz}*
+    for x in $(ls SOURCES/); do
+      peridot-cli lookaside upload SOURCES/${x}
+    done
   fi
 
   git init
