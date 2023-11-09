@@ -68,7 +68,7 @@ SUFFIX="${BRANCH#c${VERSION}}"
 
 function main() {
   _determine_clone_method_c
-  GIT_PREFIX="https://git.centos.org/rpms"
+  GIT_PREFIX="https://git.rockylinux.org/staging/src-rhel/rpms"
   GIT_PATCH_PREFIX="https://git.rockylinux.org/staging/patch"
   [[ "$CPATCH" == "1" ]] && _pull_srpmproc_patch
   ${clone_method}

@@ -72,7 +72,7 @@ build stages.
 podman run -v "$PWD/artifacts:/artifacts:z,rw" --privileged localhost/build-bash:latest prep build
 ```
 
-Without any other intervention, this will pull sources from git.centos.org and process them using srpmproc to apply patches, if available, from git.rockylinux.org/staging/patch/. If no patch repo exists upstream, one will be created. Alternatively, volume mount a local patch repo (with the latest patches from git.r.o if applicable) to /root/rocky/patch/<package>.git.
+Without any other intervention, this will pull sources from git.rockylinux.org and process them using srpmproc to apply patches, if available, from git.rockylinux.org/staging/patch/. If no patch repo exists upstream, one will be created. Alternatively, volume mount a local patch repo (with the latest patches from git.r.o if applicable) to /root/rocky/patch/<package>.git.
 
 Builds artifacts are copied to /artifacts, which you should mount read write and with any selinux flags where necessary. The default example above mounts $PWD/artifacts to /artifacts with selinux (z) and read-write (rw) flags.
 
