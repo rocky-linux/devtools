@@ -1,3 +1,6 @@
+**This repository has been archived and is slowly being replaced by an rpkg
+equivalent, [rockypkg](https://git.resf.org/sig_core/rockypkg)**
+
 A quick helper for getting a Rocky package maintainer build development
 configuration setup.
 
